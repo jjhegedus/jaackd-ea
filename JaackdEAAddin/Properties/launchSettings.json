@@ -1,0 +1,13 @@
+{
+  "profiles": {
+    "JaackdEAAddin": {
+      "commandName": "Project"
+    },
+    "EA": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Program Files\\Sparx Systems\\EA\\EA.exe",
+      "workingDirectory": "C:\\Program Files\\Sparx Systems\\EA",
+      "authenticationMode": "None"
+    }
+  }
+}

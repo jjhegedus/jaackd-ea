@@ -1,0 +1,518 @@
+// ECMAScript 5.1 Grammar
+//
+// Derived from grammar available at:
+// - http://www.ecma-international.org/ecma-262/5.1/
+//
+// Throughout the official grammar you'll see references to ExpressionNoIn and its child rules.
+// Those rules aren't present here, as they serve only to enforce places where an "in" expression
+// can't be used.  As we dont care about such validations, and removing it makes things simpler,
+// I have removed all references to them.
+
+caseSensitive();
+delimiters(<DELIMITER>);
+
+lex(<TOKENS>);
+
+parse(<root>);
+
+// Given that every char is a token, every possible char value is a delimiter
+<DELIMITER>								::= U+0x0001..U+0xFFFE;
+
+// Lexer grammar
+<TOKENS>								::= token(<WHITESPACE>) |
+//											token(<COMMENT>) |
+											token(<KEYWORD>) |
+											token(<CHAR>);
+
+<WHITESPACE>							::= " " | "\r" | "\n" | "\t";
+
+<KEYWORD>								::= keywords();
+
+<CHAR>									::= U+0x0001..U+0xFFFE;
+
+// Reusable rules
+<S>										::= <pseudoWhitespace>*;
+
+<WS>									::= <pseudoWhitespace>+;
+
+<pseudoWhitespace>						::= <WHITESPACE> |
+											<comment>;
+
+<name>									::= except(<identifier>, <reservedWordChecked>);
+
+// Pseudo token rules
+<number>								::= <floatNumber> |
+											<hexNumber> |
+											<octNumber> |
+											<decNumber>;
+
+<floatNumber>							::= <S> "0".."9"+ "." ["0".."9"+] [("e" | "E") ["+" | "-"] "0".."9"+] ["f" | "F" | "d" | "D"] |
+											<S> "." "0".."9"+ [("e" | "E") ["+" | "-"] "0".."9"+] ["f" | "F" | "d" | "D"] |
+											<S> "0".."9"+ ("e" | "E") ["+" | "-"] "0".."9"+ ["f" | "F" | "d" | "D"] |
+											<S> "0".."9"+ [("e" | "E") ["+" | "-"] "0".."9"+] ("f" | "F" | "d" | "D");
+
+<decNumber>								::= <S> "0".."9"+;
+
+<octNumber>								::= <S> "0" "0".."7"+;
+
+<hexNumber>								::= <S> "0" ("x" | "X") ("0".."9" | "a".."f" | "A".."F")+;
+
+<string>								::= <S> "\"" <stringBody> "\"" |
+											<S> "\'" <charBody> "\'";
+
+<stringBody>							::= skip("\"", "\\" "\"" | "\\" "\\");
+
+<charBody>								::= skip("\'", "\\" "\\" |"\\" "\'");
+
+
+<identifier>							::= <S> ("a".."z" | "A".."Z" | "$" | "_") ("a".."z" | "A".."Z" | "0".."9"| "_" | "$")*;
+
+// Language root
+<root>									::= node("CLASS", node("DECLARATION", node("NAME", attributeex("NAMEPART", "Anonymous"))) node("BODY", <program>));
+
+//<escape>								::= attribute("COMMENT", <COMMENT>);
+
+<comment>								::= attribute("COMMENT", 
+												"/" "/" skip("\n") "\n" |
+												"/" "*" skip("*" "/") "*" "/"
+											);
+
+<program>								::= <sourceElement>*;
+
+<sourceElement>							::= <rootDeclaration> |
+											<statement> |
+											<WS>;
+
+<rootDeclaration>						::= <rootFunctionDeclaration> |
+											<rootVariableStatement>;
+
+// make the tree..
+<rootVariableStatement>					::= <_var_> <rootVariableDeclarationList> ";" |
+											<_var_> node("ATTRIBUTE", attribute("NAME", <name>) "=" attribute("DEFAULT", <objectLiteral>));
+
+<rootVariableDeclarationList>			::= <rootVariableDeclaration> (<S> "," <rootVariableDeclaration>)*;
+
+<rootVariableDeclaration>				::= node("ATTRIBUTE", attribute("NAME", <name>) [<_as_> attribute("TYPE", <name> (<S> "." <name>)*)] [<rootInitialiser>]);
+
+<rootInitialiser>						::= <S> "=" attribute("DEFAULT", <expression> | <objectLiteral>);
+
+<rootFunctionDeclaration>				::= node("METHOD", node("DECLARATION", <_function_> <name> <S> "(" [<rootFormalParameterList>] <S> ")" <S> "{" [<functionBody>] <S> "}"));
+
+<rootFormalParameterList>				::= <rootFormalParameter> ("," <rootFormalParameter>)*;
+
+<rootFormalParameter>					::= node("PARAMETER", attribute("NAME", <name>));
+
+// Statements
+<statementList>							::= <statement> <statement>*;
+
+<statement>								::= <unterminatedStatement> [<S> ";"] |
+											<S> ";";
+
+<unterminatedStatement>					::= //<WS> |
+											<block> |
+											//<builtIn> |
+											<variableStatement> |
+											<functionDeclaration> |
+											<ifStatement> |
+											<iterationStatement> |
+											<continueStatement> |
+											<breakStatement> |
+											<returnStatement> |
+											<withStatement> |
+											<labelledStatement> |
+											<switchStatement> |
+											<throwStatement> |
+											<tryStatement> |
+											<expressionStatement> |
+											<debuggerStatement>;
+
+<block>									::= <S> "{" [<statementList>] [<expressionList>] <S> "}";
+
+<variableStatement>						::= <_var_> <variableDeclarationList>;
+
+<variableDeclarationList>				::= <variableDeclaration> (<S> "," <variableDeclaration>)*;
+
+<variableDeclaration>					::= <name> [<_as_> <name> (<S> "." <name>)*] [<initialiser>];
+
+<initialiser>							::= <S> "=" (<expression> | <objectLiteral>);
+
+<expressionStatement>					::= <expressionList>;
+
+<ifStatement>							::= <_if_> <S> "(" <expressionList> <S> ")" <statement> [<_else_> <statement>];
+
+<iterationStatement>					::= <_do_> <statement> <_while_> <S> "(" <expression> <S> ")" |
+											<_while_> <S> "(" <expression> <S> ")" <statement> |
+											<_for_> <S> "(" [<expressionList>] <S> ";" [<expression>] <S> ";" [<expression>] <S> ")" <statement> |
+											<_for_> <S> "(" <_var_> <variableDeclarationList> <S> ";" [<expression>] <S> ";" [<expression>] <S> ")" <statement> |
+											<_for_> <S> "(" <expression> <S> ")" <statement> |
+											// "for" "(" <expression> "in" <expression> ")" <statement> |
+											<_for_> <S> "(" <_var_> <variableDeclaration> <_in_> <expression> <S> ")" <statement>;
+
+<continueStatement>						::= <_continue_> [<name>];
+
+<breakStatement>						::= <_break_> [<name>];
+
+<returnStatement>						::= <_return_> [<expressionList>];
+
+<withStatement>							::= <_with_> <S> "(" <expression> <S> ")" <statement>;
+
+<switchStatement>						::= <_switch_> <S> "(" <expressionList> <S> ")" <caseBlock>;
+
+<caseBlock>								::= <S> "{" [<caseClauses>] <S> "}";
+
+<caseClauses>							::= <caseClause>*;
+
+<caseClause>							::= <_case_> <expressionList> <S> ":" [<statementList>] |
+											<defaultClause>;
+
+<defaultClause>							::= <_default_> <S> ":" [<statementList>];
+
+<labelledStatement>						::= <name> <S> ":" <statement>;
+
+<throwStatement>						::= <_throw_> <expression>;
+
+<tryStatement>							::= <_try_> <block> <catch> <finally> |
+											<_try_> <block> <finally> |
+											<_try_> <block> <catch>;
+
+<catch>									::= <_catch_> <S> "(" <name> <S> ")" <block>;
+
+<finally>								::= <_finally_> <block>;
+
+<debuggerStatement>						::= <_debugger_>;
+
+// Functions
+<functionDeclaration>					::= <_function_> <name> <S> "(" [<formalParameterList>] <S> ")" <S> "{" [<functionBody>] <S> "}";
+
+<functionExpression>					::= <_function_> [<name>] <S> "(" [<formalParameterList>] <S> ")" <S> "{" [<functionBody>] <S> "}" [<S> "(" <S> ")"]; // i don't think the trailing () is valid..
+
+<formalParameterList>					::= <name> (<S> "," <name>)*;
+
+// this can have a single expression statement with no ; terminator
+// seems can also have the first statement of the body with no terminator
+<functionBody>							::= <statementList> [<expressionList>] |
+											<expressionList>;
+
+// Expressions
+<expressionList>						::= <expression> (<S> "," <expression>)*;
+
+<expression>							::= <assignmentExpression>;
+
+<assignmentExpression>					::= preprocess(<conditionalExpression>, 
+												<?> <S> "=" <assignmentExpression> ("=" <assignmentExpression>)* |
+												<?> <S> "*" "=" <assignmentExpression> |
+												<?> <S> "/" "=" <assignmentExpression> |
+												<?> <S> "%" "=" <assignmentExpression> |
+												<?> <S> "+" "=" <assignmentExpression> |
+												<?> <S> "-" "=" <assignmentExpression> |
+												<?> <S> "<" "<" "=" <assignmentExpression> |
+												<?> <S> ">" ">" "=" <assignmentExpression> |
+												<?> <S> ">" ">" ">" "=" <assignmentExpression> |
+												<?> <S> "&" "=" <assignmentExpression> |
+												<?> <S> "^" "=" <assignmentExpression> |
+												<?> <S> "|" "=" <assignmentExpression> |
+												<?>
+											);
+
+<conditionalExpression>					::= preprocess(<logicalORExpression>,
+												<?> <S> "?" <assignmentExpression> <S> ":" <assignmentExpression> |
+												<?>
+											);
+
+<logicalORExpression>					::= preprocess(<logicalANDExpression>,
+												<?> <S> "|" "|" <logicalORExpression> |
+												<?>
+											);
+
+<logicalANDExpression>					::= preprocess(<bitwiseORExpression>,
+												<?> <S> "&" "&" <logicalANDExpression> |
+												<?>
+											);
+
+<bitwiseORExpression>					::= preprocess(<bitwiseXORExpression>,
+												<?> <S> "|" <bitwiseORExpression> |
+												<?>
+											);
+
+<bitwiseXORExpression>					::= preprocess(<bitwiseANDExpression>,
+												<?> <S> "^" <bitwiseXORExpression> |
+												<?>
+											);
+
+<bitwiseANDExpression>					::= preprocess(<equalityExpression>,
+												<?> <S> "&" <bitwiseANDExpression> |
+												<?>
+											);
+
+<equalityExpression>					::= preprocess(<relationalExpression>,
+												<?> <S> "=" "=" <equalityExpression> |
+												<?> <S> "!" "=" <equalityExpression> |
+												<?> <S> "=" "=" "=" <equalityExpression> |
+												<?> <S> "!" "=" "=" <equalityExpression> |
+												<?>
+											);
+
+<relationalExpression>					::= preprocess(<shiftExpression>,
+												<?> <S> "<" <relationalExpression> |
+												<?> <S> ">" <relationalExpression> |
+												<?> <S> "<" "=" <relationalExpression> |
+												<?> <S> ">" "=" <relationalExpression> |
+												<?> <_instanceof_> <relationalExpression> |
+												<?> <_in_> <relationalExpression> |
+												<?>
+											);
+
+<shiftExpression>						::= preprocess(<additiveExpression>,
+												<?> <S> "<" "<" <shiftExpression> |
+												<?> <S> ">" ">" <shiftExpression> |
+												<?> <S> ">" ">" ">" <shiftExpression> |
+												<?>
+											);
+
+<additiveExpression>					::= preprocess(<multiplicativeExpression>,
+												<?> <S> "+" <additiveExpression> |
+												<?> <S> "-" <additiveExpression> |
+												<?>
+											);
+
+<multiplicativeExpression>				::= preprocess(<unaryExpression>,
+												<?> <S> "*" <multiplicativeExpression> | 
+												<?> <S> "/" <multiplicativeExpression> |
+												<?> <S> "%" <multiplicativeExpression> |
+												<?>
+											);
+
+<unaryExpression>						::= <_delete_> <unaryExpression> |
+											<_void_> <unaryExpression> |
+											<_typeof_> <unaryExpression> |
+											<_new_> <unaryExpression> |
+											<S> "+" "+" <unaryExpression> |
+											<S> "-" "-" <unaryExpression> |
+											<S> "+" <unaryExpression> |
+											<S> "-" <unaryExpression> |
+											<S> "~" <unaryExpression> |
+											<S> "!" <unaryExpression> |
+											<postfixExpression>;
+
+<postfixExpression>						::= preprocess(<primaryExpression>,
+												<?> <S> "+" "+" |
+												<?> <S> "-" "-" |
+												<?>
+											);
+
+<primaryExpression>						::= <_this_> [<arrayLiteral>] [<arguments>] [<S> "." <primaryExpression>] |
+											<functionExpression> [<arrayLiteral>] [<S> "." <primaryExpression>] |
+											<methodAccess> [<arrayLiteral>] [<S> "." <primaryExpression>] |
+											<variableAccess> [<arrayLiteral>] [<S> "." <primaryExpression>] |
+											<literal> [<arrayLiteral>] [<S> "." <primaryExpression>] |
+											<arrayLiteral> [<S> "." <primaryExpression>] |
+											<objectLiteral> [<arrayLiteral>] [<S> "." <primaryExpression>] |
+											<S> "(" <expressionList> <S> ")" [<arguments>] [<arrayLiteral>] [<S> "." <primaryExpression>];
+
+<methodAccess>							::= <name> [<arrayLiteral>] <arguments>+;
+
+<variableAccess>						::= <name>;
+
+<propertySetParameter>					::= <name>;
+
+<propertyName>							::= <name> |
+											<stringLiteral> | // string and number literal?
+											<numberLiteral>;
+
+<propertyAssignment>					::= <propertyName> <S> ":" <assignmentExpression> |
+											<_get_> <propertyName> <S> "(" <S> ")" <S> "{" <functionBody> <S> "}" |
+											<_set_> <propertyName> <S> "(" <propertySetParameter> <S> ")" <S> "{" <functionBody> <S> "}";
+
+<propertyNameAndValueList>				::= <propertyAssignment> ("," <propertyNameAndValueList>)*;
+
+<objectLiteral>							::= <S> "{" [<propertyNameAndValueList>] [<S> ","] <S> "}";
+
+<elision>								::= (<S> ",")+;
+
+<elementList>							::= [<elision>] <assignmentExpression> (<S> "," [<elision>] <assignmentExpression>)*;
+
+<arrayLiteral>							::= <S> "[" [<elision>] <S> "]" [<arrayLiteral>] |
+											<S> "[" <elementList> <S> "]" [<arrayLiteral>] |
+											<S> "[" <elementList> [<elision>] <S> "]" [<arrayLiteral>];
+
+<arguments>								::= <S> "(" [<argument> (<S> "," <argument>)*] <S> ")";
+
+<argument>								::= <assignmentExpression>;
+
+<literal>								::= <numberLiteral> |
+											<stringLiteral> |
+											<regexLiteral> |
+											<booleanLiteral> |
+											<nullLiteral>;
+
+<numberLiteral>							::= <number>;
+
+<stringLiteral>							::= <string>;
+
+<booleanLiteral>						::= <_true_> | <_false_>;
+
+<nullLiteral>							::= <_null_> | <_NaN_>;
+
+//<regexLiteral>							::= <S> "/" <regexPattern>+ "/" [<regexModifier>+];
+<regexLiteral>							::= <S> "/" <regexUnary>+ "/" [<regexModifier>+];
+
+<regexUnary>							::= "^" <regexPostfix> |
+											"-" <regexPostfix> |
+											<regexPostfix>;
+
+<regexPostfix>							::= <regexPrimary> [<regexQuantity>] ("|" [<regexUnary>])* ;
+
+<regexPrimary>							::= "(" <regexUnary>* ")" |
+											"[" <regexUnary>* "]" |
+											<regexMeta> |
+											<regexChar> "-" <regexChar> |
+											<regexChar>;
+
+// Appears this is valid: var bn=/alpha\([^)]*\)/i;
+// How can it possibly be valid?  The ) is unescaped!  Is an unescaped ) allowed in some places?  Where?  How?  Says who?
+<regexChar>								::= except(" " | "\t" | <KEYWORD> | <CHAR>, "|" | "/" | "]" | ")");
+
+
+
+
+
+<regexPattern>							::= <regexMeta> |
+											<regexBody>;
+
+<regexBody>								::= <regexMeta> |
+											<regexRange> | 
+											<regexQuantity> |
+											except(<KEYWORD> | <CHAR>, "|" | "/" | "]" | ")");
+
+<regexModifier>							::= "i" | "g" | "m";
+
+<regexRange>							::= //"[" <regexBody> "]" |
+											//"[" "^" <regexBody> "]" |
+											//"[" <regexBody> "-" <regexBody> "]" |
+											//"[" "^" <regexBody> "-" <regexBody> "]" |
+											"[" skip("]") "]" | // skip here just wont do!
+											"(" <regexPattern>+ ("|" <regexPattern>+)* ")";
+
+<regexMeta>								::= "." | "\\" "\\" |"\\" "/" | "\\" "(" | "\\" ")" | "\\" "{" | "\\" "}" |"\\" "[" | "\\" "]" |
+											"\\" "w" | "\\" "W" | "\\" "d" | "\\" "D" | 
+											"\\" "s" | "\\" "S" | "\\" "b" | "\\" "B" | 
+											"\\" "0" | "\\" "n" | "\\" "f" | "\\" "r" | "\\" "t" | "\\" "v" | 
+											"\\" <NUMBER> | 
+											"\\" "u" <NUMBER>;
+
+<regexQuantity>							::= "+" | "*" | "?" | "{" "X" "}" | "{" "X" "," "Y" "}" | "{" "X" "," "}" | "$" | "^" | "?" "=" | "?" "!";
+
+// Keywords
+// As we're not making "real" tokens, keywords in the grammar body look extremely ugly.  In an attempt to negate this,
+// the following rules have the keywords done as one-token-per-char.  I've named them all with an underscore prefix
+// and suffix to make them stand out.  I've only done this with words, symbols I've split up inline.
+//
+// The <reservedWord> rule is used to prevent names that collide with keywords.  Not all keywords are reserved words,
+// and I can't find any reliable documentation on which, exactly, are, so this list is from trial and error.
+
+<reservedWordChecked>						::= preprocess(<reservedWord>,
+												<?> <identifierChar> fail() |
+												<?>
+											);
+
+<identifierChar>						::= "a".."z" | "A".."Z" | "_" | "0".."9";
+
+<reservedWord>							::= <_as_> |
+											<_break_> |
+											<_case_> |
+											<_catch_> |
+											<_continue_> |
+											<_debugger_> |
+											<_default_> |
+											<_delete_> |
+											<_do_> |
+											<_else_> |
+											<_false_> |
+											<_finally_> |
+											<_if_> |
+											<_in_> |
+											<_instanceof_> |
+											<_for_> |
+											<_function_> |
+											//<_get_> |
+											<_nan_> |
+											<_new_> |
+											<_null_> |
+											<_return_> |
+											//<_set_> |
+											<_switch_> |
+											<_this_> |
+											<_throw_> |
+											<_true_> |
+											<_try_> |
+											<_typeof_> |
+											<_var_> |
+											<_void_> |
+											<_while_> |
+											<_with_>;
+
+<_as_>									::= <S> "a" "s";
+
+<_break_>								::= <S> "b" "r" "e" "a" "k";
+
+<_case_>								::= <S> "c" "a" "s" "e";
+
+<_catch_>								::= <S> "c" "a" "t" "c" "h";
+
+<_continue_>							::= <S> "c" "o" "n" "t" "i" "n" "u" "e";
+
+<_debugger_>							::= <S> "d" "e" "b" "u" "g" "g" "e" "r";
+
+<_default_>								::= <S> "d" "e" "f" "a" "u" "l" "t";
+
+<_delete_>								::= <S> "d" "e" "l" "e" "t" "e";
+
+<_do_>									::= <S> "d" "o";
+
+<_else_>								::= <S> "e" "l" "s" "e";
+
+<_false_>								::= <S> "f" "a" "l" "s" "e";
+
+<_finally_>								::= <S> "f" "i" "n" "a" "l" "l" "y";
+
+<_if_>									::= <S> "i" "f";
+
+<_in_>									::= <S> "i" "n";
+
+<_instanceof_>							::= <S> "i" "n" "s" "t" "a" "n" "c" "e" "o" "f";
+
+<_for_>									::= <S> "f" "o" "r";
+
+<_function_>							::= <S> "f" "u" "n" "c" "t" "i" "o" "n";
+
+<_get_>									::= <S> "g" "e" "t";
+
+<_nan_>									::= <S> "N" "a" "N";
+
+<_new_>									::= <S> "n" "e" "w";
+
+<_null_>								::= <S> "n" "u" "l" "l";
+
+<_return_>								::= <S> "r" "e" "t" "u" "r" "n";
+
+<_set_>									::= <S> "s" "e" "t";
+
+<_switch_>								::= <S> "s" "w" "i" "t" "c" "h";
+
+<_this_>								::= <S> "t" "h" "i" "s";
+
+<_throw_>								::= <S> "t" "h" "r" "o" "w";
+
+<_true_>								::= <S> "t" "r" "u" "e";
+
+<_try_>									::= <S> "t" "r" "y";
+
+<_typeof_>								::= <S> "t" "y" "p" "e" "o" "f";
+
+<_var_>									::= <S> "v" "a" "r";
+
+<_void_>								::= <S> "v" "o" "i" "d";
+
+<_while_>								::= <S> "w" "h" "i" "l" "e";
+
+<_with_>								::= <S> "w" "i" "t" "h";

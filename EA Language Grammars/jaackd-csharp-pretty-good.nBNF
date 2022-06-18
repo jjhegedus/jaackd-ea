@@ -1,0 +1,1060 @@
+// C# Grammar
+//
+// Taken from:
+// - http://www.jaggersoft.com/csharp_grammar.html (primary)
+// - http://www.ssw.uni-linz.ac.at/Research/Projects/Coco/CS/CSharp.ATG
+//
+// SWM 29/6/2018 - produced unknown rule error <lookahead> when opened in Grammar Editor. substituted with <preProcess>
+//
+caseSensitive();
+delimiters(<DELIMITER>);
+
+lex(<TOKENS>);
+
+parse(<compilationUnit>, <COMMENT>);
+
+// A.1 Lexer grammar
+<DELIMITER>								::= "\n" | "\r" | "\t" |  " " |
+											"~"  | "`"  | "!"  |  "@" |
+											"#"  | "$"  | "%"  |  "^" |
+											"&"  | "*"  | "("  | ")"  |
+											"-"  | "+"  | "="  | "{"  |
+											"["  | "}"  | "]"  | ";"  |
+											":"  | "\\" | "\'" | "\"" |
+											","  | "<"  | ">"  | "/"  |
+											"?"  | "|"  | ".";
+
+<TOKENS>								::= <WHITESPACE> |
+											<COMMENT> |
+											<NUMBER> |
+											<STRING> |
+											<PRE_COMPILER> |
+											token(
+												keywords() |
+												<IDENTIFIER>
+											);
+
+<WHITESPACE>							::= " " | "\t" | "\r" | "\n" | U+0xC;
+
+<COMMENT>								::= token(
+												"//" skip("\n") "\n" |
+												"/*" skip("*/") "*/"
+											);
+
+<NUMBER>								::= token (
+												<FLOAT_NUMBER> |
+												<HEX_NUMBER> |
+												<OCT_NUMBER> |
+												<DEC_NUMBER>
+											);
+
+<FLOAT_NUMBER>							::= "0".."9"+ "." ["0".."9"+] [("e" | "E") ["+" | "-"] "0".."9"+] ["f" | "F" | "d" | "D"] |
+											"." "0".."9"+ [("e" | "E") ["+" | "-"] "0".."9"+] ["f" | "F" | "d" | "D"] |
+											"0".."9"+ ("e" | "E") ["+" | "-"] "0".."9"+ ["f" | "F" | "d" | "D"] |
+											"0".."9"+ [("e" | "E") ["+" | "-"] "0".."9"+] ("f" | "F" | "d" | "D");
+
+<DEC_NUMBER>							::= "0".."9"+;
+
+<OCT_NUMBER>							::= "0" "0".."7"+;
+
+<HEX_NUMBER>							::= "0" ("x" | "X") ("0".."9" | "a".."f" | "A".."F")+;
+
+<STRING>								::= token("\"") token(<STRING_BODY>) token("\"") |
+											token("\'") token(<CHAR_BODY>) token("\'") |
+											token("@") token("\"") token(<VERBATIM_STRING_BODY>) token("\"");
+
+<STRING_BODY>							::= skip("\"", "\\\"" | "\\\\");
+
+<CHAR_BODY>								::= skip("\'", "\\\'" | "\\\\");
+
+<VERBATIM_STRING_BODY>					::= skip("\"", "\"\"");
+
+<IDENTIFIER>							::= ("a".."z" | "A".."Z" | "_") ("a".."z" | "A".."Z" | "_" | "0".."9")*;
+
+// **FIX: This needs attention...
+<PRE_COMPILER>							::= "#" "region" skip("\n") |
+											"#" "endregion";
+
+// Literals
+//<literal>								::= node("LITERAL", 
+//												<numberLiteral> |
+//												<stringLiteral>+ |
+//												<characterLiteral>+ |
+//												<booleanLiteral> |
+//												<nullLiteral>
+//											);
+											
+
+// Literals
+<literal>								::= 	<numberLiteral> |
+												<stringLiteral>+ |
+												<characterLiteral>+ |
+												<booleanLiteral> |
+												<nullLiteral>;
+
+//<numberLiteral>							::= attribute("NUMBER", <NUMBER>);
+
+<numberLiteral>							::= <NUMBER>;
+
+//<stringLiteral>							::= "\"" attribute("STRING", <STRING_BODY>) "\"" |
+//											"@" "\"" attribute("STRING", <VERBATIM_STRING_BODY>) "\"";
+
+<stringLiteral>							::= "\"" <STRING_BODY> "\"" |
+											"@" "\"" <VERBATIM_STRING_BODY> "\"";
+
+//<characterLiteral>						::= "\'" attribute("CHAR", <CHAR_BODY>) "\'";
+
+<characterLiteral>						::= "\'" <CHAR_BODY> "\'";
+
+//<booleanLiteral>						::= attribute("BOOL", "true" | "false");
+
+<booleanLiteral>						::= "true" | "false";
+
+<nullLiteral>							::= attribute("NULL", "null");
+
+// Preprocessor directives
+
+// A.2 Syntactic grammar
+// A.2.1 Basic concepts
+
+<compilationUnit> 						::= [<usingDirectives>] [<globalAttributes>] [<namespaceMemberDeclarations>];
+
+<shortName>								::= <IDENTIFIER>;
+
+<qualifiedName>							::= <shortName> ("." <shortName>)*;
+
+// A.2.2 Types
+<type>									::= <baseType> [<rankSpecifiers>];
+
+<arrayType>								::= <baseType> <rankSpecifiers>;
+
+<nonArrayType>							::= <baseType>;
+
+<baseType>								::= <integralType> | 
+											attribute("Type",
+												"float" |
+												"double"
+												"decimal" | 
+												"bool" | 
+												"object" |
+												"string") |
+											<pointerType> |
+											<typeName>;
+
+<integralType>							::= attribute("Type",
+												"sbyte" |
+												"byte" |
+												"short" |
+												"ushort" |
+												"int" |
+												"uint" | 
+												"long" | 
+												"ulong" | 
+												"char"
+											);
+
+<pointerType>							::= <typeName> attribute("NAMEPART", "*") |
+											attribute("NAMEPART", "void") attribute("NAMEPART", "*");
+
+<typeName>								::= attribute("Type", <qualifiedName>);
+
+// A.2.3 Variables
+<variableReference>						::= <expression>;
+
+// A.2.4 Expressions
+<argumentList>							::= <argument> ("," <argument>)*;
+
+<argument>								::= "ref" <variableReference> |
+											"out" <variableReference> |
+											<expression>;
+
+//<argument>								::= node("ARGUMENT",
+//												"ref" <variableReference> |
+//												"out" <variableReference> |
+//												<expression>
+//											);
+
+<booleanExpression>						::= <expression>;
+
+<constantExpression>					::= <expression>;
+
+<expressionList>						::= <expression> ("," <expression>)*;
+
+<expression>							::= <assignment> |
+											<conditionalExpression>;
+
+//<assignment>							::= preProcess(<unaryExpression>,
+//												node("ASSIGNMENT", node("LHS", <?>) "=" node("RHS", <expression>)) | 
+//												node("ADD_ASSIGNMENT", <?> "+=" <expression>) | 
+//												node("SUBTRACT_ASSIGNMENT", <?> "-=" <expression>) | 
+//												node("MULTIPLY_ASSIGNMENT", <?> "*=" <expression>) | 
+//												node("DIVIDE_ASSIGNMENT", <?> "/=" <expression>) | 
+//												node("MOD_ASSIGNMENT", <?> "%=" <expression>) | 
+//												node("BITWISE_AND_ASSIGNMENT", <?> "&=" <expression>) | 
+//												node("BITWISE_OR_ASSIGNMENT", <?> "|=" <expression>) | 
+//												node("BITWISE_NOT_ASSIGNMENT", <?> "^=" <expression>) | 
+//												node("SHIFT_LEFT_ASSIGNMENT", <?> "<<=" <expression>) | 
+//												node("SHIFT_RIGHT_ASSIGNMENT", <?> ">>=" <expression>)
+//											);
+
+<assignment>							::= preProcess(<unaryExpression>,
+												<?> "=" <expression> | 
+												<?> "+=" <expression> | 
+												<?> "-=" <expression> | 
+												<?> "*=" <expression> | 
+												<?> "/=" <expression> | 
+												<?> "%=" <expression> | 
+												<?> "&=" <expression> | 
+												<?> "|=" <expression> | 
+												<?> "^=" <expression> | 
+												<?> "<<=" <expression> | 
+												<?> ">>=" <expression>
+											);
+
+<conditionalExpression>					::= preProcess(<conditionalOrExpression>,
+												node("CONDITIONAL", node("CONDITION", <?>) "?" node("TRUE", <expression>) ":" node("FALSE", <expression>)) |
+												<?>
+											);
+
+<conditionalOrExpression>				::= preProcess(<conditionalAndExpression>,
+												node("LOGICAL_OR", node("LHS", <?>) "||" node("RHS", <conditionalOrExpression>)) |
+												<?>
+											);
+
+<conditionalAndExpression>				::= preProcess(<inclusiveOrExpression>,
+												node("LOGICAL_AND", node("LHS", <?>) "&&" node("RHS", <conditionalAndExpression>)) |
+												<?>
+											);
+
+<inclusiveOrExpression>					::= preProcess(<exclusiveOrExpression>,
+												node("BITWISE_OR", node("LHS", <?>) "|" node("RHS", <inclusiveOrExpression>)) |
+												<?>
+											);
+
+<exclusiveOrExpression>					::= preProcess(<andExpression>,
+												node("BITWISE_XOR", node("LHS", <?>) "^" node("RHS", <exclusiveOrExpression>)) |
+												<?>
+											);
+
+<andExpression>							::= preProcess(<equalityExpression>,
+												node("BITWISE_AND", node("LHS", <?>) "&" node("RHS", <andExpression>)) |
+												<?>
+											);
+
+<equalityExpression>					::= preProcess(<relationalExpression>,
+												node("EQUAL", node("LHS", <?>) "==" node("RHS", <equalityExpression>)) |
+												node("NOT_EQUAL", node("LHS", <?>) "!=" node("RHS", <equalityExpression>)) |
+												<?>
+											);
+
+<relationalExpression>					::= preProcess(<shiftExpression>,
+												node("LESSER", node("LHS", <?>) "<" node("RHS", <relationalExpression>)) |
+												node("GREATER", node("LHS", <?>) ">" node("RHS", <relationalExpression>)) |
+												node("LESSER_EQUAL", node("LHS", <?>) "<=" node("RHS", <relationalExpression>)) |
+												node("GREATER_EQUAL", node("LHS", <?>) ">=" node("RHS", <relationalExpression>)) |
+												node("IS", node("LHS", <?>) "is" node("RHS", <type>)) |
+												node("AS", node("LHS", <?>) "as" node("RHS", <type>)) |
+												<?>
+											);
+
+<shiftExpression>						::= preProcess(<additiveExpression>,
+												node("SHIFT_LEFT", node("LHS", <?>) "<<" node("RHS", <shiftExpression>)) |
+												node("SHIFT_RIGHT", node("LHS", <?>) ">>" node("RHS", <shiftExpression>)) |
+												<?>
+											);
+
+<additiveExpression>					::= preProcess(<multiplicativeExpression>,
+												node("ADD", node("LHS", <?>) "+" node("RHS", <additiveExpression>)) |
+												node("SUBTRACE", node("LHS", <?>) "-" node("RHS", <additiveExpression>)) |
+												<?>
+											);
+
+<multiplicativeExpression>				::= preProcess(<unaryExpression>,
+												node("MULTIPLE", node("LHS", <?>) "*" node("RHS", <multiplicativeExpression>)) |
+												node("DIVIDE", node("LHS", <?>) "/" node("RHS", <multiplicativeExpression>)) |
+												node("MOD", node("LHS", <?>) "%" node("RHS", <multiplicativeExpression>)) |
+												<?>
+											);
+
+<unaryExpression>						::= preProcess(<primaryExpression>,
+												node("POST_INCREMENT", <?> "++") |
+												node("POST_DECREMENT", <?> "--") |
+												<?>
+											) |
+											node("POSITIVE", "+" <unaryExpression>) |
+											node("NEGATIVE", "-" <unaryExpression>) |
+											node("NEGATION", "!" <unaryExpression>) |
+											node("COMPLEMENT", "~" <unaryExpression>) |
+											node("PRE_INCREMENT", "++" <unaryExpression>) |
+											node("PRE_DECREMENT", "--" <unaryExpression>) |
+											<pointerIndirectionExpression> |
+											<addressOfExpression>;
+
+// cast is more of a unary expression than a primary, but its called from primary because
+// it needs to execute before parenthesizedExpression.
+<castExpression>						::= node("CAST", "(" node("TYPE", <type>) ")" <unaryExpression>);
+
+<pointerIndirectionExpression>			::= node("POINTER", "*" <unaryExpression>);
+
+<addressOfExpression>					::= node("ADDRESS_OF", "&" <unaryExpression>);
+
+<primaryExpression>						::= <arrayCreationExpression> |
+											<primaryNoArrayCreationExpression>;
+
+<primaryNoArrayCreationExpression>		::= <literal> |
+											<thisAccess> |
+											<baseAccess> |
+											<castExpression> |
+											<parenthesizedExpression> ["." <primaryExpression>] |
+											<objectCreationExpression> |
+											<delegateCreationExpression> |
+
+											<invocationExpression> ["." <primaryExpression>] |
+
+											<memberAccess> |
+											<pointerMemberAccess> |
+											<elementAccess> ["." <primaryExpression>] |
+
+											<typeofExpression> |
+											<checkedExpression> |
+											<uncheckedExpression> |
+											<sizeofExpression> |
+											<simpleName>;
+
+
+//<simpleName>					::= node("VARIABLE_ACCESS", node("NAME", <shortName>));
+<simpleName>					::= <shortName>;
+
+<parenthesizedExpression>		::= "(" <expression> ")";
+
+//<memberAccess>					::= node("VARIABLE_ACCESS", node("NAME", <predefinedType>) "." <primaryExpression>) |
+//									node("VARIABLE_ACCESS", node("NAME", <shortName>) "." <primaryExpression>);
+
+<memberAccess>					::= <predefinedType> "." <primaryExpression> |
+									<shortName> "." <primaryExpression>;
+
+<predefinedType>				::= attribute("NAMEPART", 
+										"bool"    | "byte"    | "char"    | "decimal" |
+										"double"  | "float"   | "int"     | "long"    | 
+										"object"  | "sbyte"   | "short"   | "string"  |
+										"uint"    | "ulong"   | "ushort"
+									);
+
+//<invocationExpression>			::= node("PROCEDURE_ACCESS", node("NAME", attribute("NAMEPART", <shortName>)) "(" [<argumentList>] ")");
+<invocationExpression>			::= <shortName> "(" [<argumentList>] ")";
+
+<elementAccess>					::= <shortName> "[" <expressionList> "]";
+
+<thisAccess>					::= "this" ["." <primaryExpression>];
+
+//<baseAccess>					::= node("VARIABLE_ACCESS", "base" "." <shortName>) |
+//									node("VARIABLE_ACCESS", "base" "[" <expressionList> "]");
+
+<baseAccess>					::= "base" "." <shortName> |
+									"base" "[" <expressionList> "]";
+
+<objectCreationExpression>		::= node("INSTANTIATE", "new" <type> "(" [<argumentList>] ")");
+
+<delegateCreationExpression>	::= node("INSTANTIATE", "new" <typeName> "(" <expression> ")");
+
+<typeofExpression>				::= "typeof" "(" <type> ")" |
+									"typeof" "(" "void" ")";
+
+<checkedExpression>				::= "checked" "(" <expression> ")";
+
+<uncheckedExpression>			::= "unchecked" "(" <expression> ")";
+
+//<pointerMemberAccess>			::= node("VARIABLE_ACCESS", node("NAME", <predefinedType>) "->" <primaryExpression>) |
+//									node("VARIABLE_ACCESS", node("NAME", <shortName>) "->" <primaryExpression>);
+
+<pointerMemberAccess>			::= <predefinedType> "->" <primaryExpression> |
+									<shortName> "->" <primaryExpression>;
+
+<sizeofExpression>				::= node("SIZEOF", "sizeof" "(" node("NAME", <typeName>) ")");
+
+<arrayCreationExpression>		::= "new" <nonArrayType> "[" <expressionList> "]" [<rankSpecifiers>] [<arrayInitializer>] |
+									"new" <arrayType> <arrayInitializer>;
+
+// A.2.5 Statements
+<statementList>					::= <statement>+;
+
+<statement>						::= <labeledStatement> |
+									<declarationStatement> |
+									<embeddedStatement>;
+
+<labeledStatement>				::= <shortName> ":" <statement>;
+
+<declarationStatement>			::= <localVariableDeclaration> ";" |
+									<localConstantDeclaration> ";";
+
+<localVariableDeclaration>		::= node("FIELD", node("TYPE", <type>) <localVariableDeclarators>);
+
+<localVariableDeclarators>		::= <localVariableDeclarator> ("," <localVariableDeclarator>)*;
+
+<localVariableDeclarator>		::= attribute("NAME", <shortName>) ["=" node("DEFAULT", <localVariableInitializer>)];
+
+<localVariableInitializer>		::= <expression> |
+									<arrayInitializer> |
+									<stackAllocInitializer>;
+
+<stackAllocInitializer>			::= "stackalloc" <typeName> "[" <expression> "]";
+
+<localConstantDeclaration>		::= "const" <type> <constantDeclarators>;
+
+<constantDeclarators>			::= <constantDeclarator> ("," <constantDeclarator>)*;
+
+<constantDeclarator>			::= attribute("NAME", <shortName>) "=" node("VALUE", <constantExpression>);
+
+<embeddedStatement>				::= <block> |
+									<emptyStatement> |
+									<expressionStatement> |
+									<selectionStatement> |
+									<iterationStatement> |
+									<jumpStatement> |
+									<tryStatement> |
+									<checkedStatement> |
+									<uncheckedStatement> |
+									<lockStatement> |
+									<usingStatement> |
+									<unsafeStatement> |
+									<fixedStatement>;
+
+<block>							::= "{" attribute("code", [<statementList>]) "}";
+//<block>							::= "{" attribute("code",  [<statementList>]) "}";
+
+<emptyStatement>				::= ";";
+
+<expressionStatement>			::= <statementExpression>;
+
+<statementExpressionList>		::= <statementExpression> ("," <statementExpression>)*;
+
+<statementExpression>			::= //<invocationExpression> ";" |
+									//<objectCreationExpression> ";" |
+									<assignment> ";" |
+									//<postIncrementExpression> ";" |
+									//<postDecrementExpression> ";" |
+									//<preIncrementExpression> ";" |
+									//<preDecrementExpression> ";";
+									<unaryExpression>;
+
+<selectionStatement>			::= <ifStatement> |
+									<switchStatement>;
+
+<ifStatement>					::= "if" "(" <booleanExpression> ")" <embeddedStatement> ["else" <embeddedStatement>];
+
+<switchStatement>				::= "switch" "(" <expression> ")" <switchBlock>;
+
+<switchBlock>					::= "{" [<switchSections>] "}";
+
+<switchSections>				::= <switchSection>+;
+
+<switchSection>					::= <switchLabels> <statementList>;
+
+<switchLabels>					::= <switchLabel>+;
+
+<switchLabel>					::= "case" <constantExpression> ":" |
+									"default" ":";
+
+<iterationStatement>			::= <whileStatement> |
+									<doStatement> |
+									<forStatement> |
+									<forEachStatement>;
+
+<whileStatement>				::= "while" "(" <booleanExpression> ")" <embeddedStatement>;
+
+<doStatement>					::= "do" <embeddedStatement> "while" "(" <booleanExpression> ")" ";";
+
+<forStatement>					::= "for" "(" [<forInitializer>] ";" [<forCondition>] ";" [<forIterator>] ")" <embeddedStatement>;
+
+<forInitializer>				::= <localVariableDeclaration> |
+									<localVariableDeclarator> | 
+									<statementExpressionList>;
+
+<forCondition>					::= <booleanExpression>;
+
+<forIterator>					::= <statementExpressionList>;
+
+<forEachStatement>				::= "foreach" "(" <type> <shortName> "in" <expression> ")" <embeddedStatement>;
+
+<jumpStatement>					::= <breakStatement> |
+									<continueStatement> |
+									<gotoStatement> |
+									<returnStatement> |
+									<throwStatement>;
+
+<breakStatement>				::= "break" ";";
+
+<continueStatement>				::= "continue" ";";
+
+<gotoStatement>					::= "goto" <shortName> ";" |
+									"goto" "case" <constantExpression> ";" |
+									"goto" "default" ";";
+
+<returnStatement>				::= "return" [<expression>] ";";
+
+<throwStatement>				::= "throw" [<expression>] ";";
+
+<tryStatement>					::= "try" <block> <catchClauses> |
+									"try" <block> <finallyClause> |
+									"try" <block> <catchClauses> <finallyClause>;
+
+<catchClauses>					::= <specificCatchClauses> [<generalCatchClause>] |
+									[<specificCatchClause>] <generalCatchClause>;
+
+<specificCatchClauses>			::= <specificCatchClause>+;
+
+<specificCatchClause>			::= "catch" "(" <typeName> [<shortName>] ")" <block>;
+
+<generalCatchClause>			::= "catch" <block>;
+
+<finallyClause>					::= "finally" <block>;
+
+<checkedStatement>				::= "checked" <block>;
+
+<uncheckedStatement>			::= "unchecked" <block>;
+
+<lockStatement>					::= "lock" "(" <expression> ")" <embeddedStatement>;
+
+<usingStatement>				::= "using" "(" <resourceAquisition> ")" <embeddedStatement>;
+
+<resourceAquisition>			::= <localVariableDeclaration> |
+									<expression>;
+
+<unsafeStatement>				::= "unsafe" <block>;
+
+<fixedStatement>				::= "fixed" "(" <pointerType> <fixedPointerDeclarators> ")" <embeddedStatement>;
+
+<fixedPointerDeclarators>		::= <fixedPointerDeclarator>+;
+
+<fixedPointerDeclarator>		::= <shortName> "=" <fixedPointerInitializer>;
+
+<fixedPointerInitializer>		::= "&" <variableReference> |
+									<expression>;
+
+<namespaceDeclaration>			::= node("PACKAGE", "namespace" attribute("NAME", <qualifiedName>) <namespaceBody> [";"]);
+
+<namespaceBody>					::= "{" [<usingDirectives>] [<namespaceMemberDeclarations>] "}";
+
+<usingDirectives>				::= <usingDirective>+;
+
+<usingDirective>				::= <usingAliasDirective> |
+									<usingNamespaceDirective>;
+
+<usingAliasDirective>			::= node("TAG", "using" <shortName> "=" attribute("using", <qualifiedName>) ";");
+
+//<usingNamespaceDirective>		::= node("IMPORT", "using" node("NAME", <qualifiedName>) ";");
+<usingNamespaceDirective>		::= "using" <qualifiedName> ";";
+
+<namespaceMemberDeclarations>	::= <namespaceMemberDeclaration>+;
+
+<namespaceMemberDeclaration>	::= <namespaceDeclaration> |
+									<typeDeclaration>;
+
+<typeDeclaration>				::= <classDeclaration> |
+									<structDeclaration> |
+									<interfaceDeclaration> |
+									<enumDeclaration> |
+									<delegateDeclaration>;
+
+// A.2.6 Classes
+<classDeclaration>				::= node("CLASS", [<attributes>] [<classModifiers>] "class" attribute("NAME", <shortName>) [<classBase>] <classBody> [";"]);
+
+<classModifiers>				::= <classModifier>+;
+
+<classModifier>					::= attribute("MODIFIER",
+										"new" |
+										"public" |
+										"protected" |
+										"internal" |
+										"private" |
+										"abstract" |
+										"sealed" |
+										"unsafe"
+									);
+
+<classBase>						::= ":" <classParent> ("," <classParent>)*;
+
+<classParent>					::= node("PARENT", node("NAME", <typeName>));
+
+<classBody>						::= node("BODY", "{" [<classMemberDeclarations>] "}");
+
+<classMemberDeclarations>		::= <classMemberDeclaration>+;
+
+<classMemberDeclaration>		::= <constantDeclaration> |
+									<fieldDeclaration> |
+									<methodDeclaration> |
+									<propertyDeclaration> |
+									<eventDeclaration> |
+									<indexerDeclaration> |
+									<operatorDeclaration> |
+									<constructorDeclaration> |
+									<destructorDeclaration> |
+									<staticConstructorDeclaration> |
+									<typeDeclaration>;
+
+<constantDeclaration>			::= node("FIELD", [<attributes>] [<constantModifiers>] attributeEx("CONST", "true") "const" <type> <constantDeclarators> ";");
+
+<constantModifiers>				::= <constantModifier>+;
+
+<constantModifier>				::= attribute("MODIFIER", 
+										"new" |
+										"public" |
+										"protected" |
+										"internal" |
+										"private"
+									);
+
+<fieldDeclaration>				::= node("FIELD", [<attributes>] [<fieldModifiers>] node("TYPE", <type>) <variableDeclarators> ";");
+
+<fieldModifiers>				::= <fieldModifier>+;
+
+<fieldModifier>					::= attribute("MODIFIER",
+										"new" |
+										"public" |
+										"protected" |
+										"internal" |
+										"private" |
+										"static" |
+										"readonly" |
+										"volatile" |
+										"unsafe"
+									);
+
+<variableDeclarators>			::= <variableDeclarator>+;
+
+<variableDeclarator>			::= attribute("NAME", <shortName>) ["=" node("DEFAULT", <variableInitializer>)];
+
+<variableInitializer>			::= <expression> |
+									<arrayInitializer>;
+
+<methodDeclaration>				::= node("METHOD", [<COMMENT>*] <methodHeader> <methodBody>);
+
+<methodHeader>					::= node("DECLARATION", [<attributes>] [<methodModifiers>] attribute("TYPE", <returnType>) attribute("NAME", <memberName>) "(" [<formalParameterList>] ")");
+
+<methodModifiers>				::= <methodModifier>+;
+
+<methodModifier>				::= attribute("SCOPE",
+										"new" |
+										"public" |
+										"protected" |
+										"internal" |
+										"private" |
+										"static" |
+										"virtual" |
+										"sealed" |
+										"override" |
+										"abstract" |
+										"extern" |
+										"unsafe"
+									);
+
+<returnType>					::= <type> |
+									attribute("NAMEPART", "void");
+
+<memberName>					::= <typeName> "." <shortName> |
+									<shortName>;
+
+<methodBody>					::= <block> |
+										";";
+
+<formalParameterList>			::= <fixedParameters> ["," <parameterArray>] |	
+									<parameterArray>;
+
+<fixedParameters>				::= <fixedParameter> ("," <fixedParameter>)*;
+
+<fixedParameter>				::= node("PARAMETER", [<attributes>] [<parameterModifier>] <type> attribute("NAME", <shortName>));
+
+<parameterModifier>				::= ("ref" attributeEx("kind",
+										"inout"
+									) |
+									attribute("kind",
+										"out"
+									));
+
+<parameterArray>				::= [<attributes>] "params" <arrayType> <shortName>;
+
+<propertyDeclaration>			::= [<attributes>] [<propertyModifiers>] <type> <memberName> "{" <accessorDeclarations> "}";
+
+<propertyModifiers>				::= <propertyModifier>+;
+
+<propertyModifier>				::= "new" |
+									"public" |
+									"protected" |
+									"internal" |
+									"private" |
+									"static" |
+									"virtual" |
+									"sealed" |
+									"override" |
+									"abstract" |
+									"extern" |
+									"unsafe";
+
+<accessorDeclarations>			::= <getAccessorDeclaration> [<setAccessorDeclaration>] |
+									<setAccessorDeclaration> [<getAccessorDeclaration>];
+
+<getAccessorDeclaration>		::= [<attributes>] "get" <accessorBody>;
+
+<setAccessorDeclaration>		::= [<attributes>] "set" <accessorBody>;
+
+<accessorBody>					::= <block> |
+									";";
+
+<eventDeclaration>				::= [<attributes>] [<eventModifiers>] "event" <type> <variableDeclarators> ";" |
+									[<attributes>] [<eventModifiers>] "event" <type> <memberName> "{" <eventAccessorDeclarations> "}";
+
+<eventModifiers>				::= "new" |
+									"public" |
+									"protected" |
+									"internal" |
+									"private" |
+									"static" |
+									"virtual" |
+									"sealed" |
+									"override" |
+									"abstract" |
+									"extern" |
+									"unsafe";
+
+<eventAccessorDeclarations>		::= <addAccessorDeclaration> <removeAccessorDeclaration> |
+									<removeAccessorDeclaration> <addAccessorDeclaration>;
+
+<addAccessorDeclaration>		::= [<attributes>] "add" <block>;
+
+<removeAccessorDeclaration>		::= [<attributes>] "remove" <block>;
+
+<indexerDeclaration>			::= [<attributes>] [<indexerModifiers>] <indexerDeclarator> "{" <accessorDeclarations> "}";
+
+<indexerModifiers>				::= <indexerModifier>+;
+
+<indexerModifier>				::= "new" |
+									"public" |
+									"protected" |
+									"internal" |
+									"private" |
+									"virtual" |
+									"sealed" |
+									"override" |
+									"abstract" |
+									"extern" |
+									"unsafe";
+
+<indexerDeclarator>				::= <type> "this" "[" <formalParameterList> "]" |
+									<type> <typeName> "." "this" "[" <formalParameterList> "]";
+
+<operatorDeclaration>			::= [<attributes>] [<operatorModifiers>] <operatorDeclarator> <operatorBody>;
+
+<operatorModifiers>				::= <operatorModifier>+;
+
+<operatorModifier>				::= "public" |
+									"static" |
+									"extern" |
+									"unsafe";
+
+<operatorDeclarator>			::= <unaryOperatorDeclarator> |
+									<binaryOperatorDeclarator> |
+									<conversionOperatorDeclarator>;
+
+<unaryOperatorDeclarator>		::= <type> "operator" <overloadableUnaryOperator> "(" <type> <shortName> ")";
+
+<overloadableUnaryOperator>		::= "+" | "-" | "!" | "~" | "++" | "--" | "true" | "false";
+
+<binaryOperatorDeclarator>		::= <type> "operator" <overloadableBinaryOperator> "(" <type> <shortName> "," <type> <shortName> ")";
+
+<overloadableBinaryOperator>	::= "+" | "-" | "*" | "/" | "%" | "&" | "|" | "^" | "<<" | ">>" | "==" | "!=" | ">" | "<" | ">=" | "<=";
+
+<conversionOperatorDeclarator>	::= "implicit" "operator" <type> "(" <type> <shortName> ")" |
+									"explicit" "operator" <type> "(" <type> <shortName> ")";
+
+<operatorBody>					::= <block> |
+									";";
+
+<constructorDeclaration>		::= node("METHOD", [<attributes>] [<constructorModifiers>] <constructorDeclarator> <constructorBody>);
+
+<constructorModifiers>			::= <constructorModifier>+;
+
+<constructorModifier>			::= attribute("MODIFIER",
+										"public" | 
+										"protected" | 
+										"internal" | 
+										"private" | 
+										"extern" |
+										"unsafe"
+									);
+
+<constructorDeclarator>			::= attribute("NAME", <shortName>) "(" [<formalParameterList>] ")" [<constructorInitializer>];
+
+<constructorInitializer>		::= ":" "base" "(" [<argumentList>] ")" |
+									":" "this" "(" [<argumentList>] ")";
+
+<constructorBody>				::= <block> |
+										";";
+
+<staticConstructorDeclaration>	::= [<attributes>] <staticConstructorModifiers> <shortName> "(" ")" <staticConstructorBody>;
+
+<staticConstructorModifiers>	::= ["extern"] ["unsafe"] "static" |
+									["unsafe"] ["extern"] "static" |
+									["extern"] "static" ["unsafe"] |
+									["unsafe"] "static" ["extern"] |
+									"static" ["extern"] ["unsafe"] |
+									"static" ["unsafe"] ["extern"];
+
+<staticConstructorBody>			::= <block> |
+									";";
+
+<destructorDeclaration>			::= [<attributes>] ["extern"] ["unsafe"] "~" <shortName> "(" ")" <destructorBody> |
+									[<attributes>] ["unsafe"] ["extern"] "~" <shortName> "(" ")" <destructorBody>;
+
+<destructorBody>				::= <block> |
+									";";
+
+// A.2.7 Structs
+<structDeclaration>				::= [<attributes>] [<structModifiers>] "struct" <shortName> [<structBase>] <structBody> [";"];
+
+<structModifiers>				::= <structModifier>+;
+
+<structModifier>				::= "new" |
+									"public" |
+									"protected" |
+									"internal" |
+									"private" |
+									"unsafe";
+
+<structBase>					::= ":" <structParent> ("," <structParent>)*;
+
+<structParent>					::= node("PARENT", node("NAME", <typeName>));
+
+<structBody>					::= "{" [<structMemberDeclarations>] "}";
+
+<structMemberDeclarations>		::= <structMemberDeclaration>+;
+
+<structMemberDeclaration>		::= <constantDeclaration> |
+									<fieldDeclaration> |
+									<methodDeclaration> |
+									<propertyDeclaration> |
+									<eventDeclaration> |
+									<indexerDeclaration> |
+									<operatorDeclaration> |
+									<constructorDeclaration> |
+									<staticConstructorDeclaration> |
+									<typeDeclaration>;
+
+// A.2.8 Arrays
+//<arrayType>						::= <nonArrayType> <rankSpecifiers>;
+//
+//<nonArrayType>					::= <type>;
+
+<rankSpecifiers>				::= <rankSpecifier>+;
+
+<rankSpecifier>					::= "[" [<dimSeparators>] "]";
+
+<dimSeparators>					::= ","+;
+
+<arrayInitializer>				::= "{" [<variableInitializerList>] "}" |
+									"{" <variableInitializerList> "," "}";
+
+<variableInitializerList>		::= <variableInitializer> ("," <variableInitializer>)*;
+
+// A.2.9 Interfaces
+//<classDeclaration>				::= node("CLASS", [<attributes>] [<classModifiers>] "class" node("NAME", attribute("NAMEPART", <shortName>)) [<classBase>] <classBody> [";"]);
+<interfaceDeclaration>			::= node("INTERFACE", [<attributes>] [<interfaceModifiers>] node("DECLARATION", "interface" attribute("NAME", <shortName>) [<interfaceBase>]) node("BODY", <interfaceBody>) [";"]);
+
+<interfaceModifiers>			::= <interfaceModifier>+;
+
+<interfaceModifier>				::= attribute("SCOPE",
+									"new" |
+									"public" |
+									"protected" |
+									"internal" |
+									"private" |
+									"unsafe");
+
+<interfaceBase>					::= ":" <interfaceParent> ("," <interfaceParent>)*;
+
+<interfaceParent>				::= node("PARENT", node("NAME", <typeName>));
+
+<interfaceBody>					::= "{" [<interfaceMemberDeclarations>] "}";
+
+<interfaceMemberDeclarations>	::= <interfaceMemberDeclaration>+;
+
+<interfaceMemberDeclaration>	::= <interfaceMethodDeclaration>";" |
+									<interfacePropertyDeclaration> |
+									<interfaceEventDeclaration> |
+									<interfaceIndexerDeclaration>;
+									
+									
+<interfaceMethodDeclaration>	::= node("METHOD", <interfaceMethodHeader>);
+// <interfaceMethodDeclaration>	::= [<attributes>] [<methodModifiers>] ["new"] <returnType> <shortName> "(" [<formalParameterList>] ")" ";";
+<interfaceMethodHeader>			::= node("DECLARATION", [<attributes>] [<interfaceModifiers>] attribute("TYPE", <returnType>) attribute("NAME", <memberName>) "(" [<formalParameterList>] ")");
+
+<interfacePropertyDeclaration>	::= [<attributes>] ["new"] <type> <shortName> "{" <interfaceAccessors> "}";
+
+<interfaceAccessors>			::= [<attributes>] "get" ";" |
+									[<attributes>] "set" ";" |
+									[<attributes>] "get" ";" [<attributes>] "set" ";" |
+									[<attributes>] "set" ";" [<attributes>] "get" ";";
+
+<interfaceEventDeclaration>		::= [<attributes>] ["new"] "event" <type> <shortName> ";";
+
+<interfaceIndexerDeclaration>	::= [<attributes>] ["new"] <type> "this" "[" <formalParameterList> "]" "{" <interfaceAccessors> "}";
+
+// A.2.10 Enums
+<enumDeclaration>				::= [<attributes>] [<enumModifiers>] "enum" <shortName> [<enumBase>] <enumBody> [";"];
+
+<enumModifiers>					::= <enumModifier>+;
+
+<enumModifier>					::= "new" |
+									"public" |
+									"protected" |
+									"internal" |
+									"private";
+
+<enumBase>						::= ":" <integralType>;
+
+<enumBody>						::= "{" [<enumMemberDeclarations>] "}" |
+									"{" <enumMemberDeclarations> "," "}";
+
+<enumMemberDeclarations>		::= <enumMemberDeclaration> ("," <enumMemberDeclaration>)*;
+
+<enumMemberDeclaration>			::= [<attributes>] <shortName> ["=" <constantExpression>];
+
+// A.2.11 Delegates
+<delegateDeclaration>			::= [<attributes>] [<delegateModifiers>] "delegate" <returnType> <shortName> "(" [<formalParameterList>] ")" ";" ;
+
+<delegateModifiers>				::= <delegateModifier>+;
+
+<delegateModifier>				::= "new" |
+									"public" |
+									"protected" |
+									"internal" |
+									"private" |
+									"unsafe";
+
+// A.2.12 Attributes
+<globalAttributes>				::= <globalAttributeSections>;
+
+<globalAttributeSections>		::= <globalAttributeSection>+;
+
+<globalAttributeSection>		::= "[" <globalAttributeTargetSpecifier> <attributeList> [","] "]";
+
+<globalAttributeTargetSpecifier> ::= <globalAttributeTarget> ":";
+
+<globalAttributeTarget>			::= "assembly";
+
+<attributes>					::= attribute("ATTRIBUTES", <attributeSections>);
+//<attributes>					::= node("TAG", attribute("ATTRIBUTES", <attributeSections>));
+
+<attributeSections>				::= <attributeSection>+;
+
+<attributeSection>				::= "[" node("TAG", attribute("ATTRIBUTE", [<attributeTargetSpecifier>] <attributeList>)) [","] "]";
+
+<attributeTargetSpecifier>		::= <attributeTarget> ":";
+
+<attributeTarget>				::= "field" | 
+									"event" | 
+									"method" | 
+									"module" | 
+									"param" | 
+									"property" | 
+									"return" | 
+									"type";
+
+<attributeList>					::= <attributeItem> ("," <attributeItem>)*;
+
+<attributeItem>					::= <attributeName> [<attributeArguments>];
+
+<attributeName>					::= <typeName>;
+
+<attributeArguments>			::= "(" [<positionalArgumentList>] ")" |
+									"(" <positionalArgumentList> "," <namedArgumentList> ")" |
+									"(" <namedArgumentList> ")";
+
+<positionalArgumentList>		::= <positionalArgument> ("," <positionalArgument>)*;
+
+<positionalArgument>			::= <attributeArgumentExpression>;
+
+<namedArgumentList>				::= <namedArgument> ("," <namedArgument>)*;
+
+<namedArgument>					::= <shortName> "=" <attributeArgumentExpression>;
+
+<attributeArgumentExpression>	::= <expression>;
+
+// Keywords..?!
+<languageKeywords>				::= "abstract" |
+									"as" |
+									"base" |
+									"bool" |
+									"break" |
+									"byte" |
+									"case" |
+									"catch" |
+									"char" |
+									"checked" |
+									"class" |
+									"const" |
+									"continue" |
+									"decimal" |
+									"default" |
+									"delegate" |
+									"do" |
+									"double" |
+									"else" |
+									"enum" |
+									"event" |
+									"explicit" |
+									"extern" |
+									"false" |
+									"finally" |
+									"fixed" |
+									"float" |
+									"for" |
+									"foreach" |
+									"goto" |
+									"if" |
+									"implicit" |
+									"in" |
+									"int" |
+									"interface" |
+									"internal" |
+									"is" |
+									"lock" |
+									"long" |
+									"namespace" |
+									"new" |
+									"null" |
+									"object" |
+									"operator" |
+									"out" |
+									"override" 
+									"params" |
+									"private" |
+									"protected" |
+									"public" |
+									"readonly" |
+									"ref" |
+									"return" |
+									"sbyte" |
+									"sealed" |
+									"short" |
+									"sizeof" |
+									"stackalloc" |
+									"static" |
+									"string" |
+									"struct" |
+									"switch" |
+									"this" |
+									"throw" |
+									"true" |
+									"try" |
+									"typeof" |
+									"uint" |
+									"ulong" |
+									"unchecked" |
+									"unsafe" |
+									"ushort" |
+									"using" |
+									"virtual" |
+									"void" |
+									"volatile" |
+									"while";
+

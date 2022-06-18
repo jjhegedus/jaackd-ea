@@ -1,0 +1,22 @@
+// ECMAScript 5.1
+// http://www.ecma-international.org/ecma-262/5.1/#sec-7
+
+// Processing instructions
+caseSensitive();
+
+delimiters(<Delimiter>);
+
+lex(<Tokens>);
+
+parse(<Root>);
+
+// Lexer rules
+<SourceCharacter>						::= U+0x0001..U+0xFFFE;
+<Delimiter>								::= <SourceCharacter>;
+
+<Tokens>								::= token("var");
+
+// Language
+<Root>                              	::= node("CLASS", node("DECLARATION", node("NAME", attributeex("NAMEPART", "Anonymous"))) node("BODY", <Code>));
+
+<Code>									::= <Tokens>*;

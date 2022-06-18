@@ -1,0 +1,1234 @@
+// C++ Grammar
+//
+// Derived from:
+// - http://www.nongnu.org/hcb/
+// - http://www.csci.csusb.edu/dick/c++std/cd2/gram.html
+// - http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2008/n2798.pdf
+//
+// Considering:
+// - http://www.open-std.org/jtc1/sc22/wg21/docs/cwg_toc.html
+
+caseSensitive();
+
+delimiters(<DELIMITER>);
+lex(<TOKENS>);
+
+// table(typedefList);
+// table(namespaceList);
+// table(classList);
+// table(enumList);
+// table(templateList);
+//
+// cppMacroTable(macroList);
+
+parse(<translationUnit>, <languageEscape>);
+
+// Lexer rules
+<DELIMITER>								::= "\n" | "\r" | "\t" |  " " |
+											"~"  | "`"  | "!"  |  "@" |
+											"#"  | "$"  | "%"  |  "^" |
+											"&"  | "*"  | "("  | ")"  |
+											"-"  | "+"  | "="  | "{"  |
+											"["  | "}"  | "]"  | ";"  |
+											":"  | "\\" | "\'" | "\"" |
+											","  | "<"  | ">"  | "/"  |
+											"?"  | "|"  | ".";
+
+<TOKENS>								::= <WHITESPACE> |
+											<EOL> |
+											<PP_TOKENS> |
+											token(<COMMENT>) |
+											token(<NUMBER>) |
+											[token("L")] token("\"") token(<STRING_BODY>) token("\"") |
+											[token("L")] token("\'") token(<CHAR_BODY>) token("\'") |
+											token(keywords()) |
+											token(<IDENTIFIER>);
+
+<PP_TOKENS>								::= token("#") <WHITESPACE>* token("ifdef") <PP_TOKEN_LIST> |
+											token("#") <WHITESPACE>* token("ifndef") <PP_TOKEN_LIST> |
+											token("#") <WHITESPACE>* token("if") <PP_TOKEN_LIST> |
+											token("#") <WHITESPACE>* token("elif") <PP_TOKEN_LIST> |
+											token("#") <WHITESPACE>* token("else") <PP_TOKEN_LIST> |
+											token("#") <WHITESPACE>* token("endif") <PP_TOKEN_LIST> |
+											token("#") <WHITESPACE>* token("include") <PP_TOKEN_LIST> |
+											token("#") <WHITESPACE>* token("define") <PP_TOKEN_LIST> |
+											token("#") <WHITESPACE>* token("undef") <PP_TOKEN_LIST> |
+											token("#") <WHITESPACE>* token("line") <PP_TOKEN_LIST> |
+											token("#") <WHITESPACE>* token("error") <PP_TOKEN_LIST> |
+											token("#") <WHITESPACE>* token("pragma") <PP_TOKEN_LIST> |
+											token("#") <WHITESPACE>* token(<EOL>);
+
+// what about line continues..?
+<PP_TOKEN_LIST>							::= <EOL> |
+											"\\" <TOKENS> <PP_TOKEN_LIST> |
+											<TOKENS> <PP_TOKEN_LIST>;
+
+<EOL>									::= ["\r"] "\n";
+
+<WHITESPACE>							::= " " | "\t";
+
+<COMMENT>								::= "//" skip("\r" | "\n") |
+											"/*" skip("*/") "*/";
+
+<NUMBER>								::= <FLOATING_POINT_NUMBER> |
+											<HEX_NUMBER> [<INT_SUFFIX>] |
+											<OCT_NUMBER> [<INT_SUFFIX>] |
+											<DEC_NUMBER> [<INT_SUFFIX>];
+
+<INT_SUFFIX>							::= ("u" | "U") ["l" | "L"] |
+											("l" | "L") ["u" | "U"];
+
+<FLOATING_POINT_NUMBER>					::= "0".."9"+ "." ["0".."9"+] [("e" | "E") ["+" | "-"] "0".."9"+] ["f" | "F" | "d" | "D" | "l" | "L"] |
+											"." "0".."9"+ [("e" | "E") ["+" | "-"] "0".."9"+] ["f" | "F" | "d" | "D" | "l" | "L"] |
+											"0".."9"+ ("e" | "E") ["+" | "-"] "0".."9"+ ["f" | "F" | "d" | "D" | "l" | "L"] |
+											"0".."9"+ [("e" | "E") ["+" | "-"] "0".."9"+] ("f" | "F" | "d" | "D" | "l" | "L");
+
+<DEC_NUMBER>							::= "0".."9"+;
+
+<OCT_NUMBER>							::= "0" ("0".."7")+;
+
+<HEX_NUMBER>							::= "0" ("x" | "X") ("0".."9" | "a".."f" | "A".."F")+;
+
+<STRING_BODY>							::= skip("\"", "\\\"" | "\\\\");
+
+<CHAR_BODY>								::= skip("\'", "\\\'" | "\\\\");
+
+<IDENTIFIER>							::= ("a".."z" | "A".."Z" | "_") ("a".."z" | "A".."Z" | "_" | "0".."9")*;
+
+// ***
+// * Parser rules
+// ***
+
+// names
+<shortName>								::= //"__identifier" "(" attribute("NAMEPART", <IDENTIFIER>) ")" |
+											attribute("NAME", <IDENTIFIER>) |
+											attribute("NAME", <nonKeyword>);
+
+// Keywords that are not reserved words belong below
+// Any quoted string in the grammar is considered a keyword by the lexer, and thus
+// is not identified as an IDENTIFIER token.  Adding any quoted string that are not
+// reserved words allows the to appear as a name in source.
+// SJM C16106211. Added "L", which is only signficant before a string literal
+<nonKeyword>							::= "ifdef" | "ifndef" | "undef"  "elif" | "endif" | "include" | "define" |
+											"pragma" | "once" | "warning" | "code_seg" | "import" | 
+											"auto_rename" | "auto_search" | "embedded_idl" | "exclude" | "error" |
+											"high_method_prefix" | "high_property_prefixes" | "implementation_only" | 
+											"inject_statement" |"named_guids" | "no_auto_exclude" | "no_dual_interfaces" |
+											"no_implementation" | "no_namespace" | "no_registry" | "no_search_namespace" |
+											"no_smart_pointers" | "raw_dispinterfaces" | "raw_interfaces_only" | "raw_method_prefix" |
+											"raw_native_types" | "rew_property_prefixes" | "rename" | "rename_namespace" |
+											"rename_search_namespace" | "tlbid" | "value" | "ref" | "comment" | "message" |
+											"NULL" | "TRUE" | "FALSE" | "L" | 
+											
+											// macros gone wrong
+											"TRACE" | "ASSERT" | "Assert" | "Trace" | "Tracev" | "Tracevv" | "Tracec" | "Tracecv" | "AFX_DATA";
+
+// literals
+<literal>								::= attribute("INT", <integerLiteral>) |
+											attribute("CHAR", <characterLiteral>+) |
+											attribute("FLOAT", <floatingLiteral>) |
+											attribute("STRING", <stringLiteral>+) |
+											attribute("BOOL", <booleanLiteral>) |
+											attribute("NULL", <nullLiteral>) |
+											// arrayLiteral?
+											attribute("MACRO", <literalMacro>);
+
+<integerLiteral>						::= <DEC_NUMBER> |
+											<OCT_NUMBER> |
+											<HEX_NUMBER>;
+
+<characterLiteral>						::= "_T" "(" "\'" [<CHAR_BODY>] "\'" ")" |
+											"L" "\'" [<CHAR_BODY>] "\'" |
+											"\'" [<CHAR_BODY>] "\'";
+
+<floatingLiteral>						::= <FLOATING_POINT_NUMBER>;
+
+<stringLiteral>							::= "_T" "(" ("\"" [<STRING_BODY>] "\"" | <expression>) ")" |
+											"L" "\"" [<STRING_BODY>] "\"" |
+											"\"" [<STRING_BODY>] "\"";
+
+<booleanLiteral>						::= "true" | "false" | "TRUE" | "FALSE";
+
+<nullLiteral>							::= "null" | "NULL";
+
+// cpp
+<preprocessorDirective>					::= <hashIf> |
+											<hashIfDef> |
+											<hashIfNDef> |
+											<hashUndef> |
+											<hashElIf> |
+											<hashElse> |
+											<hashEndIf> |
+											<hashInclude> |
+											<hashDefine> |
+											<hashPragma> |
+											<hashImport> |
+											<hashError>;
+
+// these need to have body nodes etc like a proper if statement..
+<hashIf>								::= "#" "if" <constantExpression>;
+
+<hashIfDef>								::= "#" "ifdef" <shortName>;
+
+<hashIfNDef>							::= "#" "ifndef" <shortName>;
+
+<hashUndef>								::= "#" "undef" <shortName>;
+
+<hashElIf>								::= "#" "elif" <constantExpression> skipBalanced("#" "if" | "#" "ifdef" | "#" "ifndef", "#" "endif");
+
+<hashElse>								::= "#" "else" skipBalanced("#" "if" | "#" "ifdef" | "#" "ifndef", "#" "endif");
+
+<hashEndIf>								::= "#" "endif" <PP_TOKEN_LIST>*;
+
+<hashInclude>							::= node("INCLUDE_FILE", "#" "include" <hashIncludeName>);
+
+<hashIncludeName>						::= "<" skip(">") ">" |
+											"\"" <STRING_BODY> "\"";
+
+//SJM - Added | attributeex("VALUE")) to prevent attribute failing if no value exists
+<hashDefine>							::= node ("DEFINE", "#" "define" attribute("NAME", <PP_TOKENS>) (attribute("VALUE", [<PP_TOKEN_LIST>*]) | attributeex("VALUE"))	);
+
+<hashPragma>							::= "#" "pragma" <hashPragmaBody>;
+
+<hashPragmaBody>						::= "once" | 
+											"warning" "(" ("disable" | "default" | "push" | "pop") [":" <NUMBER>+] ")" |
+											"message" "(" skip(")") ")" |
+											"code_seg" "(" skip(")") ")" |
+											"init_seg" "(" skip(")") ")" |
+											"comment" "(" skip(")") ")" |
+											"pack" "(" skip(")") ")" |
+											"pop" "(" skip(")") ")" |
+											"deprecated" "(" skip(")") ")" |
+											"managed" "(" skip(")") ")" |
+											"push_macro" "(" skip(")") ")" |
+											"pop_macro" "(" skip(")") ")" |
+											"component" "(" skip(")") ")";
+
+<hashImport>							::= "#" "import" <hashImportLibrary> <hashImportAttribute>*;
+
+<hashImportLibrary>						::= <stringLiteral> |
+											"<" skip(">") ">";
+
+<hashImportAttribute>					::= "auto_rename" |
+											"auto_search" |
+											"embedded_idl" "(" <stringLiteral> ")"|
+											"exclude" "(" <stringLiteral> ("," <stringLiteral>)* ")" |
+											"high_method_prefix" "(" <stringLiteral> ")" |
+											"high_property_prefixes" "(" <stringLiteral> "," <stringLiteral> "," <stringLiteral> ")" |
+											"implementation_only" |
+											"include" "(" <stringLiteral> ("," <stringLiteral>)* ")" |
+											"inject_statement" "(" <stringLiteral> ")" |
+											"named_guids" |
+											"no_auto_exclude" |
+											"no_dual_interfaces" |
+											"no_implementation" |
+											"no_namespace" |
+											"no_registry" |
+											"no_search_namespace" |
+											"no_smart_pointers" |
+											"raw_dispinterfaces" |
+											"raw_interfaces_only" |
+											"raw_method_prefix" "(" <stringLiteral> ")" |
+											"raw_native_types" |
+											"rew_property_prefixes" "(" <stringLiteral> "," <stringLiteral> "," <stringLiteral> ")" |
+											"rename" "(" <stringLiteral> "," <stringLiteral> ")" |
+											"rename_namespace" "(" <stringLiteral> ")" |
+											"rename_search_namespace" "(" <stringLiteral> ")" |
+											"tlbid" "(" <NUMBER> ")";
+
+<hashError>								::= "#" "error" <PP_TOKEN_LIST>*;
+
+// Macro rules are defined near EOF
+<macro>									::= <vcClassMacro> |
+											<vcFileMacro> |
+											<atlMacro> |
+											<otherMacros>;
+
+// basic.link
+<translationUnit>						::= <declaration>*;
+
+<languageEscape>						::= attribute("COMMENT", <COMMENT>) | 
+											<elsePragma> |
+											<preprocessorDirective> | 
+											<macro> | 
+											"\\";
+
+<ifpragmaToken>							::= "#" ("if" | "ifdef" | "ifndef");
+<ifFalsepragmaToken>					::= "#" "ifdef" <undefinedMacro> |
+											"#" "ifndef" <definedMacro> |
+											"#" "if" <falseValue>;
+<elsepragmaToken>						::= "#" ("else" | "elif");
+<closeifpragmaToken>					::= "#" ("else" | "elif" | "endif");
+<endifpragmaToken>						::= "#" "endif";
+<ifpragma>								::= <ifpragmaToken> skipBalanced( <ifpragmaToken>, <endifpragmaToken>, <COMMENT> ) <endifpragmaToken> |
+											<COMMENT>;
+<elsePragma>							::= <elsepragmaToken> skip( <endifpragmaToken>, <ifpragma> ) <endifpragmaToken> |
+											<iffalsepragmatoken> skip( <closeifpragmaToken>, <ifpragma> ) <closeifpragmaToken>;
+<undefinedMacro>						::= fail(); // Nothing hard coded to always fail
+<definedMacro>							::= "_FULL"; // More complete parse internally.
+<falseValue>							::= fail(); // Matching "0" doesn't work;
+
+
+
+<codeEscape>							::= <COMMENT> |
+											<elsePragma> |
+											<stringLiteral> |
+											<characterLiteral>;
+
+// declarations that can appear outside a block
+<declaration>							::= <blockDeclaration> |
+											node("OPERATION", <functionDefinition>) |
+											node("OPERATION", <functionDeclaration>) |
+											<functionPointer> |
+											<templateDeclaration> |
+											<explicitInstantiation> |
+											<explicitSpecialization> |
+											<linkageSpecification> |
+											<namespaceDefinition>;
+
+// declarations that can appear inside or outside a block
+<blockDeclaration>						::= <simpleDeclaration> |
+											<asmDefinition> |
+											<namespaceAliasDefinition> |
+											<usingDeclaration> |
+											<staticAssertDeclaration> |
+											";";
+
+// A simpleDeclaration can be a either variable declaration or a type declaration
+// Check variable first, as the type specifier of a field can be a full class declaration etc
+// This must also allow for the declaration of fields with an incomplete or no type specified, it should default to int
+<simpleDeclaration>						::= //[<declSpecifierSeq>] [<typeSignedUnsigned>] [<typeLongShort>] [<initDeclaratorList>] ";" | // for those who wish not to specify a type :@
+											preProcess(<simpleDeclarationHeader>,
+												node("FIELD", attribute("TYPE", node("TYPE", <?>)) <initDeclaratorList> ";") |
+												<?> ";"
+											);// |
+											// node("FIELD", <initDeclaratorList> ";");
+
+// This rule allows for a preProcess of the complete typeSpecifier for simpleDeclaration
+<simpleDeclarationHeader>				::= [<declSpecifierSeq>] <typeSpecifier> [<declSpecifierSeq>];
+
+<staticAssertDeclaration>				::= "static_assert" "(" <constantExpression> "," <stringLiteral> ")" ";";
+
+// dcl.spec
+<declSpecifierSeq>						::= <declSpecifier>+;
+
+<declSpecifier>							::= <storageClassSpecifier> |
+											<cvQualifierSeq> |
+											<functionSpecifier> |
+											attribute("MODIFIER", "friend") |
+											attribute("MODIFIER", "typedef") |
+											attribute("MODIFIER", "constexpr");
+
+// dcl.stc
+<storageClassSpecifier>					::= attribute("MODIFIER", "register") |
+											attribute("MODIFIER", "static") |
+											attribute("MODIFIER", "extern") |
+											attribute("MODIFIER", "mutable") |
+											attribute("MODIFIER", "auto") |
+											attribute("MODIFIER", "literal") |
+											attribute("MODIFIER", "initonly") |
+											"EXTERN_C";
+
+<cvQualifierSeq>						::= <cvQualifier>+;
+
+<cvQualifier>							::= attribute("MODIFIER", "const") |
+											attribute("MODIFIER", "volatile") | 
+											<pureSpecifier>;
+
+// dcl.type
+<typeSpecifier>							::= <classSpecifier> |
+											<enumSpecifier> |
+											<simpleTypeSpecifier> |
+											<elaboratedTypeSpecifier> |
+											<typenameSpecifier> |
+											<simpleTemplateId> | 
+											<cvQualifier> |
+											<typeMacro>;
+
+// dcl.type.simple
+<simpleTypeSpecifier>					::= ["::"] <nestedNameSpecifier> "template" <simpleTemplateId> |
+											["::"] [<nestedNameSpecifier>] <typeName> |
+											[<typeSignedUnsigned>] attribute("PRIMITIVE", "char") |
+											[<typeSignedUnsigned>] attribute("PRIMITIVE", "wchar_t") |
+											[<typeSignedUnsigned>] attribute("PRIMITIVE", "bool") |
+											[<typeSignedUnsigned>] [<typeLongShort>] attribute("PRIMITIVE", "int") |
+											[<typeSignedUnsigned>] attribute("LENGTH", "long") attribute("PRIMITIVE", "long") | // __int64
+											[<typeSignedUnsigned>] attribute("PRIMITIVE", "long") |
+											[<typeSignedUnsigned>] attribute("PRIMITIVE", "short") |
+											attribute("PRIMITIVE", "float") |
+											attribute("PRIMITIVE", "double") |
+											attribute("PRIMITIVE", "void") |
+											[<typeSignedUnsigned>] attribute("PRIMITIVE", "auto") |
+											
+											// MS specific simple types
+											[<typeSignedUnsigned>] attribute("PRIMITIVE", "_int8") |
+											[<typeSignedUnsigned>] attribute("PRIMITIVE", "_int16") |
+											[<typeSignedUnsigned>] [<typeLongShort>] attribute("PRIMITIVE", "_int32") |
+											[<typeSignedUnsigned>] attribute("PRIMITIVE", "_int64") |
+											
+											[<typeSignedUnsigned>] attribute("PRIMITIVE", "__int8") |
+											[<typeSignedUnsigned>] attribute("PRIMITIVE", "__int16") |
+											[<typeSignedUnsigned>] [<typeLongShort>] attribute("PRIMITIVE", "__int32") |
+											[<typeSignedUnsigned>] attribute("PRIMITIVE", "__int64") |
+											
+											attribute("NAME", "signed") |
+											attribute("NAME", "unsigned");
+
+<typeSignedUnsigned>					::= attribute("SIGNED", "signed") | 
+											attribute("UNSIGNED", "unsigned");
+
+<typeLongShort>							::= attribute("LENGTH", "long") | 
+											attribute("LENGTH", "short");
+
+<typeName>								::= <className> |
+											<enumName> |
+											<typedefName>;
+
+// dcl.type.elab
+<elaboratedTypeSpecifier>				::= [<typeSpecifierModifier>] "class" ["::"] [<nestedNameSpecifier>] ["template"] <simpleTemplateId> |
+											[<typeSpecifierModifier>] "class" ["::"] node("NAME", [<nestedNameSpecifier>] <shortName>) |
+											[<typeSpecifierModifier>] "struct" ["::"] [<nestedNameSpecifier>] ["template"] <simpleTemplateId> |
+											[<typeSpecifierModifier>] "struct" ["::"] node("NAME", [<nestedNameSpecifier>] <shortName>) |
+											[<typeSpecifierModifier>] "union" ["::"] [<nestedNameSpecifier>] ["template"] <simpleTemplateId> |
+											[<typeSpecifierModifier>] "union" ["::"] node("NAME", [<nestedNameSpecifier>] <shortName>) |
+											[<typeSpecifierModifier>] "enum" ["::"] node("NAME", [<nestedNameSpecifier>] <shortName>);
+											// typename?
+											// __interface?
+
+<typeSpecifierModifier>					::= "ref" | "__gc" | "interface" | "__nogc" | "value" | "__value";
+
+// dcl.fct.spec
+<functionSpecifier>						::= attribute("MODIFIER", "inline") |
+											attribute("MODIFIER", "virtual") |
+											attribute("MODIFIER", "explicit") |
+											attribute("MODIFIER", "afx_msg") |
+											attribute("MODIFIER", "_cdecl") |
+											attribute("MODIFIER", "__cdecl") |
+											attribute("MODIFIER", "_stdcall") |
+											attribute("MODIFIER", "__stdcall") |
+											attribute("MODIFIER", "__declspec" "(" skip(")") ")");
+
+// dcl.typedef
+<typedefName>							::= <shortName>;
+
+ // dcl.asm
+<asmDefinition>							::= "asm" "(" <stringLiteral> ")" ";" |
+											"__asm" "{" skip("}") "}" [";"];
+
+// dcl.link
+<linkageSpecification>					::= "extern" <stringLiteral> "{" <declaration>* "}" |
+											"extern" <stringLiteral> <declaration>;
+
+// dcl.decl
+<initDeclaratorList>					::= <initDeclarator> ("," <initDeclarator>)*;
+
+<initDeclarator>						::= <fieldDeclarator> [node("DEFAULT", <initializer>)];
+
+// split into:
+// - functionDeclarator -- must have (), with optional parameters, can be pure
+// - fieldDeclarator -- must what..?  can have constructor args, can have default
+// - parameterDeclarator -- must have type, name is optional, default is optional
+//<declarator>							::= node("NAME", <ptrOperator>* <directDeclarator>);
+ 
+<CallConvention>						::= attribute("MODIFIER", "_cdecl") |
+											attribute("MODIFIER", "__cdecl") |
+											attribute("MODIFIER", "_stdcall") |
+											attribute("MODIFIER", "_fastcall") |
+											attribute("MODIFIER", "__stdcall") |
+											attribute("MODIFIER", "__declspec" "(" skip(")") ")");
+
+
+<functionDeclarator>					::= <ptrOperator>* [<CallConvention>] <functionDirectDeclarator>;
+
+<functionDirectDeclarator>				::= <declaratorId> "(" [<parameterDeclarationClause>] ")" [<cvQualifierSeq>] [<exceptionSpecification>] | 
+											"(" <functionDeclarator> ")";
+
+<fieldDeclarator>						::= <ptrOperator>* <fieldDirectDeclarator>;
+
+<fieldDirectDeclarator>					::= <declaratorId> "(" [<argumentList>] ")" |
+											<declaratorId> ("[" [<constantExpression>] "]")+ |
+											<declaratorId> |
+											"(" [<declSpecifierSeq>] <nestedNameSpecifier> "*" <declaratorId> ")" "(" [<parameterDeclarationClause>] ")" |
+											"(" [<declSpecifierSeq>] <expression> ")" "(" [<parameterDeclarationClause>] ")" |
+											"(" <fieldDeclarator> ")";
+
+// the first definition here is a function declarator, then 3 field declarator definitions, then 2 function pointer (field, param) declarator definitions, then finally we let morons put parenthesis around anything
+// the function declarators need to moved out
+//<directDeclarator>						::= <declaratorId> "(" [<parameterDeclarationClause>] ")" [<cvQualifierSeq>] [<exceptionSpecification>] |
+//											<declaratorId> "(" [<argumentList>] ")" |
+//											<declaratorId> ("[" [<constantExpression>] "]")+ |
+//											<declaratorId> |
+//											// function pointer
+//											"(" [<declSpecifierSeq>] <nestedNameSpecifier> "*" <declaratorId> ")" "(" [<parameterDeclarationClause>] ")" |
+//											"(" [<declSpecifierSeq>] <expression> ")" "(" [<parameterDeclarationClause>] ")" |
+//											//"(" [<declSpecifierSeq>] <expression> ")" ("[" [<constantExpression>] "]")* |
+//											"(" <declarator> ")";
+
+<ptrOperator>							::= attribute("REFERENCE", "*") [<cvQualifierSeq>] |
+											attribute("REFERENCE", "&") attribute("REFERENCE", "&") |
+											attribute("REFERENCE", "&") |
+											["::"] <nestedNameSpecifier> attribute("REFERENCE", "*") [<cvQualifierSeq>];
+
+<declaratorId>							::= ["::"] [<nestedNameSpecifier>] <className> |
+											<idExpression>;
+
+// dcl.name
+<typeId>								::= <typeSpecifierSeq> [<abstractDeclarator>];
+
+<typeSpecifierSeq>						::= <typeSpecifier>+;
+
+<abstractDeclarator>					::= <ptrOperator> [<abstractDeclarator>] |
+											<directAbstractDeclarator>;
+
+<directAbstractDeclarator>				::= "(" [<parameterDeclarationClause>] ")" [<cvQualifierSeq>] [<exceptionSpecification>] |
+											"[" [<constantExpression>] "]" |
+											"(" <abstractDeclarator> ")";
+
+// dcl.fct
+<parameterDeclarationClause>			::= [<parameterDeclarationList> ","] "..." |
+											<parameterDeclarationList>;
+
+<parameterDeclarationList>				::= <parameterDeclaration> ("," <parameterDeclaration>)*;
+
+<parameterDeclaration>					::= node("PARAMETER", attribute("TYPE", node("TYPE", [<declSpecifierSeq>] <typeSpecifier> [<declSpecifierSeq>])) <fieldDeclarator> [node("DEFAULT", "=" <assignmentExpression>)]) |
+											node("PARAMETER", attribute("TYPE", node("TYPE", [<declSpecifierSeq>] <typeSpecifier> [<declSpecifierSeq>])) <abstractDeclarator> ["(" <parameterDeclarationClause> ")"] [node("DEFAULT", "=" <assignmentExpression>)]) |
+											node("PARAMETER", attribute("TYPE", node("TYPE", [<declSpecifierSeq>] <typeSpecifier> [<declSpecifierSeq>])) [node("DEFAULT", "=" <assignmentExpression>)]);
+
+// dcl.fct.def
+<functionDefinition>					::= <STDMETHODIMP> |
+											attribute("DECLARATION", [<declSpecifierSeq>] <functionDeclarator> [<declSpecifierSeq>] [<ctorInitializer>] [<declSpecifierSeq>]) <functionBody> |
+											attribute("DECLARATION", node("TYPE", [<declSpecifierSeq>] <typeSpecifier> [<declSpecifierSeq>]) <functionDeclarator> [<declSpecifierSeq>]) <functionTryBlock> |
+											attribute("DECLARATION", node("TYPE", [<declSpecifierSeq>] <typeSpecifier> [<declSpecifierSeq>]) <functionDeclarator> [<declSpecifierSeq>]) <functionBody>;
+
+<functionDeclaration>					::= <STDMETHOD> | 
+											<IFACEMETHOD> |
+											attribute("DECLARATION", [<declSpecifierSeq>] node("TYPE", <typeSpecifier>) [<declSpecifierSeq>] <functionDeclarator> ";") |
+											attribute("DECLARATION", [<declSpecifierSeq>] <functionDeclarator> ";");
+
+<functionBody>							::= node("BEHAVIOR", <compoundStatement>);
+
+<STDMETHODIMP>							::= "STDMETHODIMP_" "(" <typeId> ")" node("NAME", <functionDeclarator>) [<declSpecifierSeq>] <functionBody> [";"] |
+											"STDMETHODIMP_" "(" <typeId> ")" node("NAME", <functionDeclarator>) [<declSpecifierSeq>] ";" |
+											"STDMETHODIMP" [<declSpecifierSeq>] node("NAME", <functionDeclarator>) [<declSpecifierSeq>] <functionBody> [";"] |
+											"STDMETHODIMP" [<declSpecifierSeq>] node("NAME", <functionDeclarator>) [<declSpecifierSeq>] ";";
+
+// dcl.init
+<initializerList>						::= <initializerClause> ("," <initializerClause>)*;
+
+<initializer>							::= "=" <initializerClause> |
+											":" <initializerClause> | 
+											"(" <expressionList> ")";
+
+<initializerClause>						::= <assignmentExpression> |
+											"{" <initializerList> [","] "}" |
+											"{" "}";
+
+// namespace.def
+<namespaceName>							::= <originalNamespaceName> |
+											<namespaceAlias>;
+
+<originalNamespaceName>					::= <shortName>;
+
+<namespaceDefinition>					::= node("PACKAGE", "namespace" [<shortName>] "{" <namespaceBody> "}" [";"]);
+
+<namespaceBody>							::= <declaration>*;
+
+// namespace.alias
+<namespaceAlias>						::= node("NAME", <shortName>);
+
+<namespaceAliasDefinition>				::= "namespace" node("NAME", <shortName>) "=" node("ALIAS", <qualifiedNamespaceSpecifier>) ";";
+
+<qualifiedNamespaceSpecifier>			::= ["::"] [<nestedNameSpecifier>] <namespaceName>;
+
+// namepsace.udecl
+<usingDeclaration>						::= node("PACKAGE_IMPORT", "using" "namespace" ["::"] [<nestedNameSpecifier>] <unqualifiedId> ";") |
+											node("ELEMENT_IMPORT", "using"             ["::"] [<nestedNameSpecifier>] <unqualifiedId> ";");
+
+// class.def
+<className>								::= <simpleTemplateId> |
+											<shortName>;
+
+// **FIX: Need to split the class definition out into two definitions
+// One for an actual class declaration
+// The other for a class forward declaration
+// Same will most likely apply for struct, union and interface
+<classSpecifier>						::= node("CLASS", <classHead> "{" <memberSpecification>* "}") | 
+											node("DECLARE_CLASS", <classHead> ) |
+											node("STRUCT", <structHead> ["{" <memberSpecification>* "}"]) |
+											node("UNION", <unionHead> ["{" <memberSpecification>* "}"]) |
+											node("INTERFACE", <interfaceHead> ["{" <memberSpecification>* "}"]);
+
+<classHead>								::= "class" [node("NAME", <nestedNameSpecifier>)] <simpleTemplateId> [<baseClause>] |
+											"class" <nestedNameSpecifier> <shortName> [<baseClause>] |
+											"class" [<shortName>] [<baseClause>];
+
+<structHead>							::= "struct" [node("NAME", <nestedNameSpecifier>)] <simpleTemplateId> [<baseClause>] |
+											"struct" node("NAME", <nestedNameSpecifier> <shortName>) [<baseClause>] |
+											"struct" [node("NAME", <shortName>)] [<baseClause>];
+
+<unionHead>								::= "union" [node("NAME", <nestedNameSpecifier>)] <simpleTemplateId> [<baseClause>] |
+											"union" node("NAME", <nestedNameSpecifier> <shortName>) [<baseClause>] |
+											"union" [node("NAME", <shortName>)] [<baseClause>];
+
+<interfaceHead>							::= <interfaceKey> [node("NAME", <nestedNameSpecifier>)] <simpleTemplateId> [<baseClause>] |
+											<interfaceKey> node("NAME", <nestedNameSpecifier> <shortName>) [<baseClause>] |
+											<interfaceKey> [node("NAME", <shortName>)] [<baseClause>];
+
+<interfaceKey>							::= ["__gc"] "__interface" |
+											"interface" [<managedType>] |
+											"MIDL_INTERFACE" "(" <stringLiteral> ")";
+
+// class.mem
+<memberSpecification>					::= node("REGION", <accessSpecifier> ":" <memberDeclaration>*) |
+											node("REGION", <memberDeclaration>+ );
+
+<addressof>								::= "&";
+
+<externc>								::= "extern" ["\"" "C" "\""];
+
+<functionPointer>						::= [<externc>] <typeSpecifier> "(" [<CallConvention>] "*" [<cvQualifier>] node("POINTER", <shortName> ")" "(" [<argumentList>] ")" [ "=" [<addressof>]<assignmentExpression>] ";");
+
+<memberDeclaration>						::= <STDMETHOD> | // put this first as it can be misidentified
+											node("OPERATION", <functionDeclaration>) |
+											<functionPointer> |
+											node("FIELD", attribute("TYPE", "typedef") node("TYPE", <typeSpecifier> [<declSpecifierSeq>]) <memberDeclaratorList> ";") |
+											node("FIELD", attribute("TYPE", node("TYPE", [<declSpecifierSeq>] <typeSpecifier> [<declSpecifierSeq>])) <memberDeclaratorList> ";") |
+											node("OPERATION", <functionDefinition>) [";"] |
+											["::"] <nestedNameSpecifier> ["template"] <unqualifiedId> ";" |
+											<usingDeclaration> |
+											<staticAssertDeclaration> |
+											<templateDeclaration> |
+											<simpleDeclaration>;
+
+<STDMETHOD>								::= "STDMETHOD" "(" <unqualifiedId> ")" "(" [<parameterDeclarationClause>] ")" ";" |
+											"STDMETHOD" "(" <unqualifiedId> ")" "(" [<parameterDeclarationClause>] ")" <compoundStatement> [";"];
+
+<IFACEMETHOD>							::= "IFACEMETHOD" "(" <unqualifiedId> ")" "(" [<parameterDeclarationClause>] ")" ";" |
+											"IFACEMETHOD" "(" <unqualifiedId> ")" "(" [<parameterDeclarationClause>] ")" <compoundStatement> [";"];
+
+
+<memberDeclaratorList>					::= <memberDeclarator> ("," <memberDeclarator>)*;
+
+<memberDeclarator>						::= <functionDeclarator> [<pureSpecifier>] | 
+											<fieldDeclarator> [<constantInitializer>];
+
+<pureSpecifier>							::= "=" "0" attributeex("ABSTRACT", "true");
+
+<constantInitializer>					::= "=" node("DEFAULT", <constantExpression>);
+
+// class.derived
+<baseClause>							::= ":" <baseSpecifierList>;
+
+<baseSpecifierList>						::= node("PARENT", <baseSpecifier>) ("," node("PARENT", <baseSpecifier>))*;
+
+<baseSpecifier>							::= ["::"] [<nestedNameSpecifier>] <className> |
+											attribute("ACCESS", "virtual") [<accessSpecifier>] ["::"] [<nestedNameSpecifier>] <className> |
+											<accessSpecifier> [attribute("ACCESS", "virtual")] ["::"] [<nestedNameSpecifier>] <className>;
+
+<accessSpecifier>						::= attribute("VISIBILITY", "private") |
+											attribute("VISIBILITY", "protected") |
+											attribute("VISIBILITY", "public");
+
+// class.conv.fct
+<conversionFunctionId>					::= "operator" <conversionTypeId>;
+
+<conversionTypeId>						::= <typeSpecifierSeq> [<conversionDeclarator>];
+
+<conversionDeclarator>					::= <ptrOperator> [<conversionDeclarator>];
+
+// class.base.init
+<ctorInitializer>						::= ":" <memInitializerList>;
+
+<memInitializerList>					::= <memInitializer> ("," <memInitializer>)*;
+
+<memInitializer>						::= node("INIT", <memInitializerId> "(" [<argumentList>] ")");
+
+<memInitializerId>						::= ["::"] [<nestedNameSpecifier>] <className> |
+											<shortName>;
+
+// over.oper
+<operatorFunctionId>					::= "operator" <overloadableOperator> "<" [<templateArgumentList>] ">" |
+											"operator" <overloadableOperator>;
+
+<overloadableOperator>					::= "new" ["[" "]"] |
+											"delete" ["[" "]"] |
+											"+"     | "-"    | "*"    | "/"    |
+											"%"     | "^"    | "&"    | "|"    |
+											"~"     | "!"    | "="    | "<"    |
+											">"     | "+="   | "-="   | "*="   |
+											"/="    | "%="   | "^="   | "&="   |
+											"|="    | "<<"   | ">>"   | ">>="  |
+											"<<="   | "=="   | "!="   | "<="   |
+											">="    | "&&"   | "||"   | "++"   |
+											"--"    | ","    | "->*"  | "->"   |
+											"(" ")" | "[" "]";
+
+// dcl.enum
+<enumName>								::= <shortName>;
+
+<enumSpecifier>							::= ["__value" <managedTypeScope>*] "enum" [<managedType>] [<shortName>] "{" [<enumeratorList>] [","] "}";
+
+<enumeratorList>						::= <enumeratorDefinition> ("," <enumeratorDefinition>)*;
+
+<enumeratorDefinition>					::= <enumerator> ["=" <constantExpression>];
+
+<enumerator>							::= <shortName>;
+
+// temp
+<templateDeclaration>					::= ["export"] "template" "<" <templateParameterList>* ">" <declaration>;
+
+<templateParameterList>					::= <templateParameter> ("," <templateParameter>)*;
+
+// temp.param
+<templateParameter>						::= <typeParameter> |
+											<parameterDeclaration>;
+
+<typeParameter>							::= "class" [<shortName>] ["=" <typeId>] |
+											"typename" [<shortName>] ["=" <typeId>] |
+											"template" "<" <templateParameterList> ">" "class" [<shortName>] ["=" <idExpression>];
+
+// temp.names
+<simpleTemplateId>						::= <templateName> "<" <templateArgumentList> ">";
+
+<templateId>							::= <operatorFunctionId> "<" [<templateArgumentList>] ">" |
+											<simpleTemplateId>;
+
+<templateName>							::= <shortName>;
+
+<templateArgumentList>					::= <templateArgument> ("," <templateArgument>)*;
+
+<templateArgument>						::= node("TEMPLATE_ARGUMENT", attribute("TEXT", <typeId> | ["&"] <idExpression> |	<assignmentExpression>));
+
+// temp.res
+<typenameSpecifier>						::= "typename" ["::"] <nestedNameSpecifier> <shortName> |
+											"typename" ["::"] <nestedNameSpecifier> ["template"] <simpleTemplateId>;
+
+// temp.explicit
+<explicitInstantiation>					::= ["extern"] "template" <declaration>;
+
+// temp.expl.spec
+<explicitSpecialization>				::= "template" "<" ">" <declaration>;
+
+<tryBlock>								::= "try" node("BODY", <compoundStatement>) <handlerSeq> |
+											"__try" <compoundStatement> "__except" "(" <expression> ")" <compoundStatement>* ["__finally" <compoundStatement>] |
+											"TRY" <compoundStatement> ["END_TRY"] [("CATCH" | "CATCH_ALL") "(" [<typeId> ","] <idExpression> ")" <compoundStatement> ("END_CATCH" | "END_CATCH_ALL")];
+
+<functionTryBlock>						::= "try" [<ctorInitializer>] <functionBody> <handlerSeq>;
+
+<handlerSeq>							::= <handler>+;
+
+<handler>								::= node("CATCH", "catch" "(" node("EXCEPTION", <exceptionDeclaration>) ")" node("BODY", <compoundStatement>));
+
+<exceptionDeclaration>					::= node("TYPE", <typeSpecifierSeq>) <fieldDeclarator> |
+											node("TYPE", <typeSpecifierSeq>) <abstractDeclarator> |
+											node("TYPE", <typeSpecifierSeq>) |
+											node("ALL", "...");
+
+<throwExpression>						::= "throw" [<assignmentExpression>];
+
+<exceptionSpecification>				::= "throw" "(" [<typeIdList>] ")";
+
+<typeIdList>							::= <typeId> ("," <typeId>)*;
+
+// stmt.stmt
+<statement>								::= node("MACRO", <statementMacro>) | 
+											<labeledStatement> |
+											<compoundStatement> |
+											node("IF", <ifStatement>) |
+											node("SWITCH", <switchStatement>) |
+											node("WHILE", <whileStatement>) |
+											node("DO", <doStatement>) |
+											node("FOR", <forStatement>) |
+											<jumpStatement> |
+											node("TRY", <tryBlock>) |
+											<expressionStatement> |
+											<declarationStatement> |
+											";";
+
+// stmt.label
+<labeledStatement>						::= node("LABEL", node("NAME", <shortName>)) ":" <statement>;
+
+// stmt.expr
+<expressionStatement>					::= <expression> ";";
+
+// stmt.block
+<compoundStatement>						::= "{" <statement>* "}" |
+											// if statement fails, skip it
+											"{" skipBalanced("{", "}", <codeEscape>) "}";
+
+// stmt.select
+<ifStatement>							::= "if" "(" node("CONDITION", <condition>) ")" node("BODY", <statement>) [node("ELSE", "else" <statement>)] |
+											// if condition fails, skip it
+											"if" "(" skipBalanced("(", ")", <codeEscape>) ")" node("BODY", <statement>) [node("ELSE", "else" <statement>)];
+
+<switchStatement>						::= "switch" "(" node("CONDITION", <condition>) ")" node("BODY", <switchBody>) |
+											// if condition fails, skip it
+											"switch" "(" skipBalanced("(", ")", <codeEscape>) ")" node("BODY", <switchBody>);
+
+<switchBody>							::= "{" <caseBlock>* "}" |
+											// if caseBlock fails, skip it
+											"{" skipBalanced("{", "}", <codeEscape>) "}";
+
+<caseBlock>								::= node("CASE", "case" node("VALUE", <constantExpression>) ":" [node("BODY", <statement>+)]) |
+											node("DEFAULT", "default" ":" node("BODY", <statement>*));
+
+<condition>								::= <typeSpecifier> <fieldDeclarator> "=" <assignmentExpression> |
+											<expression>;
+
+// stmt.iter
+<whileStatement>						::= "while" "(" node("CONDITION", <condition>) ")" node("BODY", <statement>);
+
+<doStatement>							::= "do" node("BODY", <statement>) "while" "(" node("CONDITION", <expression>) ")" ";";
+
+<forStatement>							::= "for" "(" node("INIT", <forInitStatement>) [node("CONDITION", <condition>)] ";" [node("NEXT", <expression>)] ")" <statement>;
+
+<forInitStatement>						::= <expressionStatement> |
+											<simpleDeclaration> |
+											";";
+
+// stmt.jump
+<jumpStatement>							::= node("BREAK", "break" ";") |
+											node("CONTINUE", "continue" ";") |
+											node("RETURN", "return" [<expression>] ";") |
+											node("GOTO", "goto" <shortName> ";");
+
+// stmt.dcl
+<declarationStatement>					::= <blockDeclaration>;
+
+// expr.new
+<newExpression>							::= ["::"] "new" [<newPlacement>] <newTypeId> [<newInitializer>] |
+											["::"] "new" [<newPlacement>] "(" <typeId> ")" [<newInitializer>];
+
+<newPlacement>							::= "(" <expressionList> ")";
+
+<newTypeId>								::= <typeSpecifierSeq> [<newDeclarator>];
+
+<newDeclarator>							::= <ptrOperator> [<newDeclarator>] |
+											<directNewDeclarator>;
+
+<directNewDeclarator>					::= "[" <expression> "]" [<directNewDeclarator>];
+
+<newInitializer>						::= "(" [<expressionList>] ")";
+
+// expr.delete
+<deleteExpression>						::= ["::"] "delete" ["[" "]"] <castExpression>;
+
+<va_argExpression>						::= "va_arg" "(" <constantExpression> "," <typeId> ")";
+
+// expr.comma
+<expression>							::= <assignmentExpression> ("," <assignmentExpression>)*;
+
+// expr.const
+<constantExpression>					::= <conditionalExpression>;
+
+// expr.ass
+<assignmentExpression>					::= preProcess(<conditionalExpression>,
+												node("ASSIGNMENT", node("LHS", <?>) "=" node("RHS", <assignmentExpression>)) |
+												node("ASSIGNMENT_MULTIPLY", node("LHS", <?>) "*=" node("RHS", <assignmentExpression>)) |
+												node("ASSIGNMENT_DIVIDE", node("LHS", <?>) "/=" node("RHS", <assignmentExpression>)) |
+												node("ASSIGNMENT_MOD", node("LHS", <?>) "%=" node("RHS", <assignmentExpression>)) |
+												node("ASSIGNMENT_MINUS", node("LHS", <?>) "-=" node("RHS", <assignmentExpression>)) |
+												node("ASSIGNMENT_PLUS", node("LHS", <?>) "+=" node("RHS", <assignmentExpression>)) |
+												node("ASSIGNMENT_SHIFT_RIGHT", node("LHS", <?>) ">>=" node("RHS", <assignmentExpression>)) |
+												node("ASSIGNMENT_SHIFT_LEFT", node("LHS", <?>) "<<=" node("RHS", <assignmentExpression>)) |
+												node("ASSIGNMENT_AND", node("LHS", <?>) "&=" node("RHS", <assignmentExpression>)) |
+												node("ASSIGNMENT_XOR", node("LHS", <?>) "^=" node("RHS", <assignmentExpression>)) |
+												node("ASSIGNMENT_OR", node("LHS", <?>) "|=" node("RHS", <assignmentExpression>)) |
+												<?>) |
+											<throwExpression>;
+
+// expr.cond
+<conditionalExpression>					::= preProcess(<logicalOrExpression>,
+												node("CONDITIONAL", node("CONDITION", <?>) "?" node("TRUE", <assignmentExpression>) ":" node("FALSE", <assignmentExpression>)) |
+												<?>);
+
+// expr.log.or
+<logicalOrExpression>					::= preProcess(<logicalAndExpression>,
+												node("LOGICAL_OR", node("LHS", <?>) "||" node("RHS", <logicalOrExpression>)) |
+												<?>);
+
+// expr.log.and
+<logicalAndExpression>					::= preProcess(<inclusiveOrExpression>,
+												node("LOGICAL_AND", node("LHS", <?>) "&&" node("RHS", <logicalAndExpression>)) |
+												<?>);
+
+// expr.or
+<inclusiveOrExpression>					::= preProcess(<exclusiveOrExpression>,
+												node("BITWISE_OR", node("LHS", <?>) "|" node("RHS", <inclusiveOrExpression>)) |
+												<?>);
+
+// expr.xor
+<exclusiveOrExpression>					::= preProcess(<andExpression>,
+												node("BITWISE_XOR", node("LHS", <?>) "^" node("RHS", <exclusiveOrExpression>)) |
+												<?>);
+
+// expr.bit.and
+<andExpression>							::= preProcess(<equalityExpression>,
+												node("BITWISE_AND", node("LHS", <?>) "&" node("RHS", <andExpression>)) |
+												<?>);
+
+// expr.ea
+<equalityExpression>					::= preProcess(<relationalExpression>,
+												node("EQUAL", node("LHS", <?>) "==" node("RHS", <equalityExpression>)) |
+												node("NOT_EQUAL", node("LHS", <?>) "!=" node("RHS", <equalityExpression>)) |
+												<?>);
+
+// expr.rel
+<relationalExpression>					::= preProcess(<shiftExpression>,
+												node("LESSER_EQUAL", node("LHS", <?>) "<=" node("RHS", <relationalExpression>)) |
+												node("LESSER", node("LHS", <?>) "<" node("RHS", <relationalExpression>)) |
+												node("GREATER_EQUAL", node("LHS", <?>) ">=" node("RHS", <relationalExpression>)) |
+												node("GREATER", node("LHS", <?>) ">" node("RHS", <relationalExpression>)) |
+												<?>);
+
+// expr.shift
+<shiftExpression>						::= preProcess(<additiveExpression>,
+												node("SHIFT_LEFT", node("LHS", <?>) "<<" node("RHS", <shiftExpression>)) |
+												node("SHIFT_RIGHT", node("LHS", <?>) ">>" node("RHS", <shiftExpression>)) |
+												<?>);
+
+// expr.add
+<additiveExpression>					::= preProcess(<multiplicativeExpression>,
+												node("PLUS", node("LHS", <?>) "+" node("RHS", <additiveExpression>)) |
+												node("MINUS", node("LHS", <?>) "-" node("RHS", <additiveExpression>)) |
+												<?>);
+// expr.mul
+<multiplicativeExpression>				::= preProcess(<castExpression>,
+												node("MULTIPLY", node("LHS", <?>) "*" node("RHS", <multiplicativeExpression>)) |
+												node("DIVIDE", node("LHS", <?>) "/" node("RHS", <multiplicativeExpression>)) |
+												node("MOD", node("LHS", <?>) "%" node("RHS", <multiplicativeExpression>)) |
+												<?>);
+
+// expr.mptr.oper
+<pmExpression>							::= preProcess(<castExpression>,
+												<?> ".*" <pmExpression> |
+												<?> "->*" <pmExpression> |
+												<?>);
+
+// expr.cast
+// **FIX: handle type(expression) casts
+<castExpression>						::= "(" <typeId> ")" <castExpression> |
+											"dynamic_cast" "<" <typeId> ">" "(" <expression> ")" |
+											"static_cast" "<" <typeId> ">" "(" <expression> ")" |
+											"reinterpret_cast" "<" <typeId> ">" "(" <expression> ")" |
+											"const_cast" "<" <typeId> ">" "(" <expression> ")" |
+											"typeid" "<" <expression> ">" |
+											"typeid" "<" <typeId> ">" |
+											<unaryExpression>;
+
+// expr.unary
+<unaryExpression>						::= <postfixExpression> |
+											"++" <castExpression> |
+											"--" <castExpression> |
+											<unaryOperator> |
+											"sizeof" <unaryExpression> |
+											"sizeof" "(" <typeId> ")" |
+											<newExpression> |
+											<deleteExpression> |
+											<va_argExpression>;
+
+<unaryOperator>							::= "*" <castExpression> |
+											"&" <castExpression> |
+											"+" <castExpression> |
+											"-" <castExpression> |
+											"!" <castExpression> |
+											"~" <castExpression> |
+											
+											// this handles #if defined X and #if defined(x)
+											"defined" "(" <castExpression> ")" |
+											"defined" <castExpression> |
+											
+											// some macros that often can't be skipped over
+											"FAILED" "(" <expression> ")" |
+											"RGB" "(" skipBalanced("(", ")", <COMMENT> | <stringLiteral>) ")";
+
+// expr.post
+<postfixExpression>						::= preProcess(<primaryExpression>,
+												node("MEMBER_ACCESS", node("LHS", <?>) "." node("RHS", ["template"] <postfixExpression>)) |
+												node("MEMBER_ACCESS", node("LHS", <?>) "->" node("RHS", ["template"] <postfixExpression>)) |
+												node("MEMBER_ACCESS", node("LHS", <?>) "." node("RHS", <pseudoDestructorName>)) |
+												node("MEMBER_ACCESS", node("LHS", <?>) "->" node("RHS", <pseudoDestructorName>)) |
+												node("MEMBER_POINTER", node("LHS", <?>) ".*" node("RHS", <pmExpression>)) |
+												node("MEMBER_POINTER", node("LHS", <?>) "->*" node("RHS", <pmExpression>)) |
+												node("POST_INCREMENT", <?> "++") |
+												node("POST_DECREMENT", <?> "--") |
+												<?>);
+
+<expressionList>						::= <assignmentExpression> ("," <assignmentExpression>)*;
+
+<pseudoDestructorName>					::= ["::"] [<nestedNameSpecifier>] <typeName> "::" "~" <typeName> |
+											["::"] <nestedNameSpecifier> "template" <simpleTemplateId> "::" "~" <typeName> |
+											["::"] [<nestedNameSpecifier>] "~" <typeName>;
+
+// expr.prim
+<primaryExpression>						::= node("LITERAL", <literal>) |
+											node("THIS", "this") |
+											"(" ("*" <postfixExpression> | <pmExpression>) ")" "(" [<argumentList>] ")" |
+											node("PROCEDURE_ACCESS", <idExpression> "(" [<argumentList>] ")" ("[" <expression> "]")*) |
+											node("VARIABLE_ACCESS", <idExpression> ("[" <expression> "]")*) |
+											"(" <expression> ")" ("[" <expression> "]")* |
+											// this cast is here because it is practically indistinguishable from a function call
+											<typeSpecifier> "(" <expression> ")" |
+											attribute("MACRO", <expressionMacro>)+;
+
+<idExpression>							::= <qualifiedId> |
+											<unqualifiedId>;
+
+<unqualifiedId>							::= <shortName> |
+											<operatorFunctionId> |
+											<conversionFunctionId> |
+											attribute("NAMEPART", "~") [<nestedNameSpecifier>] <className> |
+											<templateId>;
+
+<qualifiedId>							::= ["::"] <nestedNameSpecifier> ["template"] <unqualifiedId> |
+											"::" <shortName> |
+											"::" <operatorFunctionId> |
+											"::" <templateId>;
+
+<nestedNameSpecifier>					::= node("NAMESPACE", <shortName>) "::" [<nestedNameSpecifier>] |
+											node("NAMESPACE", ["template"] <simpleTemplateId>) "::" [<nestedNameSpecifier>];
+											
+<argumentList>							::= <argument> ("," <argument>)*;
+
+<argument>								::= node("ARGUMENT", <expression>);
+
+// ***
+// * Wierdness
+// ***
+<managedType>               			::= "struct" | "class";
+
+<managedTypeScope>						::= "public" | "protected" | "private";
+
+// ***
+// * Macros
+// ***
+<otherMacros>					::= // pointer modifier macros
+									"FAR" | "far" | "__RPC_FAR" | "NEAR" | "huge" |
+									
+									// STL macros
+                                    "__STL_BEGIN_NAMESPACE" |
+                                    "__STL_TEMPLATE_NULL" |
+                                    "__STL_END_NAMESPACE" |
+                                    
+									// Managed C++ extensions.
+                                    "__delegate" |
+                                    "__event" |
+                                    "__restrict" |
+                                    "__pin" |
+                                    "__typeof" |
+                                    
+                                    // BCG macros
+                                    "BCGCBPRODLLEXPORT" |
+                                    "DECLSPEC_UUID" "(" <stringLiteral> ")" |
+                                    "BCGCBPRODLLEXPORT" |
+                                    "BCGCONTROLBARDLLEXPORT" | 
+                                    "XYDISPDRIVER_EXPORT" |
+
+                                    // unzip.cpp
+                                    "NO_RENTRY" |
+                                    "NO_RENTRY_EXIT" |
+                                    "LOAD" |
+                                    "UPDATE" |
+                                    "LEAVE" |
+                                    "NEEDOUT" |
+                                    "FLUSH" |
+                                    "UNGRAB" |
+                                    "IM_NEEDBYTE" |
+									"GRABBITS" "(" skipBalanced("(", ")") ")" [";"] |
+                                    "NEEDBITS" "(" skipBalanced("(", ")") ")" [";"] |
+                                    "DUMPBITS" "(" skipBalanced("(", ")") ")" [";"] |
+                                    "OUTBYTE" "(" skipBalanced("(", ")") ")" [";"] |
+                                    "TER_MENU_PROC_IMPL" "(" skipBalanced("(", ")") ")" [";"] |
+
+									// Misc macros
+									"CALLBACK" | 
+                                    "THIS_" |
+                                    "Q_OBJECT" |
+                                    "DEFINE_PROXY_EVENT" "(" skipBalanced("(", ")", <COMMENT> | <stringLiteral>) ")" |
+                                    "DECLSPEC_SELECTANY" |
+									"DECLSPEC_UUID" "(" <stringLiteral> ")"  |
+                                    "SSLIBRARY_API" |
+									"HUGEP" |
+                                    "complex" |
+                                    "BASED_CODE" |
+                                    "JNIEXPORT" |
+                                    "JNICALL" |
+                                    "PREFIX" |
+                                    "HUGEP" |
+                                    "IN" |
+                                    "OUT" |
+									"OPTIONAL" |
+									"METHOD_PROLOGUE" "(" skipBalanced("(", ")") ")" |
+                                    "CATCH_OLE_EXCEPT" "(" skipBalanced("(", ")") ")" |
+                                    "CATCH_USER_EXCEPT" "(" skipBalanced("(", ")") ")" |
+                                    "CATCH_POINTER_CONVERT" "(" skipBalanced("(", ")") ")" |
+                                    "CATCH_OLE_POINTER_CONVERT" "(" skipBalanced("(", ")") ")" |
+                                    "IF_MATCH_THEN_CREATE_AND_LOAD" "(" skipBalanced("(", ")") ")" |
+                                    "AFX_BEGIN_DESTRUCTOR" skip("AFX_END_DESTRUCTOR") "AFX_END_DESTRUCTOR" |
+                                    "CLEARMAP" "(" skip(")") ")" |
+									"DEFINE_DAOGUID" "(" skipBalanced("(", ")") ")";
+
+<vcDeclareMacroRule>			::= "(" skipBalanced("(", ")") ")" [";"];
+
+<vcClassMacro>	                ::= "DECLARE_DYNAMIC"					<vcDeclareMacroRule> |
+                                    "DECLARE_DYNCREATE"					<vcDeclareMacroRule> |
+                                    "DECLARE_MESSAGE_MAP"				<vcDeclareMacroRule> |
+                                    "DECLARE_OLECREATE"					<vcDeclareMacroRule> |
+                                    "DECLARE_OLETYPELIB"				<vcDeclareMacroRule> |
+                                    "DECLARE_OLEMISC_STATUS"			<vcDeclareMacroRule> |
+                                    "DECLARE_DISPATCH_MAP"				<vcDeclareMacroRule> |
+                                    "DECLARE_INTERFACE_MAP"				<vcDeclareMacroRule> |
+                                    "DECLARE_DUAL_ERRORINFO"			<vcDeclareMacroRule> |
+                                    "DECLARE_SERIAL"					<vcDeclareMacroRule> |
+                                    "DECLARE_VIEW_STATUS"				<vcDeclareMacroRule> |
+                                    "DECLARE_REGISTRY_RESOURCEID"		<vcDeclareMacroRule> |
+                                    "DECLARE_NOT_AGGREGATABLE"			<vcDeclareMacroRule> |
+                                    "DECLARE_PROTECT_FINAL_CONSTRUCT"	<vcDeclareMacroRule> |
+                    				"BEGIN_INTERFACE_PART"             	"(" skipBalanced("(", ")") ")" |
+                                    "INIT_INTERFACE_PART"				"(" skipBalanced("(", ")") ")" |
+                                    "BEGIN_CONNECTION_PART"				"(" skipBalanced("(", ")") ")" |
+                                    "END_CONNECTION_PART"				"(" skipBalanced("(", ")") ")" |
+                                    "BEGIN_DUAL_INTERFACE_PART"			"(" skipBalanced("(", ")") ")" |
+                                    "END_DUAL_INTERFACE_PART"			"(" skipBalanced("(", ")") ")" |
+                                    "DECLARE_EVENTSINK_MAP"				"(" skipBalanced("(", ")") ")" |
+									"DECLARE_CONNECTION_MAP"			"(" skipBalanced("(", ")") ")" |
+									"END_INTERFACE_PART"				"(" skipBalanced("(", ")") ")" |
+									"END_INTERFACE_PART_STATIC"			"(" skipBalanced("(", ")") ")" |
+                                    "OBJECT_ENTRY_AUTO"					"(" skipBalanced("(", ")") ")";
+
+<vcFileMacro>	                ::= "BEGIN_COLUMN_MAP"             		"(" skipBalanced("(", ")") ")" skip("END_COLUMN_MAP")				"END_COLUMN_MAP" 			"(" skipBalanced("(", ")") ")" |
+                    				"BEGIN_COM_MAP"                		"(" skipBalanced("(", ")") ")" skip("END_COM_MAP")					"END_COM_MAP"				"(" skipBalanced("(", ")") ")" |
+                    				"BEGIN_MESSAGE_MAP"                	"(" skipBalanced("(", ")") ")" skip("END_MESSAGE_MAP")				"END_MESSAGE_MAP"			"(" skipBalanced("(", ")") ")" |
+                    				"BEGIN_COUNTER_MAP"            		"(" skipBalanced("(", ")") ")" skip("END_COUNTER_MAP")				"END_COUNTER_MAP"			"(" skipBalanced("(", ")") ")" |
+                    				"BEGIN_EVENTSINK_MAP"          		"(" skipBalanced("(", ")") ")" skip("END_EVENTSINK_MAP") 			"END_EVENTSINK_MAP"			"(" skipBalanced("(", ")") ")" |
+                    				"BEGIN_MSG_MAP"                		"(" skipBalanced("(", ")") ")" skip("END_MSG_MAP")					"END_MSG_MAP"				"(" skipBalanced("(", ")") ")" |
+                    				"BEGIN_PARAM_MAP"              		"(" skipBalanced("(", ")") ")" skip("END_PARAM_MAP")				"END_PARAM_MAP"				"(" skipBalanced("(", ")") ")" |
+                    				"BEGIN_PERF_MAP"               		"(" skipBalanced("(", ")") ")" skip("END_PERF_MAP")					"END_PERF_MAP"				"(" skipBalanced("(", ")") ")" |
+                    				"BEGIN_PROVIDER_COLUMN_MAP"    		"(" skipBalanced("(", ")") ")" skip("END_PROVIDER_COLUMN_MAP") 		"END_PROVIDER_COLUMN_MAP"	"(" skipBalanced("(", ")") ")" |
+                    				"BEGIN_REPLACEMENT_METHOD_MAP" 		"(" skipBalanced("(", ")") ")" skip("END_REPLACEMENT_METHOD_MAP") 	"END_REPLACEMENT_METHOD_MAP""(" skipBalanced("(", ")") ")" |
+                    				"BEGIN_PROP_MAP"               		"(" skipBalanced("(", ")") ")" skip("END_PROP_MAP")					"END_PROP_MAP"				"(" skipBalanced("(", ")") ")" |
+                    				"BEGIN_CONNECTION_POINT_MAP"   		"(" skipBalanced("(", ")") ")" skip("END_CONNECTION_POINT_MAP")		"END_CONNECTION_POINT_MAP"	"(" skipBalanced("(", ")") ")" |
+                    				"BEGIN_OBJECT_MAP"             		"(" skipBalanced("(", ")") ")" skip("END_OBJECT_MAP")				"END_OBJECT_MAP" 			"(" skipBalanced("(", ")") ")" |
+                    				"BEGIN_CONSTRUCT_MAP"          		"(" skipBalanced("(", ")") ")" skip("END_CONSTRUCT_MAP")			"END_CONSTRUCT_MAP" 		"(" skipBalanced("(", ")") ")" |
+                    				"BEGIN_EVENT_MAP"              		"(" skipBalanced("(", ")") ")" skip("END_EVENT_MAP")				"END_EVENT_MAP"				"(" skipBalanced("(", ")") ")" |
+                    				"BEGIN_PRIMITIVE_MAP"          		"(" skipBalanced("(", ")") ")" skip("END_PRIMITIVE_MAP")			"END_PRIMITIVE_MAP"			"(" skipBalanced("(", ")") ")" |
+                    				"BEGIN_VERTEX_MAP"             		"(" skipBalanced("(", ")") ")" skip("END_VERTEX_MAP")				"END_VERTEX_MAP"			"(" skipBalanced("(", ")") ")" |
+                    				"IMPLEMENT_DYNCREATE"               "(" skipBalanced("(", ")") ")" |
+                    				"IMPLEMENT_OLETYPELIB"              "(" skipBalanced("(", ")") ")" |
+                    				"BEGIN_DISPATCH_MAP"                "(" skipBalanced("(", ")") ")" |
+                    				"BEGIN_INTERFACE_MAP"               "(" skipBalanced("(", ")") ")" |
+                    				"END_DISPATCH_MAP"                  "(" skipBalanced("(", ")") ")" |
+                    				"END_INTERFACE_MAP"                 "(" skipBalanced("(", ")") ")" |
+                    				"DISP_PROPERTY_EX"                  "(" skipBalanced("(", ")") ")" |
+                    				"DISP_PROPERTY_EX_ID"               "(" skipBalanced("(", ")") ")" |
+                    				"DISP_FUNCTION"                     "(" skipBalanced("(", ")") ")" |
+                    				"DISP_FUNCTION_ID"                  "(" skipBalanced("(", ")") ")" |
+                    				// SJM 798:C06090060. Automatically skip these dispatch properties.
+                    				"DISP_PROPERTY_NOTIFY"              "(" skipBalanced("(", ")") ")" |
+                    				"DISP_PROPERTY_NOTIFY_ID"           "(" skipBalanced("(", ")") ")" |
+                    				"DISP_PROPERTY_PARAM"               "(" skipBalanced("(", ")") ")" |
+                    				"DISP_PROPERTY_PARAM_ID"            "(" skipBalanced("(", ")") ")" |
+                    				"DISP_DEFVALUE"                     "(" skipBalanced("(", ")") ")" |
+                    				"DISP_DEFVALUE_ID"                  "(" skipBalanced("(", ")") ")" |
+                    				"INTERFACE_PART"                    "(" skipBalanced("(", ")") ")" |
+                    				"DUAL_ERRORINFO_PART"               "(" skipBalanced("(", ")") ")" |
+									"CONNECTION_IID"               		"(" skipBalanced("(", ")") ")" |
+                    				"IMPLEMENT_OLECREATE"               "(" skipBalanced("(", ")") ")" |
+                    				"SINGLE_USE_IMPLEMENT_OLECREATE"    "(" skipBalanced("(", ")") ")" |
+                    				"IMPLEMENT_DUAL_ERRORINFO"          "(" skipBalanced("(", ")") ")" |
+                    				"IMPLEMENT_DYNAMIC"                 "(" skipBalanced("(", ")") ")" [";"] |
+                    				"IMPLEMENT_SERIAL"                  "(" skipBalanced("(", ")") ")" |
+                    				"DELEGATE_DUAL_INTERFACE"           "(" skipBalanced("(", ")") ")" |
+                    				"EXTERN_PROCESS_LOCAL"              "(" skipBalanced("(", ")") ")" |
+                    				"DECLARE_PERF_OBJECT"               "(" skipBalanced("(", ")") ")" |
+                    				"DECLARE_PERF_OBJECT_EX"            "(" skipBalanced("(", ")") ")" |
+                    				"DEFINE_OLEDB_TYPE_FUNCTION"        "(" skipBalanced("(", ")") ")" |
+                    				"DECLARE_WND_CLASS_EX"              "(" skipBalanced("(", ")") ")" |
+                    				"DECLARE_LIBID"                     "(" skipBalanced("(", ")") ")" |
+                    				"DECLARE_REGISTRY_APPID_RESOURCEID" "(" skipBalanced("(", ")") ")" |
+                    				"TERMFC_MENU_PROC_IMPL"             "(" skipBalanced("(", ")") ")" |
+                    				"PROCESS_LOCAL"                     "(" skipBalanced("(", ")") ")" |
+                    				"AFX_MANAGE_STATE"                  "(" skipBalanced("(", ")") ")" |
+                    				"EXTERN_PROXY_EVENT"                "(" skipBalanced("(", ")") ")" |
+                    				"READ_PRIMITIVE"                    "(" skipBalanced("(", ")") ")" |
+                    				"READ_CONSTRUCT"                    "(" skipBalanced("(", ")") ")" |
+                                    "DECLARE_INTERFACE_"                "(" skipBalanced("(", ")") ")" "{" skipBalanced("(", ")") "}" |
+                                    "DECLARE_INTERFACE"                 "(" skipBalanced("(", ")") ")" "{" skipBalanced("(", ")") "}" |
+                    				"AFX_DEPRECATED" 					"(" skipBalanced("(", ")") ")" |
+									"AFX_STATIC" |
+                                    "AFX_STATIC_DATA" |  
+                    				"AFX_INLINE" |
+                    				"AFX_EXPORT" |
+                    				"AFX_NOVTABLE" |
+                    				"AFX_EXT_CLASS" |
+									
+									// should these me in the function modifiers rule?
+                    				"__pascal" |
+                    				"_inline" |
+                                    "__inline" |
+                                    "__forceinline" |
+                    				"_cdecl" |
+                    				"_Cdecl" |
+                                    "CDECL" |
+                    				"FASTCALL" |
+									
+                    				"STDAPICALLTYPE" |
+                    				"STDMETHODCALLTYPE" |
+                    				"APIENTRY" |
+                    				"AFXAPI" | 
+                                    "AFX_CDECL" | 
+                                    "WINAPI" | 
+                                    "PASCAL" | 
+                                    "__RPC_USER" |
+                    				"OUT_OF_LINE" |
+                    				"WINBASEAPI" |
+									"__RPC_STUB" |
+									"HTS_CPLUSPLUS" |
+									"_export";
+
+<atlMacro>                      ::= "ATL_NO_VTABLE" |
+                                    "ATLINLINE" | 
+                                    "ATL_NOINLINE" | 
+                                    "ATL_FORCEINLINE" | 
+                                    "ATLAPI" |
+                                    "ATL_DEPRECATED" | 
+                                    "VARIANT::*" |
+                                    "C::*";
+
+// connected to the literal rule, not the macros rule
+<literalMacro>                  ::= "AFX_IDW_DOCKBAR_TOP" |
+                                    "AFX_IDW_DOCKBAR_BOTTOM" |
+                                    "AFX_IDW_DOCKBAR_LEFT" |
+                                    "AFX_IDW_DOCKBAR_RIGHT" |
+                                    "CBRS_TOP" |
+                                    "CBRS_BOTTOM" |
+                                    "CBRS_LEFT" |
+                                    "CBRS_RIGHT" |
+                                    "CXIMAGE_FORMAT_BMP" |
+                                    "CXIMAGE_FORMAT_GIF" |
+                                    "CXIMAGE_FORMAT_JPG" |
+                                    "CXIMAGE_FORMAT_PNG" |
+                                    "CXIMAGE_FORMAT_MNG" |
+                                    "CXIMAGE_FORMAT_ICO" |
+                                    "CXIMAGE_FORMAT_TIF" |
+                                    "CXIMAGE_FORMAT_TGA" |
+                                    "CXIMAGE_FORMAT_PCX";
+
+// connected to the types rule, not the macros rule
+<typeMacro>						::= "PNG_EXPORT_VAR" "(" skipBalanced("(", ")") ")";
+
+<statementMacro>				::= "DO_REFRESH" "(" <shortName> ")" |
+                                    "TRACE" "(" skipBalanced("(", ")", <COMMENT> | <stringLiteral>) ")" [";"] |
+                                    "ASSERT" "(" skipBalanced("(", ")", <COMMENT> | <stringLiteral>) ")" [";"] |
+                                    "Assert" "(" skipBalanced("(", ")") ")" [";"] |
+									"Trace" "(" skipBalanced("(", ")") ")" [";"] |
+                                    "Tracev" "(" skipBalanced("(", ")") ")" [";"] |
+                                    "Tracevv" "(" skipBalanced("(", ")") ")" [";"] |
+                                    "Tracec" "(" skipBalanced("(", ")") ")" [";"] |
+                                    "Tracecv" "(" skipBalanced("(", ")") ")" [";"];
+
+<expressionMacro>               ::= "VTS_BSTR" |
+                                    "VTS_I2" |
+                                    "VTS_I4" |
+									"VTS_BOOL" |
+									"VTS_VARIANT";

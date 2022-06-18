@@ -1,0 +1,173 @@
+// CSV File Sample Grammar
+//
+// This is an example of a grammar to import a generic CSV file.
+// Its primarily an example of how to abuse the parser to do freaky things.
+// The grammar must be modified to handle different types of columns within
+// a CSV file.  If quotes are required or not, or if whitespace should be
+// trimmed or not, define which of the available column rules is most
+// appropriate.
+caseSensitive();
+
+delimiters(<KEYWORD_DELIMITERS>);
+
+lex(<TOKENS>);
+
+parse(<language>);
+
+// ***
+// * Lexer rules
+// ***
+
+// We basically just work around the lexer here, making it
+// recognise every seperate character in the input stream as a single token.
+// This makes it easy to identify what we're looking for in the parser rules.
+// You might think that the whole grammar could be pretty much defined using
+// the lexer, but the problem there is the hard limit of 32 total lexer rules,
+// plus the inability to create nodes and attributes.
+
+// Every possible character is a delimiter.
+// Note that this rule has nothing to do with the column delimiter used in the
+// input file!
+<KEYWORD_DELIMITERS>					::= u+0x0001..u+0xFFFD;
+
+// Every possible character is a token.
+// Note that there is no reference to the keywords() command within this rule.
+// The keywords() command performs a search of all keywords present within the
+// parser rule of the grammar.  As we have no interesting in matching such
+// keywords, especially given that this grammar contains no such things, the
+// command is not used.  This ensures that, regardless of what may appear in
+// the parser rules, the lexer will always* create a single token per
+// character.
+//
+// * EOL tokens may be two characters.  If your column delimiter or quote rules
+// specify so, those tokens may be more than once character long.
+<TOKENS>								::= token(
+												<WHITESPACE> |
+												<EOL> |
+												<DELIMITER> |
+												<QUOTE> |
+												u+0x0001..u+0xFFFD
+											);
+
+// Whitespace is identified so that it can be trimmed from column values later.
+<WHITESPACE>							::= " " | "\t";
+
+// EOL tokens are also identified so they can be handled explicitly.
+<EOL>									::= ["\r"] "\n";
+
+// This is where the column delimiter is specified.  To use a different column
+// delimiter, change this rule.
+<DELIMITER>								::= ",";
+
+// The QUOTE rule defines the quote symbol to be used for the target CSV file
+// format.  Changing this value here will take effect throughout the entire
+// grammar.
+<QUOTE>									::= "\"";
+
+// ***
+// * Parser rules
+// ***
+<language>								::= <row>*;
+
+// This rule defines a single row, and allows for empty (or blank) rows to be
+// effectively ignored.  Note that the EOL token at the end of the first
+// definition is optional - this allows for the last row to end at EOF instead
+// of an EOL.
+//
+// To create a usable CSV grammar you will need to modify this rule to expect
+// a certain number of columns having specific values in specific columns.  
+// A real world row rule would look more like this:
+//
+// <row>								::= node("CLASS", node("DECLARATION", <classScopeColumn> <DELIMITER> <classNameColumn> <DELIMITER> <classNoteColumn>)) [<EOL>] |
+//											<WHITESPACE>* <EOL>;
+//
+// In addition to a more customised row rule, see below for details on the more
+// customised column rules you will also need.
+<row>									::= node("ROW", <column> (<DELIMITER> <column>)*) [<EOL>] |
+											<WHITESPACE>* <EOL>;
+
+// A column is all tokens from the current token until the first instance of
+// the column delimiter or the end of the line.
+//
+// To change the specifics of how columns are processed, reference one of the 
+// five available column rules here.  Each column rule is described in further
+// detail below, but briefly the available column rules are:
+// - unquotedColumn
+// - unquotedColumnTrimmed
+// - quotedColumn
+// - quotedColumnTrimmed
+// - quotedColumnEscape
+//
+// In order to make this actually useful you'll need to create a number of 
+// custom column rules, one specific for each column in your input file.  The
+// way to do this is to copy and paste a suitable specific rule from below
+// that you require, rename it to something specific, and add any node and/or
+// attribute commands you require.  An example of a specific column rule 
+// follows.
+//
+// <classNameColumn>					::= <WHITESPACE>* <QUOTE> <WHITESPACE>* attribute("NAME", skip(<WHITESPACE>* <QUOTE>)) <WHITESPACE>* <QUOTE> <WHITESPACE>*;
+//
+// This sample rule was derived from the quotedColumnTrimmed rule below, then
+// modified to create a NAME attribute from the quoted value (minus leading and
+// trailing whitespace).
+<column>								::= node("COLUMN", <unquotedColumnEscape>);
+
+// This rule uses the except() command instead of the skip() command to handle
+// the fringe case where a line ends at EOF instead of a newline.
+//
+// The skip() command consumes tokens up until if finds tokens that match the
+// target expression.  If the target expression cannot be matched by EOF, the
+// skip command will fail.
+//
+// Except() fails on EOF, but consumes anything else up to there.  This handles
+// cases where a row ends with EOF instead of EOL.  Because the target 
+// expression is the top level lexer rule TOKENS, any token can be consumed.
+<unquotedColumn>						::= attribute("VALUE", except(<TOKENS>, <DELIMITER> | <EOL>)*);
+
+// This rule is very similar to the previous, with the exception that it 
+// will trim leading both leading and trailing whitespace from the column 
+// value.  This is achieved by consuming the whitespace with an optional-
+// repeating reference to the WHITESPACE rule prior to consuming the rule
+// value.  You will notice that the exception parameter to the except()
+// command also matches any amount of whitespace prior to the delimiter
+// or end of line.  Finally, WHITESPACE is called again in an optional-
+// repeating term to consume any trailing whitespace.
+//
+// Note that the tokens matching the exception expression in the except()
+// command are not consumed when they are matched.  This aligns with the 
+// target expression in a skip rule; they are not consumed either.
+<unquotedColumnTrimmed>					::= <WHITESPACE>* attribute("VALUE", except(<TOKENS>, <WHITESPACE>* (<DELIMITER> | <EOL>))) <WHITESPACE>*;
+
+// We can use skip here because we always have something concrete to skip to.
+// Its also worth noting that skip is significantly faster than except in 
+// almost all cases.
+//
+// You will notice that this rule allows for any amount of whitespace before
+// the opening quote.  This is required, as whitespace often appears here.
+// We also allow for any amount of whitespace between the closing quote and
+// the column/row delimiter.
+<quotedColumn>							::= <WHITESPACE>* <QUOTE> attribute("VALUE", skip(<QUOTE>)) <QUOTE> <WHITESPACE>*;
+
+// This rule is very similar to the previous, except that it will also trim
+// whitespace from within the quoted column value.  This is done in a manner
+// very similar to what was done above in unquotedColumnTrimmed.
+<quotedColumnTrimmed>					::= <WHITESPACE>* <QUOTE> <WHITESPACE>* attribute("VALUE", skip(<WHITESPACE>* <QUOTE>)) <WHITESPACE>* <QUOTE> <WHITESPACE>*;
+
+// Although its rarely seen in CSV files, we can support escaped quotes if we
+// need to.  This is done by providing an escape expression to the skip 
+// command.  In this example, we've provided the columnQuoteEscape rule as the
+// skip escape, which allows for both C++ and VB/SQL style quote escapes.
+<quotedColumnEscape>					::= <WHITESPACE>* <QUOTE> attribute("VALUE", skip(<QUOTE>, <columnQuoteEscape>)) <QUOTE> <WHITESPACE>*;
+
+// Handles escapes on the column delimiter using C style notation.  For example
+// parsing the string "simple, more complex, contains a comma (\,)" with this
+// rule causes it to ignore the escaped comma within the parenthesis.
+<unquotedColumnEscape>					::= attribute("VALUE", except(<columnDelimiterEscape> | <TOKENS>, <DELIMITER> | <EOL>)*);
+
+// This rule allows both C style and SQL style quote escapes.
+<columnQuoteEscape>						::= "\\\"" | 
+											"\"\"";
+
+// For unquoted columns, this specifies that a backslash followed by a 
+// delimiter counts as an escaped delimiter - so, not a delimiter.
+<columnDelimiterEscape>					::= "\\" <DELIMITER>;

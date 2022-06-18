@@ -1,0 +1,6 @@
+<CodeOptions>
+     <CodeOption name="DefaultExtension">.jaackd</CodeOption>
+     <CodeOption name="HasImplementation">true</CodeOption>
+     <CodeOption name="ImplementationExtension">.jaackdi</CodeOption>
+     <CodeOption name="Editor">C:\Windows\notepad.exe</CodeOption>
+</CodeOptions>

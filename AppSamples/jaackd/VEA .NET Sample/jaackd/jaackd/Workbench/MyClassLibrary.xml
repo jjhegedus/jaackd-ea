@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<RefData version="1.0" exporter="EA.25">
+	<DataSet name="Package Build Scripts" table="t_script" filter="ScriptName='#ScriptName#' and ScriptAuthor='#ScriptAuthor#'" stoplist=";ScriptID;">
+		<DataRow>
+			<Column name="ScriptID" value="17"/>
+			<Column name="ScriptCategory" value="EACompileScript"/>
+			<Column name="ScriptName" value="MyClassLibrary"/>
+			<Column name="ScriptAuthor" value="{2F849A7E-8093-476e-BB67-3A702F3583D6}"/>
+			<Column name="Notes" value="&lt;?xml version=&quot;1.0&quot;?&gt;&#xA;&lt;DATA&gt;&lt;Capture value=&quot;true&quot;/&gt;&lt;InitialDir value=&quot;C:\Benchmark\DotNet\csharp\Assemblies\MyClassLibrary&quot;/&gt;&lt;OutputParser value=&quot;jaackd&quot;/&gt;&lt;RunCommand value=&quot;&quot;/&gt;&lt;TestRunCommand value=&quot;&quot;/&gt;&lt;TestOutputParser value=&quot;&quot;/&gt;&lt;TestCapture value=&quot;false&quot;/&gt;&lt;TestBuildFirst value=&quot;false&quot;/&gt;&lt;DeployCommand value=&quot;&quot;/&gt;&lt;Debugger value=&quot;jaackd 2.0&quot;/&gt;&lt;Vars value=&quot;MyClassLibrary.CJohn,SetAge,23&quot;/&gt;&lt;DebugClass value=&quot;bin\Debug\MyClassLibrary.dll&quot;/&gt;&lt;ShowConsole value=&quot;true&quot;/&gt;&lt;SeqFilter value=&quot;&quot;/&gt;&lt;SeqOptionArguments value=&quot;false&quot;/&gt;&lt;SeqOptionFilter value=&quot;false&quot;/&gt;&lt;SeqOptionStep value=&quot;false&quot;/&gt;&lt;SeqSingleStepMax value=&quot;100&quot;/&gt;&lt;SeqOptionExternal value=&quot;false&quot;/&gt;&lt;/DATA&gt;&#xA;"/>
+			<Column name="Script" value="C:\Program Files\Microsoft Visual Studio 8\Common7\IDE\devenv.com  /Build Debug MyClassLibrary.sln"/>
+		</DataRow>
+	</DataSet>
+</RefData>

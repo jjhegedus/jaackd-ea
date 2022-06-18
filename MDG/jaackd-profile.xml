@@ -1,0 +1,190 @@
+<?xml  version='1.0' encoding='windows-1252' ?>
+<UMLProfile profiletype="uml2">
+	<Documentation id="8A93E0A4-5" name="jaackd" version="1.0" notes="jaackd"/>
+	<Content>
+		<Stereotypes>
+			<Stereotype name="Aggregation" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
+				<AppliesTo>
+					<Apply type="Aggregation"/>
+				</AppliesTo>
+			</Stereotype>
+			<Stereotype name="Composition" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
+				<AppliesTo>
+					<Apply type="Composition"/>
+				</AppliesTo>
+			</Stereotype>
+			<Stereotype name="Generalization" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
+				<AppliesTo>
+					<Apply type="Generalization">
+						<Property name="isSubstitutable" value="true"/>
+					</Apply>
+				</AppliesTo>
+			</Stereotype>
+			<Stereotype name="jaackd-binaries" metatype="jaackd-binaries" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
+				<metaconstraints>
+					<metaconstraint umlRole="owner" constraint="jaackd::jaackd-model"/>
+				</metaconstraints>
+				<stereotypedrelationships>
+					<stereotypedrelationship stereotype="jaackd::Composition" constraint="jaackd::jaackd-model"/>
+				</stereotypedrelationships>
+				<AppliesTo>
+					<Apply type="Package">
+						<Property name="URI" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
+					</Apply>
+				</AppliesTo>
+			</Stereotype>
+			<Stereotype name="jaackd-binary" metatype="jaackd-binary" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
+				<metaconstraints>
+					<metaconstraint umlRole="owner" constraint="jaackd::jaackd-binaries"/>
+				</metaconstraints>
+				<stereotypedrelationships>
+					<stereotypedrelationship stereotype="jaackd::Composition" constraint="jaackd::jaackd-binaries"/>
+				</stereotypedrelationships>
+				<AppliesTo>
+					<Apply type="Package">
+						<Property name="URI" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
+					</Apply>
+				</AppliesTo>
+				<TaggedValues>
+					<Tag name="BinaryFile" type="" description="" unit="" values="" default=""/>
+				</TaggedValues>
+			</Stereotype>
+			<Stereotype name="jaackd-configuration" metatype="jaackd-configuration" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
+				<metaconstraints>
+					<metaconstraint umlRole="owner" constraint="jaackd::jaackd-model"/>
+				</metaconstraints>
+				<stereotypedrelationships>
+					<stereotypedrelationship stereotype="jaackd::Composition" constraint="jaackd::jaackd-model"/>
+				</stereotypedrelationships>
+				<AppliesTo>
+					<Apply type="Package">
+						<Property name="URI" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
+					</Apply>
+				</AppliesTo>
+			</Stereotype>
+			<Stereotype name="jaackd-configuration-element" metatype="jaackd-configuration-element (ABSTRACT-DO NOT USE)" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
+				<metaconstraints>
+					<metaconstraint umlRole="owner" constraint="jaackd::jaackd-configuration"/>
+				</metaconstraints>
+				<stereotypedrelationships>
+					<stereotypedrelationship stereotype="jaackd::Composition" constraint="jaackd::jaackd-configuration"/>
+				</stereotypedrelationships>
+				<AppliesTo>
+					<Apply type="Class">
+						<Property name="isActive" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
+					</Apply>
+				</AppliesTo>
+			</Stereotype>
+			<Stereotype name="jaackd-menu" metatype="jaackd-menu" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-configuration-element" baseStereotypes="jaackd-configuration-element jaackd-menu-element" strictness="all">
+				<AppliesTo>
+					<Apply type="Class">
+						<Property name="isActive" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
+					</Apply>
+				</AppliesTo>
+				<TaggedValues>
+					<Tag name="Name" type="string" description="" unit="" values="" default=""/>
+				</TaggedValues>
+			</Stereotype>
+			<Stereotype name="jaackd-menu-element" metatype="jaackd-menu-element (ABSTRACT - DO NOT USE)" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" strictness="all"/>
+			<Stereotype name="jaackd-menu-item" metatype="jaackd-menu-item" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" strictness="all">
+				<stereotypedrelationships>
+					<stereotypedrelationship stereotype="jaackd::MenuNesting" constraint="jaackd::jaackd-menu-element"/>
+				</stereotypedrelationships>
+				<AppliesTo>
+					<Apply type="Class">
+						<Property name="isActive" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
+					</Apply>
+				</AppliesTo>
+				<TaggedValues>
+					<Tag name="Operation" type="" description="" unit="" values="" default=""/>
+				</TaggedValues>
+			</Stereotype>
+			<Stereotype name="jaackd-model" metatype="jaackd-model" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
+				<AppliesTo>
+					<Apply type="Package">
+						<Property name="URI" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
+					</Apply>
+				</AppliesTo>
+			</Stereotype>
+			<Stereotype name="jaackd-namespace" metatype="jaackd-namespace" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
+				<metaconstraints>
+					<metaconstraint umlRole="owner" constraint="jaackd::jaackd-model"/>
+				</metaconstraints>
+				<stereotypedrelationships>
+					<stereotypedrelationship stereotype="jaackd::Composition" constraint="jaackd::jaackd-model"/>
+				</stereotypedrelationships>
+				<AppliesTo>
+					<Apply type="Package">
+						<Property name="URI" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
+					</Apply>
+				</AppliesTo>
+			</Stereotype>
+			<Stereotype name="jaackd-repositories" metatype="jaackd-repositories" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
+				<metaconstraints>
+					<metaconstraint umlRole="owner" constraint="jaackd::jaackd-model"/>
+				</metaconstraints>
+				<stereotypedrelationships>
+					<stereotypedrelationship stereotype="jaackd::Composition" constraint="jaackd::jaackd-model"/>
+				</stereotypedrelationships>
+				<AppliesTo>
+					<Apply type="Package">
+						<Property name="URI" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
+					</Apply>
+				</AppliesTo>
+			</Stereotype>
+			<Stereotype name="jaackd-repository" metatype="jaackd-repository" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
+				<metaconstraints>
+					<metaconstraint umlRole="owner" constraint="jaackd::jaackd-repositories"/>
+				</metaconstraints>
+				<stereotypedrelationships>
+					<stereotypedrelationship stereotype="jaackd::Composition" constraint="jaackd::jaackd-repositories"/>
+				</stereotypedrelationships>
+				<AppliesTo>
+					<Apply type="Package">
+						<Property name="URI" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
+					</Apply>
+				</AppliesTo>
+				<TaggedValues>
+					<Tag name="CloneURL" type="" description="" unit="" values="" default=""/>
+					<Tag name="LocalDirectory" type="" description="" unit="" values="" default=""/>
+				</TaggedValues>
+			</Stereotype>
+			<Stereotype name="jaackd-submenu" metatype="jaackd-submenu" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-configuration-element" baseStereotypes="jaackd-configuration-element jaackd-menu-element" strictness="all">
+				<stereotypedrelationships>
+					<stereotypedrelationship stereotype="jaackd::MenuNesting" constraint="jaackd::jaackd-menu-element"/>
+				</stereotypedrelationships>
+				<AppliesTo>
+					<Apply type="Class">
+						<Property name="isActive" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
+					</Apply>
+				</AppliesTo>
+				<TaggedValues>
+					<Tag name="Name" type="string" description="" unit="" values="" default=""/>
+				</TaggedValues>
+			</Stereotype>
+			<Stereotype name="MenuNesting" metatype="MenuNesting" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
+				<AppliesTo>
+					<Apply type="Nesting">
+						<Property name="_MeaningBackwards" value="nests over"/>
+						<Property name="_MeaningForwards" value="is nested within"/>
+						<Property name="direction" value="Destination -&gt; Source"/>
+					</Apply>
+				</AppliesTo>
+			</Stereotype>
+		</Stereotypes>
+		<TaggedValueTypes/>
+		<ViewDefinitions/>
+		<Metamodel/>
+	</Content>
+</UMLProfile>

@@ -1,0 +1,4 @@
+<CodeOptions>
+     <CodeOption name="DefaultExtension">.cs</CodeOption>
+     <CodeOption name="Editor">%VS22%\devenv.exe</CodeOption>
+</CodeOptions>

@@ -1,0 +1,80 @@
+// ECMAScript 5.1
+// http://www.ecma-international.org/ecma-262/5.1/#sec-7
+
+// Processing instructions
+caseSensitive();
+
+delimiters(<delimiter>);
+
+lex(<tokens>);
+
+parse(<language>);
+
+// Lexer rules
+<SourceCharacter>						::= U+0x0001..U+0xFFFE;
+
+<tokens>								::= token(<character>) |
+											token(<whitespace>) ;
+
+<FORMAT_CONTROL_CHARACTERS>             ::= <ZWNJ> + <ZWJ> + <BOM>;
+
+
+//7.1 Unicode Format-Control Characters
+//
+//The Unicode format-control characters (i.e., the characters in category “Cf” in the Unicode Character Database 
+//such as left-to-right mark or right-to-left mark) are control codes used to control the formatting of a range of 
+//text in the absence of higher-level protocols for this (such as mark-up languages).
+//
+//It is useful to allow format-control characters in source text to facilitate editing and display. All format control 
+//characters may be used within comments, and within string literals and regular expression literals.
+//
+//<ZWNJ> and <ZWJ> are format-control characters that are used to make necessary distinctions when forming words or phrases 
+//in certain languages. In ECMAScript source text, <ZWNJ> and <ZWJ> may also be used in an identifier after the first character.
+//
+//<BOM> is a format-control character used primarily at the start of a text to mark it as Unicode and to allow detection of 
+//the text's encoding and byte order. <BOM> characters intended for this purpose can sometimes also appear after the start of a text, 
+//for example as a result of concatenating files. <BOM> characters are treated as white space characters (see 7.2).
+
+
+<ZWNJ>									::= U+0x200C; // zero width non joiner
+<ZWJ>									::= U+0x200D; // zero width joiner
+<BOM>									::= U+0xFEFF; // byte order mark
+
+<WHITESPACE>							::= <TAB> + <VT> + <FF> + <SP> + <NBSP> + <BOM>; 
+// JJH: We need to add support for other Unicode space types if and as necessary
+
+<TAB>									::= U+0x009;
+<VT>									::= U+0x000B; // Vertical Tab
+<FF>									::= U+0x000C; // Form Feed
+<SP>                                    ::= U+0x0020; // space
+<NBSP>                                  ::= U+0x00A0; // no-break space
+
+<LINE_TERMINATORS>						::= <LF> + <CR> + <LS> + <PS>;
+
+<LF>									::= U+0x000A; // Line Feed
+<CR>									::= U+0x000D; // Carriage Return
+<LS>									::= U+0x2028; // Line Separator
+<PS>									::= U+0x2029; // Paragraph Separator
+
+
+
+
+// Language
+<language>                              ::= <fileScope>;
+
+<fileScope>                             ::= <TOKENS>*;
+
+<DELIMITER>							::= <PUNCTUATORS> + <DIV_PUNCTUATORS>;
+
+
+<PUNCTUATORS>							::= "{" | "}" | "(" | ")" | "[" | "]" | 
+											"." | ";" | "," | "<" | ">" | "<=" |
+								            ">=" | "==" | "!=" | "===" | "!==" |
+											"+" | "-" | "*" | "%" | "++" | "--" | 
+											"<<" | ">>" | ">>>" | "&" "|" | "^" | 
+											"!" | "~" | "&&" | "||" | "?" | ":" | 
+											"=" | "+=" | "-=" | "*=" | "%=" | "<<=" |
+											">>=" | ">>>=" | "&=" | "|=" | "^=";
+
+
+<DIV_PUNCTUATORS> 						::= "/" + "/="; 
