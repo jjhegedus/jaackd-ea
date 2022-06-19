@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace JaackdEAAddin {
-  internal class BackgroundService {
+  internal class BackgroundService : IBackgroundService {
     private readonly ILogger<BackgroundService> _log;
     private readonly IConfiguration _configuration;
 
@@ -18,7 +18,7 @@ namespace JaackdEAAddin {
 
     public void Run() {
       for (int i = 0; i < _configuration.GetValue<int>("LoopTimes"); i++) {
-        _log.LogInformation("Run number { runNUmber }", i);
+        _log.LogInformation("Run number {runNUmber}", i);
       }
     }
 

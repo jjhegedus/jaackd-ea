@@ -6,7 +6,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
-
+using Microsoft.Extensions.Logging;
+using System.Windows.Forms;
 
 namespace JaackdEAAddin {
 
@@ -47,12 +48,6 @@ namespace JaackdEAAddin {
     /// <param name="Repository" />the EA repository
     /// a string
     public String EA_Connect(EA.Repository Repository) {
-      //using IHost host = Host.CreateDefaultBuilder().Build();
-      //IConfiguration config = host.Services.GetRequiredService<IConfiguration>();
-
-      //int keyOneValue = config.GetValue<int>("KeyOne");
-      //bool keyTwoValue = config.GetValue<bool>("KeyTwo");
-      //string keyThreeNestedValue = config.GetValue<string>("KeyThree:Message");
 
       var builder = new ConfigurationBuilder();
       Utilities.BuildConfiguration(builder);
@@ -60,17 +55,20 @@ namespace JaackdEAAddin {
       Log.Logger = new LoggerConfiguration()
         .ReadFrom.Configuration(builder.Build())
         .Enrich.FromLogContext()
-        .WriteTo.Console()
+        .WriteTo.File("test.log")
         .CreateLogger();
 
       Log.Logger.Information("EA_Connect: Logging Initialized");
-
+       
       var host = Host.CreateDefaultBuilder()
         .ConfigureServices((context, services) => {
-
+          services.AddTransient<IBackgroundService, BackgroundService>(); 
         })
         .UseSerilog()
         .Build();
+
+      var backgroundService = ActivatorUtilities.CreateInstance<BackgroundService>(host.Services);
+      backgroundService.Run();
 
       return "a string";
     }
@@ -194,4 +192,5 @@ namespace JaackdEAAddin {
     }
 
   }
+
 }

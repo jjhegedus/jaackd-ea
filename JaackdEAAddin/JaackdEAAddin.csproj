@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net5.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
-    <ImplicitUsings>enable</ImplicitUsings>
     <EnableComHosting>true</EnableComHosting>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
@@ -31,7 +31,7 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="regsvr32 C:\Projects\github\jjhegedus\jaackd-ea\JaackdEAAddin\bin\Debug\net6.0-windows\JaackdEAAddin.comhost.dll" />
+    <Exec Command="regsvr32 C:\Projects\github\jjhegedus\jaackd-ea\JaackdEAAddin\bin\x64\Debug\net5.0-windows\JaackdEAAddin.comhost.dll" />
   </Target>
 
 </Project>
