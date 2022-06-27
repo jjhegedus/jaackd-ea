@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="windows-1252" standalone="no" ?>
+<RefData version="1.0" exporter="EA.25">
+	<DataSet name="jaackd-csharp" table="t_datatypes where ProductName='jaackd-csharp'" filter="Type='#Type#' and ProductName='#ProductName#' and DataType='#DataType#'" stoplist=";DatatypeID;">
+		<DataRow>
+			<Column name="Type" value="Code"/>
+			<Column name="ProductName" value="jaackd-csharp"/>
+			<Column name="DataType" value="void"/>
+			<Column name="Size" value="0"/>
+			<Column name="MaxLen" value="0"/>
+			<Column name="MaxPrec" value="0"/>
+			<Column name="MaxScale" value="0"/>
+			<Column name="DefaultLen" value="0"/>
+			<Column name="DefaultPrec" value="0"/>
+			<Column name="DefaultScale" value="0"/>
+			<Column name="User" value="0"/>
+			<Column name="GenericType" value="Void"/>
+			<Column name="DatatypeID" value="1367"/>
+		</DataRow>
+		<DataRow>
+			<Column name="Type" value="Code"/>
+			<Column name="ProductName" value="jaackd-csharp"/>
+			<Column name="DataType" value="sbyte"/>
+			<Column name="Size" value="0"/>
+			<Column name="MaxLen" value="0"/>
+			<Column name="MaxPrec" value="0"/>
+			<Column name="MaxScale" value="0"/>
+			<Column name="DefaultLen" value="0"/>
+			<Column name="DefaultPrec" value="0"/>
+			<Column name="DefaultScale" value="0"/>
+			<Column name="User" value="0"/>
+			<Column name="DatatypeID" value="1368"/>
+		</DataRow>
+		<DataRow>
+			<Column name="Type" value="Code"/>
+			<Column name="ProductName" value="jaackd-csharp"/>
+			<Column name="DataType" value="byte"/>
+			<Column name="Size" value="0"/>
+			<Column name="MaxLen" value="0"/>
+			<Column name="MaxPrec" value="0"/>
+			<Column name="MaxScale" value="0"/>
+			<Column name="DefaultLen" value="0"/>
+			<Column name="DefaultPrec" value="0"/>
+			<Column name="DefaultScale" value="0"/>
+			<Column name="User" value="0"/>
+			<Column name="GenericType" value="Byte"/>
+			<Column name="DatatypeID" value="1369"/>
+		</DataRow>
+		<DataRow>
+			<Column name="Type" value="Code"/>
+			<Column name="ProductName" value="jaackd-csharp"/>
+			<Column name="DataType" value="short"/>
+			<Column name="Size" value="0"/>
+			<Column name="MaxLen" value="0"/>
+			<Column name="MaxPrec" value="0"/>
+			<Column name="MaxScale" value="0"/>
+			<Column name="DefaultLen" value="0"/>
+			<Column name="DefaultPrec" value="0"/>
+			<Column name="DefaultScale" value="0"/>
+			<Column name="User" value="0"/>
+			<Column name="GenericType" value="Integer"/>
+			<Column name="DatatypeID" value="1370"/>
+		</DataRow>
+		<DataRow>
+			<Column name="Type" value="Code"/>
+			<Column name="ProductName" value="jaackd-csharp"/>
+			<Column name="DataType" value="ushort"/>
+			<Column name="Size" value="0"/>
+			<Column name="MaxLen" value="0"/>
+			<Column name="MaxPrec" value="0"/>
+			<Column name="MaxScale" value="0"/>
+			<Column name="DefaultLen" value="0"/>
+			<Column name="DefaultPrec" value="0"/>
+			<Column name="DefaultScale" value="0"/>
+			<Column name="User" value="0"/>
+			<Column name="GenericType" value="Integer"/>
+			<Column name="DatatypeID" value="1371"/>
+		</DataRow>
+		<DataRow>
+			<Column name="Type" value="Code"/>
+			<Column name="ProductName" value="jaackd-csharp"/>
+			<Column name="DataType" value="int"/>
+			<Column name="Size" value="0"/>
+			<Column name="MaxLen" value="0"/>
+			<Column name="MaxPrec" value="0"/>
+			<Column name="MaxScale" value="0"/>
+			<Column name="DefaultLen" value="0"/>
+			<Column name="DefaultPrec" value="0"/>
+			<Column name="DefaultScale" value="0"/>
+			<Column name="User" value="0"/>
+			<Column name="GenericType" value="Integer"/>
+			<Column name="DatatypeID" value="1372"/>
+		</DataRow>
+		<DataRow>
+			<Column name="Type" value="Code"/>
+			<Column name="ProductName" value="jaackd-csharp"/>
+			<Column name="DataType" value="uint"/>
+			<Column name="Size" value="0"/>
+			<Column name="MaxLen" value="0"/>
+			<Column name="MaxPrec" value="0"/>
+			<Column name="MaxScale" value="0"/>
+			<Column name="DefaultLen" value="0"/>
+			<Column name="DefaultPrec" value="0"/>
+			<Column name="DefaultScale" value="0"/>
+			<Column name="User" value="0"/>
+			<Column name="GenericType" value="Integer"/>
+			<Column name="DatatypeID" value="1373"/>
+		</DataRow>
+		<DataRow>
+			<Column name="Type" value="Code"/>
+			<Column name="ProductName" value="jaackd-csharp"/>
+			<Column name="DataType" value="long"/>
+			<Column name="Size" value="0"/>
+			<Column name="MaxLen" value="0"/>
+			<Column name="MaxPrec" value="0"/>
+			<Column name="MaxScale" value="0"/>
+			<Column name="DefaultLen" value="0"/>
+			<Column name="DefaultPrec" value="0"/>
+			<Column name="DefaultScale" value="0"/>
+			<Column name="User" value="0"/>
+			<Column name="GenericType" value="Integer"/>
+			<Column name="DatatypeID" value="1374"/>
+		</DataRow>
+		<DataRow>
+			<Column name="Type" value="Code"/>
+			<Column name="ProductName" value="jaackd-csharp"/>
+			<Column name="DataType" value="ulong"/>
+			<Column name="Size" value="0"/>
+			<Column name="MaxLen" value="0"/>
+			<Column name="MaxPrec" value="0"/>
+			<Column name="MaxScale" value="0"/>
+			<Column name="DefaultLen" value="0"/>
+			<Column name="DefaultPrec" value="0"/>
+			<Column name="DefaultScale" value="0"/>
+			<Column name="User" value="0"/>
+			<Column name="GenericType" value="Integer"/>
+			<Column name="DatatypeID" value="1375"/>
+		</DataRow>
+		<DataRow>
+			<Column name="Type" value="Code"/>
+			<Column name="ProductName" value="jaackd-csharp"/>
+			<Column name="DataType" value="char"/>
+			<Column name="Size" value="0"/>
+			<Column name="MaxLen" value="0"/>
+			<Column name="MaxPrec" value="0"/>
+			<Column name="MaxScale" value="0"/>
+			<Column name="DefaultLen" value="0"/>
+			<Column name="DefaultPrec" value="0"/>
+			<Column name="DefaultScale" value="0"/>
+			<Column name="User" value="0"/>
+			<Column name="GenericType" value="Character"/>
+			<Column name="DatatypeID" value="1376"/>
+		</DataRow>
+		<DataRow>
+			<Column name="Type" value="Code"/>
+			<Column name="ProductName" value="jaackd-csharp"/>
+			<Column name="DataType" value="float"/>
+			<Column name="Size" value="0"/>
+			<Column name="MaxLen" value="0"/>
+			<Column name="MaxPrec" value="0"/>
+			<Column name="MaxScale" value="0"/>
+			<Column name="DefaultLen" value="0"/>
+			<Column name="DefaultPrec" value="0"/>
+			<Column name="DefaultScale" value="0"/>
+			<Column name="User" value="0"/>
+			<Column name="GenericType" value="Real"/>
+			<Column name="DatatypeID" value="1377"/>
+		</DataRow>
+		<DataRow>
+			<Column name="Type" value="Code"/>
+			<Column name="ProductName" value="jaackd-csharp"/>
+			<Column name="DataType" value="double"/>
+			<Column name="Size" value="0"/>
+			<Column name="MaxLen" value="0"/>
+			<Column name="MaxPrec" value="0"/>
+			<Column name="MaxScale" value="0"/>
+			<Column name="DefaultLen" value="0"/>
+			<Column name="DefaultPrec" value="0"/>
+			<Column name="DefaultScale" value="0"/>
+			<Column name="User" value="0"/>
+			<Column name="GenericType" value="Real"/>
+			<Column name="DatatypeID" value="1378"/>
+		</DataRow>
+		<DataRow>
+			<Column name="Type" value="Code"/>
+			<Column name="ProductName" value="jaackd-csharp"/>
+			<Column name="DataType" value="bool"/>
+			<Column name="Size" value="0"/>
+			<Column name="MaxLen" value="0"/>
+			<Column name="MaxPrec" value="0"/>
+			<Column name="MaxScale" value="0"/>
+			<Column name="DefaultLen" value="0"/>
+			<Column name="DefaultPrec" value="0"/>
+			<Column name="DefaultScale" value="0"/>
+			<Column name="User" value="0"/>
+			<Column name="GenericType" value="Boolean"/>
+			<Column name="DatatypeID" value="1379"/>
+		</DataRow>
+		<DataRow>
+			<Column name="Type" value="Code"/>
+			<Column name="ProductName" value="jaackd-csharp"/>
+			<Column name="DataType" value="decimal"/>
+			<Column name="Size" value="0"/>
+			<Column name="MaxLen" value="0"/>
+			<Column name="MaxPrec" value="0"/>
+			<Column name="MaxScale" value="0"/>
+			<Column name="DefaultLen" value="0"/>
+			<Column name="DefaultPrec" value="0"/>
+			<Column name="DefaultScale" value="0"/>
+			<Column name="User" value="0"/>
+			<Column name="GenericType" value="Real"/>
+			<Column name="DatatypeID" value="1380"/>
+		</DataRow>
+		<DataRow>
+			<Column name="Type" value="Code"/>
+			<Column name="ProductName" value="jaackd-csharp"/>
+			<Column name="DataType" value="string"/>
+			<Column name="Size" value="0"/>
+			<Column name="MaxLen" value="0"/>
+			<Column name="MaxPrec" value="0"/>
+			<Column name="MaxScale" value="0"/>
+			<Column name="DefaultLen" value="0"/>
+			<Column name="DefaultPrec" value="0"/>
+			<Column name="DefaultScale" value="0"/>
+			<Column name="User" value="1"/>
+			<Column name="GenericType" value="String"/>
+			<Column name="DatatypeID" value="1381"/>
+		</DataRow>
+	</DataSet>
+</RefData>

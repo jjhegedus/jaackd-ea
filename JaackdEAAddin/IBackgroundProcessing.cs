@@ -1,5 +1,5 @@
 ﻿namespace JaackdEAAddin {
-  internal interface IBackgroundService {
+  internal interface IBackgroundProcessing {
     void Run();
   }
 }

@@ -7,7 +7,10 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using Microsoft.Extensions.Logging;
+using System.IO;
+using System.Reflection;
 using System.Windows.Forms;
+//using Microsoft.VisualBasic;
 
 namespace JaackdEAAddin {
 
@@ -16,15 +19,11 @@ namespace JaackdEAAddin {
   [Guid("B4CC0052-01CE-406F-9769-E8D9D4A544AB")]
   [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
   public interface IAddin {
-    public String EA_Connect(EA.Repository Repository);
-    public object EA_GetMenuItems(EA.Repository Repository, string Location, string MenuName);
-    public void EA_GetMenuState(EA.Repository Repository, string Location, string MenuName, string ItemName, ref bool IsEnabled, ref bool IsChecked);
-    public void EA_MenuClick(EA.Repository Repository, string Location, string MenuName, string ItemName);
-    public void EA_Disconnect();
-    // String EA_Connect(EA.Repository Repository);
-    // object EA_GetMenuItems(EA.Repository Repository, string Location, string MenuName);
-    // void EA_GetMenuState(EA.Repository Repository, string Location, string MenuName, string ItemName, ref bool IsEnabled, ref bool IsChecked);
-    // void EA_MenuClick(EA.Repository Repository, string Location, string MenuName, string ItemName);
+    String EA_Connect(EA.Repository Repository);
+    object EA_GetMenuItems(EA.Repository Repository, string Location, string MenuName);
+    void EA_GetMenuState(EA.Repository Repository, string Location, string MenuName, string ItemName, ref bool IsEnabled, ref bool IsChecked);
+    void EA_MenuClick(EA.Repository Repository, string Location, string MenuName, string ItemName);
+    void EA_Disconnect();
   }
 
 
@@ -32,49 +31,84 @@ namespace JaackdEAAddin {
   [Guid("0806C872-F80D-48DC-AD48-2408556757DF")]
   public class Addin : IAddin {
 
-    // define menu constants
-    const string menuHeader = "-&MyAddin";
-    const string menuHello = "&Say Hello";
-    const string menuGoodbye = "&Say Goodbye";
+    private static IHost _host = _host = Host.CreateDefaultBuilder()
+        .ConfigureAppConfiguration(builder => {
+          builder.Sources.Clear();
+          builder.AddConfiguration(Utilities.BuildConfiguration(new ConfigurationBuilder()).Build());
+        })
+        .UseSerilog()
+        .Build();
 
-    // remember if we have to say hello or goodbye
-    private bool shouldWeSayHello = true;
+    static Addin() {
+      Configure();
+    }
+
+    private static void Configure() {
+
+
+      //MessageBox.Show("Current directory is " + Directory.GetCurrentDirectory() + "\n");
+      var builder = Utilities.BuildConfiguration(new ConfigurationBuilder());
+      var config = builder.Build();
+
+      Log.Logger = new LoggerConfiguration()
+        .ReadFrom.Configuration(config)
+        .Enrich.FromLogContext()
+        .WriteTo.File(config.GetValue<string>("LogFileName"))
+        .CreateLogger();
+
+      Log.Logger.Information("EA_Connect: Logging Initialized");
+
+
+    }
+
+
+#pragma warning disable CS8601 // Possible null reference assignment. We know this can't be null since we're using the location the Assembly was launched from.
+    private string _assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+#pragma warning restore CS8601 // Possible null reference assignment.
+
+    public String AbsoluteFromAddinRelativePath(string relativePath) {
+      return _assemblyFolder + relativePath;
+    }
 
     ///
-    /// Called Before EA starts to check Add-In Exists
-    /// Nothing is done here.
-    /// This operation needs to exists for the addin to work
+    /// Called Before EA starts and the addin must respond in order to work with EA
     ///
     /// <param name="Repository" />the EA repository
     /// a string
     public String EA_Connect(EA.Repository Repository) {
 
-      var builder = new ConfigurationBuilder();
-      Utilities.BuildConfiguration(builder);
 
-      Log.Logger = new LoggerConfiguration()
-        .ReadFrom.Configuration(builder.Build())
-        .Enrich.FromLogContext()
-        .WriteTo.File("test.log")
-        .CreateLogger();
-
-      Log.Logger.Information("EA_Connect: Logging Initialized");
-       
-      var host = Host.CreateDefaultBuilder()
+      _host = Host.CreateDefaultBuilder()
         .ConfigureServices((context, services) => {
-          services.AddTransient<IBackgroundService, BackgroundService>(); 
+
+          IEAService eaService = new EAService(
+            _host.Services.GetRequiredService<Microsoft.Extensions.Logging.ILogger<EAService>>(),
+            _host.Services.GetRequiredService<IConfiguration>(),
+            Repository);
+
+          services.AddSingleton(typeof(IEAService), eaService);
+
+          services.AddSingleton<IMenuService, MenuService>();
+
         })
         .UseSerilog()
         .Build();
 
-      var backgroundService = ActivatorUtilities.CreateInstance<BackgroundService>(host.Services);
-      backgroundService.Run();
 
-      return "a string";
+
+      //IBackgroundProcessing backgroundProcessing = _host.Services.GetRequiredService<IBackgroundProcessing>();
+      //backgroundProcessing.Run();
+
+      return "JaackdEAAddin";
     }
 
-    public void LoadModelConfiguration() {
+    public virtual object EA_OnInitializeTechnologies(EA.Repository Repository) {
+      IConfiguration config = _host.Services.GetRequiredService<IConfiguration>();
 
+      string mdgFile = config.GetValue<string>("MDGFile");
+
+      string xmlString = System.IO.File.ReadAllText(mdgFile);
+      return xmlString;
     }
 
     ///
@@ -88,31 +122,8 @@ namespace JaackdEAAddin {
     ///
     public object EA_GetMenuItems(EA.Repository Repository, string Location, string MenuName) {
 
-      switch (MenuName) {
-        // defines the top level menu option
-        case "":
-          return menuHeader;
-        // defines the submenu options
-        case menuHeader:
-          string[] subMenus = { menuHello, menuGoodbye };
-          return subMenus;
-      }
-
-      return "";
-    }
-
-    ///
-    /// returns true if a project is currently opened
-    ///
-    /// <param name="Repository" />the repository
-    /// true if a project is opened in EA
-    bool IsProjectOpen(EA.Repository Repository) {
-      try {
-        EA.Collection c = Repository.Models;
-        return true;
-      } catch {
-        return false;
-      }
+      IMenuService menuService = _host.Services.GetRequiredService<IMenuService>();
+      return menuService.GetMenuItems(Repository, Location, MenuName);
     }
 
     ///
@@ -125,25 +136,9 @@ namespace JaackdEAAddin {
     /// <param name="IsEnabled" />boolean indicating whethe the menu item is enabled
     /// <param name="IsChecked" />boolean indicating whether the menu is checked
     public void EA_GetMenuState(EA.Repository Repository, string Location, string MenuName, string ItemName, ref bool IsEnabled, ref bool IsChecked) {
-      if (IsProjectOpen(Repository)) {
-        switch (ItemName) {
-          // define the state of the hello menu option
-          case menuHello:
-            IsEnabled = shouldWeSayHello;
-            break;
-          // define the state of the goodbye menu option
-          case menuGoodbye:
-            IsEnabled = !shouldWeSayHello;
-            break;
-          // there shouldn't be any other, but just in case disable it.
-          default:
-            IsEnabled = false;
-            break;
-        }
-      } else {
-        // If no open project, disable all menu options
-        IsEnabled = false;
-      }
+
+      IMenuService menuService = _host.Services.GetRequiredService<IMenuService>();
+      menuService.GetMenuState(Repository, Location, MenuName, ItemName, ref IsEnabled, ref IsChecked);
     }
 
     ///
@@ -155,32 +150,9 @@ namespace JaackdEAAddin {
     /// <param name="MenuName" />the name of the menu
     /// <param name="ItemName" />the name of the selected menu item
     public void EA_MenuClick(EA.Repository Repository, string Location, string MenuName, string ItemName) {
-      switch (ItemName) {
-        // user has clicked the menuHello menu option
-        case menuHello:
-          this.sayHello();
-          break;
-        // user has clicked the menuGoodbye menu option
-        case menuGoodbye:
-          this.sayGoodbye();
-          break;
-      }
-    }
 
-    ///
-    /// Say Hello to the world
-    ///
-    private void sayHello() {
-      MessageBox.Show("Hello World");
-      this.shouldWeSayHello = false;
-    }
-
-    ///
-    /// Say Goodbye to the world
-    ///
-    private void sayGoodbye() {
-      MessageBox.Show("Goodbye World");
-      this.shouldWeSayHello = true;
+      IMenuService menuService = _host.Services.GetRequiredService<IMenuService>();
+      menuService.MenuClick(Repository, Location, MenuName, ItemName);
     }
 
     ///
