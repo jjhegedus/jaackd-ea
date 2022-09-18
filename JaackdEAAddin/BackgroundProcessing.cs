@@ -18,7 +18,8 @@ namespace JaackdEAAddin {
     }
 
     public void Run() {
-      for (int i = 0; i < _configuration.GetValue<int>("LoopTimes"); i++) {
+      int numTasks = _configuration.GetValue<int>("numTasks");
+      for (int i = 0; i < numTasks; i++) {
         Task logActionTask = Task.Factory.StartNew(LogAction, new Tuple<string, ILogger<BackgroundProcessing>>(string.Format("Run number {0}", i), _logger));
       }
     }

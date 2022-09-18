@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
+using System.Globalization;
 //using Microsoft.VisualBasic;
 
 namespace JaackdEAAddin {
@@ -30,7 +31,8 @@ namespace JaackdEAAddin {
   [ComVisible(true)]
   [Guid("0806C872-F80D-48DC-AD48-2408556757DF")]
   public class Addin : IAddin {
-
+    private const string ADDIN_NAME = "JaackdEAAddin";
+    private string logFileName = "";
     private static IHost _host = _host = Host.CreateDefaultBuilder()
         .ConfigureAppConfiguration(builder => {
           builder.Sources.Clear();
@@ -39,26 +41,28 @@ namespace JaackdEAAddin {
         .UseSerilog()
         .Build();
 
+    private static IConfigurationBuilder? builder;
+    private static IConfigurationRoot? config;
+
+
     static Addin() {
-      Configure();
+      //Configure();
     }
 
-    private static void Configure() {
+    private void Configure() {
 
+      builder = Utilities.BuildConfiguration(new ConfigurationBuilder());
+      config = builder.Build();
 
-      //MessageBox.Show("Current directory is " + Directory.GetCurrentDirectory() + "\n");
-      var builder = Utilities.BuildConfiguration(new ConfigurationBuilder());
-      var config = builder.Build();
+      logFileName = config.GetValue<string>("LogFileBaseName") + "." + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss", CultureInfo.GetCultureInfo("en-US")) + ".log";
 
       Log.Logger = new LoggerConfiguration()
         .ReadFrom.Configuration(config)
         .Enrich.FromLogContext()
-        .WriteTo.File(config.GetValue<string>("LogFileName"))
+        .WriteTo.File(logFileName)
         .CreateLogger();
 
-      Log.Logger.Information("EA_Connect: Logging Initialized");
-
-
+      Log.Logger.Information("Addin::Configure(): Logging Initialized: logFileName = " + logFileName);
     }
 
 
@@ -75,20 +79,32 @@ namespace JaackdEAAddin {
     ///
     /// <param name="Repository" />the EA repository
     /// a string
-    public String EA_Connect(EA.Repository Repository) {
+    public String EA_Connect(EA.Repository repository) {
+      Configure();
+      AddEAServices(repository);
 
+      return ADDIN_NAME;
+    }
+
+    private void AddEAServices(EA.Repository repository) {
 
       _host = Host.CreateDefaultBuilder()
+        .ConfigureAppConfiguration(builder => {
+          builder.Sources.Clear();
+          builder.AddConfiguration(Utilities.BuildConfiguration(new ConfigurationBuilder()).Build());
+        })
         .ConfigureServices((context, services) => {
 
           IEAService eaService = new EAService(
             _host.Services.GetRequiredService<Microsoft.Extensions.Logging.ILogger<EAService>>(),
             _host.Services.GetRequiredService<IConfiguration>(),
-            Repository);
+            repository);
 
           services.AddSingleton(typeof(IEAService), eaService);
 
           services.AddSingleton<IMenuService, MenuService>();
+
+          services.AddSingleton<IBackgroundProcessing, BackgroundProcessing>();
 
         })
         .UseSerilog()
@@ -96,19 +112,24 @@ namespace JaackdEAAddin {
 
 
 
-      //IBackgroundProcessing backgroundProcessing = _host.Services.GetRequiredService<IBackgroundProcessing>();
-      //backgroundProcessing.Run();
-
-      return "JaackdEAAddin";
+      IBackgroundProcessing backgroundProcessing = _host.Services.GetRequiredService<IBackgroundProcessing>();
+      backgroundProcessing.Run();
     }
 
-    public virtual object EA_OnInitializeTechnologies(EA.Repository Repository) {
+    public virtual object EA_OnInitializeTechnologies(EA.Repository repository) {
+
       IConfiguration config = _host.Services.GetRequiredService<IConfiguration>();
+      Log.Logger.Information("Addin::EA_OnInitializeTechnologies(repository): successfully retrieved configuration service.");
 
       string mdgFile = config.GetValue<string>("MDGFile");
+      Log.Logger.Information("Addin::EA_OnInitializeTechnologies(repository): successfully retrieved MDGFile from the configuration service. MDGFile = " + mdgFile);
 
       string xmlString = System.IO.File.ReadAllText(mdgFile);
       return xmlString;
+    }
+
+    public void EA_FileOpen(EA.Repository repository) {
+
     }
 
     ///

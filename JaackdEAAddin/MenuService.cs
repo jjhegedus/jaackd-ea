@@ -6,7 +6,7 @@ namespace JaackdEAAddin {
   internal class MenuService : IMenuService {
 
     // define menu constants
-    const string menuHeader = "-&MyAddin";
+    const string menuHeader = "-&JaackdTools";
     const string menuHello = "&Say Hello";
     const string menuGoodbye = "&Say Goodbye";
 
@@ -16,6 +16,8 @@ namespace JaackdEAAddin {
     private readonly ILogger<MenuService> _logger;
     private readonly IConfiguration _configuration;
     private readonly IEAService _eaService;
+
+    
 
     public MenuService(ILogger<MenuService> logger, IConfiguration configuration, IEAService eaService) {
       _logger = logger;

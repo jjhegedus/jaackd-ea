@@ -3,11 +3,13 @@ using System;
 using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
+using Serilog;
 
 namespace JaackdEAAddin {
   internal class Utilities {
 
     public static IConfigurationBuilder BuildConfiguration(IConfigurationBuilder builder) {
+
       return builder.SetBasePath(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location))
         .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
         .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ENVIRONMENT") ?? "Production"}.json", optional: true)
