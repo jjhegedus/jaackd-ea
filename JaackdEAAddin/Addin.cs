@@ -45,9 +45,9 @@ namespace JaackdEAAddin {
     private static IConfigurationRoot? config;
 
 
-    static Addin() {
-      //Configure();
-    }
+    //static Addin() {
+    //  //Configure();
+    //}
 
     private void Configure() {
 

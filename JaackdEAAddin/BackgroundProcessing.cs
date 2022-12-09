@@ -31,5 +31,9 @@ namespace JaackdEAAddin {
       logger.LogInformation("Message={0}; Task={1}; Thread={2}", message, Task.CurrentId, Thread.CurrentThread.ManagedThreadId);
     };
 
+    //Action<object?> EAActivityAction = (object? obj) => {
+
+    //};
+
   }
 }
