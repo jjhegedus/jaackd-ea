@@ -1,14 +1,14 @@
 <?xml  version='1.0' encoding='windows-1252' ?>
 <UMLProfile profiletype="uml2">
-	<Documentation id="38540F44-6" name="jaackd-diagram" version="1.0" notes="jaackd-diagram"/>
+	<Documentation id="2AE79173-8" name="jaackd-diagram" version="1.0" alias="jaackd-diagram" notes="Diagram for jaackd modeling"/>
 	<Content>
 		<Stereotypes>
-			<Stereotype name="jaackd-diagram" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
+			<Stereotype name="jaackd-diagram" notes="" cx="90" cy="70" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
 				<AppliesTo>
 					<Apply type="Diagram_Logical">
 						<Property name="alias" value="jaackd-diagram"/>
-						<Property name="toolbox" value="jaackd::jaackd-toolbox"/>
 						<Property name="diagramID" value="jd"/>
+						<Property name="toolbox" value="jaackd::jaackd-toolbox"/>
 					</Apply>
 				</AppliesTo>
 			</Stereotype>
