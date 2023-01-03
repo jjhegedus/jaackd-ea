@@ -3,18 +3,19 @@
 	<Documentation id="6D4B159F-9" name="jaackd-toolbox" version="1.0" alias="jaackd-toolbox-profile" notes="Elements for jaackd modeling"/>
 	<Content>
 		<Stereotypes>
-			<Stereotype name="jaackd-packages" notes="jaackd packages" cx="369" cy="162" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
+			<Stereotype name="jaackd-packages" notes="jaackd packages" cx="369" cy="175" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
 				<AppliesTo>
 					<Apply type="ToolboxPage"/>
 				</AppliesTo>
 				<TaggedValues>
-					<Tag name="jaackd::jaackd-binaries(UML::Package)" type="" description="" unit="" values="" default="Binaries"/>
-					<Tag name="jaackd::jaackd-binary(UML::Package)" type="" description="" unit="" values="" default="Repository"/>
-					<Tag name="jaackd::jaackd-configuration(UML::Package)" type="" description="" unit="" values="" default="Configuration"/>
-					<Tag name="jaackd::jaackd-model(UML::Package)" type="" description="" unit="" values="" default="Model"/>
-					<Tag name="jaackd::jaackd-namespace" type="" description="" unit="" values="" default="Namespace"/>
-					<Tag name="jaackd::jaackd-repositories(UML::Package)" type="" description="" unit="" values="" default="Repositories"/>
-					<Tag name="jaackd::jaackd-repository(UML::Package)" type="" description="" unit="" values="" default="Repository"/>
+					<Tag name="jaackd::contract(UML::Class)" type="" description="" unit="" values="" default="Contract"/>
+					<Tag name="jaackd::model(UML::Package)" type="" description="" unit="" values="" default="Model"/>
+					<Tag name="jaackd::configuration(UML::Package)" type="" description="" unit="" values="" default="Configuration"/>
+					<Tag name="jaackd::binaries(UML::Package)" type="" description="" unit="" values="" default="Binaries"/>
+					<Tag name="jaackd::repositories(UML::Package)" type="" description="" unit="" values="" default="Repositories"/>
+					<Tag name="jaackd::namespace" type="" description="" unit="" values="" default="Namespace"/>
+					<Tag name="jaackd::repository(UML::Package)" type="" description="" unit="" values="" default="Repository"/>
+					<Tag name="jaackd::binary(UML::Package)" type="" description="" unit="" values="" default="Binary"/>
 				</TaggedValues>
 			</Stereotype>
 			<Stereotype name="jaackd-connectors" notes="jaackd connectors" cx="281" cy="136" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
@@ -34,9 +35,9 @@
 					<Apply type="ToolboxPage"/>
 				</AppliesTo>
 				<TaggedValues>
-					<Tag name="jaackd::jaackd-menu" type="" description="" unit="" values="" default="jaackd-menu"/>
-					<Tag name="jaackd::jaackd-menu-item" type="" description="" unit="" values="" default="jaackd-menu-item"/>
-					<Tag name="jaackd::jaackd-submenu" type="" description="" unit="" values="" default="jaackd-submenu"/>
+					<Tag name="jaackd::menu" type="" description="" unit="" values="" default="jaackd-menu"/>
+					<Tag name="jaackd::submenu" type="" description="" unit="" values="" default="jaackd-submenu"/>
+					<Tag name="jaackd::menu-item" type="" description="" unit="" values="" default="jaackd-menu-item"/>
 				</TaggedValues>
 			</Stereotype>
 		</Stereotypes>
