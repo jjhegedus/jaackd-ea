@@ -43,6 +43,7 @@ namespace JaackdEAAddin {
 
     private static IConfigurationBuilder? builder;
     private static IConfigurationRoot? config;
+    private string baseJaackdFolder = String.Empty;
 
 
     //static Addin() {
@@ -50,6 +51,9 @@ namespace JaackdEAAddin {
     //}
 
     private void Configure() {
+
+      baseJaackdFolder = System.Environment.GetEnvironmentVariable("jaackd-ea");
+
 
       builder = Utilities.BuildConfiguration(new ConfigurationBuilder());
       config = builder.Build();
@@ -121,7 +125,7 @@ namespace JaackdEAAddin {
       IConfiguration config = _host.Services.GetRequiredService<IConfiguration>();
       Log.Logger.Information("Addin::EA_OnInitializeTechnologies(repository): successfully retrieved configuration service.");
 
-      string mdgFile = config.GetValue<string>("MDGFile");
+      string mdgFile = baseJaackdFolder + config.GetValue<string>("MDGFile");
       Log.Logger.Information("Addin::EA_OnInitializeTechnologies(repository): successfully retrieved MDGFile from the configuration service. MDGFile = " + mdgFile);
 
       string xmlString = System.IO.File.ReadAllText(mdgFile);

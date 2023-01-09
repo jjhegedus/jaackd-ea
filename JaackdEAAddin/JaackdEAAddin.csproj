@@ -31,7 +31,7 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="regsvr32 C:\p\gh\jjhegedus\jaackd-ea\JaackdEAAddin\bin\x64\Debug\net5.0-windows\JaackdEAAddin.comhost.dll" />
+    <Exec Command="regsvr32 %25jaackd-ea%25\JaackdEAAddin\bin\x64\Debug\net5.0-windows\JaackdEAAddin.comhost.dll" />
   </Target>
 
 </Project>

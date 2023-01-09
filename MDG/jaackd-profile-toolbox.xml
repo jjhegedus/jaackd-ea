@@ -18,7 +18,7 @@
 					<Tag name="jaackd::binary(UML::Package)" type="" description="" unit="" values="" default="Binary"/>
 				</TaggedValues>
 			</Stereotype>
-			<Stereotype name="jaackd-connectors" notes="jaackd connectors" cx="281" cy="136" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
+			<Stereotype name="jaackd-connectors" notes="jaackd connectors" cx="281" cy="149" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
 				<AppliesTo>
 					<Apply type="ToolboxPage"/>
 				</AppliesTo>
@@ -28,6 +28,7 @@
 					<Tag name="jaackd::Generalization(UML::Generalization)" type="" description="" unit="" values="" default="Generalization"/>
 					<Tag name="jaackd::MenuNesting" type="" description="" unit="" values="" default="MenuNesting"/>
 					<Tag name="jaackd::TopLevelConfigurationComposition" type="" description="" unit="" values="" default="TopLevelConfigurationComposition"/>
+					<Tag name="jaackd::Dependency(UML::Dependency)" type="int" description="" unit="" values="" default="Dependency"/>
 				</TaggedValues>
 			</Stereotype>
 			<Stereotype name="jaackd-classes" notes="jaackd classes" cx="214" cy="110" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
@@ -38,6 +39,18 @@
 					<Tag name="jaackd::menu" type="" description="" unit="" values="" default="jaackd-menu"/>
 					<Tag name="jaackd::submenu" type="" description="" unit="" values="" default="jaackd-submenu"/>
 					<Tag name="jaackd::menu-item" type="" description="" unit="" values="" default="jaackd-menu-item"/>
+				</TaggedValues>
+			</Stereotype>
+			<Stereotype name="jaackd-work-items" notes="" cx="220" cy="101" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
+				<AppliesTo>
+					<Apply type="ToolboxPage"/>
+				</AppliesTo>
+				<TaggedValues>
+					<Tag name="jaackd::Bug(UML::Requirement)" type="" description="" unit="" values="" default="Bug"/>
+					<Tag name="jaackd::Epic(UML::Requirement)" type="" description="" unit="" values="" default="Epic"/>
+					<Tag name="jaackd::Initiative(UML::Requirement)" type="" description="" unit="" values="" default="Initiative"/>
+					<Tag name="jaackd::Story(UML::Requirement)" type="" description="" unit="" values="" default="Story"/>
+					<Tag name="jaackd::Theme(UML::Requirement)" type="" description="" unit="" values="" default="Theme"/>
 				</TaggedValues>
 			</Stereotype>
 		</Stereotypes>
