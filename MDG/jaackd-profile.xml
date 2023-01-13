@@ -109,13 +109,26 @@
 					</Apply>
 				</AppliesTo>
 			</Stereotype>
-			<Stereotype name="Initiative" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
+			<Stereotype name="implementation-model" metatype="Implementation Model" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="top-level-model" baseStereotypes="top-level-model">
+				<AppliesTo>
+					<Apply type="Package">
+						<Property name="URI" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
+					</Apply>
+				</AppliesTo>
+			</Stereotype>
+			<Stereotype name="Initiative" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="Initiative Owner" baseStereotypes="Initiative%20Owner">
 				<metaconstraints>
-					<metaconstraint umlRole="owner" constraint="jaackd::Theme"/>
+					<metaconstraint umlRole="owner" constraint="jaackd::Initiative Owner"/>
 				</metaconstraints>
 				<stereotypedrelationships>
-					<stereotypedrelationship stereotype="jaackd::Composition" constraint="jaackd::Theme"/>
+					<stereotypedrelationship stereotype="jaackd::Composition" constraint="jaackd::Initiative;jaackd::Theme"/>
 				</stereotypedrelationships>
+				<AppliesTo>
+					<Apply type="Requirement"/>
+				</AppliesTo>
+			</Stereotype>
+			<Stereotype name="Initiative Owner" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
 				<AppliesTo>
 					<Apply type="Requirement"/>
 				</AppliesTo>
@@ -164,6 +177,14 @@
 					</Apply>
 				</AppliesTo>
 			</Stereotype>
+			<Stereotype name="model-set-configuration" metatype="Model Set Configuration" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="top-level-model" baseStereotypes="top-level-model">
+				<AppliesTo>
+					<Apply type="Package">
+						<Property name="URI" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
+					</Apply>
+				</AppliesTo>
+			</Stereotype>
 			<Stereotype name="problem-model" metatype="Problem Model" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="top-level-model" baseStereotypes="top-level-model">
 				<AppliesTo>
 					<Apply type="Package">
@@ -204,6 +225,70 @@
 					<Tag name="LocalDirectory" type="" description="" unit="" values="" default=""/>
 				</TaggedValues>
 			</Stereotype>
+			<Stereotype name="Requirements" metatype="Requirements" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
+				<metaconstraints>
+					<metaconstraint umlRole="owner" constraint="jaackd::problem-model"/>
+				</metaconstraints>
+				<stereotypedrelationships>
+					<stereotypedrelationship stereotype="jaackd::Composition" constraint="jaackd::problem-model"/>
+				</stereotypedrelationships>
+				<AppliesTo>
+					<Apply type="Package">
+						<Property name="URI" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
+					</Apply>
+				</AppliesTo>
+			</Stereotype>
+			<Stereotype name="solution-model" metatype="Solution Model" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="top-level-model" baseStereotypes="top-level-model">
+				<AppliesTo>
+					<Apply type="Package">
+						<Property name="URI" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
+					</Apply>
+				</AppliesTo>
+			</Stereotype>
+			<Stereotype name="Stakeholder Needs" metatype="Stakeholder Needs" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
+				<metaconstraints>
+					<metaconstraint umlRole="owner" constraint="jaackd::Stakeholder Needs and Restrictions"/>
+				</metaconstraints>
+				<stereotypedrelationships>
+					<stereotypedrelationship stereotype="jaackd::Composition" constraint="jaackd::Stakeholder Needs and Restrictions"/>
+				</stereotypedrelationships>
+				<AppliesTo>
+					<Apply type="Package">
+						<Property name="URI" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
+					</Apply>
+				</AppliesTo>
+			</Stereotype>
+			<Stereotype name="Stakeholder Needs and Restrictions" metatype="Stakeholder Needs and Restrictions" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
+				<metaconstraints>
+					<metaconstraint umlRole="owner" constraint="jaackd::Requirements"/>
+				</metaconstraints>
+				<stereotypedrelationships>
+					<stereotypedrelationship stereotype="jaackd::Composition" constraint="jaackd::Requirements"/>
+				</stereotypedrelationships>
+				<AppliesTo>
+					<Apply type="Package">
+						<Property name="URI" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
+					</Apply>
+				</AppliesTo>
+			</Stereotype>
+			<Stereotype name="Stakeholder Restrictions" metatype="Stakeholder Restrictions" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
+				<metaconstraints>
+					<metaconstraint umlRole="owner" constraint="jaackd::Stakeholder Needs and Restrictions"/>
+				</metaconstraints>
+				<stereotypedrelationships>
+					<stereotypedrelationship stereotype="jaackd::Composition" constraint="jaackd::Stakeholder Needs and Restrictions"/>
+				</stereotypedrelationships>
+				<AppliesTo>
+					<Apply type="Package">
+						<Property name="URI" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
+					</Apply>
+				</AppliesTo>
+			</Stereotype>
 			<Stereotype name="Story" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
 				<metaconstraints>
 					<metaconstraint umlRole="owner" constraint="jaackd::Epic"/>
@@ -229,7 +314,13 @@
 					<Tag name="Name" type="string" description="" unit="" values="" default=""/>
 				</TaggedValues>
 			</Stereotype>
-			<Stereotype name="Theme" metatype="Theme" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
+			<Stereotype name="Theme" metatype="Theme" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="Initiative Owner" baseStereotypes="Initiative%20Owner">
+				<metaconstraints>
+					<metaconstraint umlRole="owner" constraint="jaackd::Work Items"/>
+				</metaconstraints>
+				<stereotypedrelationships>
+					<stereotypedrelationship stereotype="jaackd::Composition" constraint="jaackd::Work Items"/>
+				</stereotypedrelationships>
 				<AppliesTo>
 					<Apply type="Requirement"/>
 				</AppliesTo>
@@ -267,6 +358,20 @@
 					<metaconstraint umlRole="source" constraint="jaackd::top-level-configuration-element"/>
 					<metaconstraint umlRole="target" constraint="jaackd::configuration"/>
 				</metaconstraints>
+			</Stereotype>
+			<Stereotype name="Work Items" metatype="Work Items" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
+				<metaconstraints>
+					<metaconstraint umlRole="owner" constraint="jaackd::implementation-model"/>
+				</metaconstraints>
+				<stereotypedrelationships>
+					<stereotypedrelationship stereotype="jaackd::Composition" constraint="jaackd::implementation-model"/>
+				</stereotypedrelationships>
+				<AppliesTo>
+					<Apply type="Package">
+						<Property name="URI" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
+					</Apply>
+				</AppliesTo>
 			</Stereotype>
 		</Stereotypes>
 		<TaggedValueTypes/>
