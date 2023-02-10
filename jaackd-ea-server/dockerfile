@@ -1,0 +1,60 @@
+FROM ubuntu
+LABEL maintainer="admin@22ndtech.com"
+
+WORKDIR /work
+
+# Install curl
+RUN apt-get update \
+  && apt-get install -y curl
+
+# get the latest debian package of vscode
+RUN apt-get install -y wget gpg
+RUN wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg \
+  && install -o root -g root -m 644 packages.microsoft.gpg /etc/apt/trusted.gpg.d/ \
+  && sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/trusted.gpg.d/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
+
+RUN apt update \
+ && apt install -y code
+
+RUN apt-get install libx11-xcb-dev -y
+RUN apt-get install -y libxcb-dri3-0
+RUN apt-get install -y libasound2
+
+#install git, python and pip
+RUN apt-get update \
+  && apt-get install -y git \
+  && apt-get install -y python3 \
+  && apt-get install -y python3-pip
+
+# Set the git variables
+ENV GITHUB_USER="$GITHUB_USER"
+ENV GITHUB_USER_EMAIL="$GITHUB_USER_EMAIL"
+ENV GITHUB_TOKEN="$GITHUB_TOKEN"
+ENV REPOSITORY_NAME="$REPOSITORY_NAME"
+ENV REPOSITORY_URL="$REPOSITORY_URL"
+
+# set the display variables
+ENV LIBGL_DRI3_DISABLE=1
+ENV DONT_PROMPT_WSL_INSTALL=1
+
+# Install the github cli
+RUN curl -LO https://github.com/cli/cli/releases/download/v1.3.0/gh_1.3.0_linux_amd64.tar.gz -o gh.tar.gz
+RUN tar -xvf ./gh_1.3.0_linux_amd64.tar.gz -C /usr/bin
+ENV PATH=${PATH}:/usr/bin/gh_1.3.0_linux_amd64/bin
+
+# Install basic vscode extensions 
+RUN mkdir /vscode-user-data
+RUN /usr/bin/code --user-data-dir /vscode-user-data --install-extension ms-azuretools.vscode-docker
+RUN /usr/bin/code --user-data-dir /vscode-user-data --install-extension ms-kubernetes-tools.vscode-kubernetes-tools
+RUN /usr/bin/code --user-data-dir /vscode-user-data --install-extension nickdemayo.vscode-json-editor
+RUN /usr/bin/code --user-data-dir /vscode-user-data --install-extension redhat.vscode-yaml
+
+RUN /usr/bin/code --user-data-dir /vscode-user-data --list-extensions
+
+COPY entrypoint.bash /usr/bin/entrypoint.bash
+
+ENV GIT_USER_NAME="$GIT_USER_NAME"
+ENV GIT_USER_EMAIL="$GIT_USER_EMAIL"
+ENV GIT_REPOSITORY_NAME="$GIT_REPOSITORY_NAME"
+
+ENTRYPOINT [ "/bin/bash", "/usr/bin/entrypoint.bash" ]
