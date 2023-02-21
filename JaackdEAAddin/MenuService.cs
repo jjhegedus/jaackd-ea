@@ -9,6 +9,8 @@ namespace JaackdEAAddin {
     const string menuHeader = "-&JaackdTools";
     const string menuHello = "&Say Hello";
     const string menuGoodbye = "&Say Goodbye";
+    const string menuShowMain = "&Show Main Window";
+    const string menuHideMain = "&Hide Main Window";
 
     // remember if we have to say hello or goodbye
     private bool shouldWeSayHello = true;
@@ -70,6 +72,14 @@ namespace JaackdEAAddin {
             break;
           // define the state of the goodbye menu option
           case menuGoodbye:
+            IsEnabled = !shouldWeSayHello;
+            break;
+          // show the main window
+          case menuShowMain:
+            IsEnabled = !shouldWeSayHello;
+            break;
+          // define the state of the goodbye menu option
+          case menuHideMain:
             IsEnabled = !shouldWeSayHello;
             break;
           // there shouldn't be any other, but just in case disable it.

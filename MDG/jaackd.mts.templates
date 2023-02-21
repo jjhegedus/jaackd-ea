@@ -1,0 +1,3 @@
+	<ModelTemplates>
+		<Model name="jaackd-patterns" description="jaackd-patterns and elements" location="c:\p\gh\jjhegedus\jaackd-ea\jaackd-patterns.xml" default="yes" icon="34" filter="Common"/>
+	</ModelTemplates>

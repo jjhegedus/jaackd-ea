@@ -340,7 +340,7 @@
 														<UML:TaggedValue tag="stereotype" value="stereotyped relationship"/>
 														<UML:TaggedValue tag="headStyle" value="0"/>
 														<UML:TaggedValue tag="lineStyle" value="0"/>
-														<UML:TaggedValue tag="conditional" value=" &#xA;«stereotyped relationship»"/>
+														<UML:TaggedValue tag="conditional" value=" &#xA;ï¿½stereotyped relationshipï¿½"/>
 														<UML:TaggedValue tag="ea_localid" value="33719"/>
 														<UML:TaggedValue tag="ea_sourceName" value="jaackd-configuration-element"/>
 														<UML:TaggedValue tag="ea_targetName" value="jaackd-configuration"/>
@@ -366,7 +366,7 @@
 														<UML:TaggedValue tag="dst_style" value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
 														<UML:TaggedValue tag="$ea_xref_property" value="$XREFPROP=$XID={1769F3FC-F4BB-4975-B6A2-9AED0497F031}$XID;$NAM=Stereotypes$NAM;$TYP=connector property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@STEREO;Name=stereotyped relationship;FQName=Profile Constraints::stereotyped relationship;@ENDSTEREO;$DES;$CLT={084560BB-804A-4887-A847-FF3B9A383B13}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;"/>
 														<UML:TaggedValue tag="virtualInheritance" value="0"/>
-														<UML:TaggedValue tag="mb" value=" &#xA;«stereotyped relationship»"/>
+														<UML:TaggedValue tag="mb" value=" &#xA;ï¿½stereotyped relationshipï¿½"/>
 														<UML:TaggedValue tag="stereotype" value="Composition" xmi.id="EAID_0A3DC5F4_1CAF_411c_83FD_E34C0A0F449D"/>
 													</UML:ModelElement.taggedValue>
 												</UML:Dependency>
@@ -385,7 +385,7 @@
 														<UML:TaggedValue tag="stereotype" value="stereotyped relationship"/>
 														<UML:TaggedValue tag="headStyle" value="0"/>
 														<UML:TaggedValue tag="lineStyle" value="0"/>
-														<UML:TaggedValue tag="conditional" value=" &#xA;«stereotyped relationship»"/>
+														<UML:TaggedValue tag="conditional" value=" &#xA;ï¿½stereotyped relationshipï¿½"/>
 														<UML:TaggedValue tag="ea_localid" value="33675"/>
 														<UML:TaggedValue tag="ea_sourceName" value="jaackd-configuration"/>
 														<UML:TaggedValue tag="ea_targetName" value="jaackd-model"/>
@@ -411,7 +411,7 @@
 														<UML:TaggedValue tag="dst_style" value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
 														<UML:TaggedValue tag="$ea_xref_property" value="$XREFPROP=$XID={60C08BFB-28C8-41ba-9982-295C09C5CE49}$XID;$NAM=Stereotypes$NAM;$TYP=connector property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@STEREO;Name=stereotyped relationship;FQName=Profile Constraints::stereotyped relationship;@ENDSTEREO;$DES;$CLT={0BEAA506-F57E-4118-BC48-7D95E7CD91F2}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;"/>
 														<UML:TaggedValue tag="virtualInheritance" value="0"/>
-														<UML:TaggedValue tag="mb" value=" &#xA;«stereotyped relationship»"/>
+														<UML:TaggedValue tag="mb" value=" &#xA;ï¿½stereotyped relationshipï¿½"/>
 														<UML:TaggedValue tag="stereotype" value="Composition" xmi.id="EAID_0A3DC5F4_1CAF_411c_BB94_AF3D68CEB6D7"/>
 													</UML:ModelElement.taggedValue>
 												</UML:Dependency>
@@ -430,7 +430,7 @@
 														<UML:TaggedValue tag="stereotype" value="metaconstraint"/>
 														<UML:TaggedValue tag="headStyle" value="0"/>
 														<UML:TaggedValue tag="lineStyle" value="0"/>
-														<UML:TaggedValue tag="conditional" value=" &#xA;«metaconstraint»"/>
+														<UML:TaggedValue tag="conditional" value=" &#xA;ï¿½metaconstraintï¿½"/>
 														<UML:TaggedValue tag="ea_localid" value="33673"/>
 														<UML:TaggedValue tag="ea_sourceName" value="jaackd-configuration"/>
 														<UML:TaggedValue tag="ea_targetName" value="jaackd-model"/>
@@ -456,7 +456,7 @@
 														<UML:TaggedValue tag="dst_style" value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
 														<UML:TaggedValue tag="$ea_xref_property" value="$XREFPROP=$XID={BC15D300-65EA-4dd8-9945-DD65A5720D39}$XID;$NAM=Stereotypes$NAM;$TYP=connector property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@STEREO;Name=metaconstraint;FQName=Profile Constraints::metaconstraint;@ENDSTEREO;$DES;$CLT={633778EC-E6DE-4743-A7FF-27C04F48CBF8}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;"/>
 														<UML:TaggedValue tag="virtualInheritance" value="0"/>
-														<UML:TaggedValue tag="mb" value=" &#xA;«metaconstraint»"/>
+														<UML:TaggedValue tag="mb" value=" &#xA;ï¿½metaconstraintï¿½"/>
 														<UML:TaggedValue tag="umlRole" value="owner" xmi.id="EAID_3482D0E0_17FD_8617_A127_0FD61713FD65"/>
 													</UML:ModelElement.taggedValue>
 												</UML:Dependency>
@@ -475,7 +475,7 @@
 														<UML:TaggedValue tag="stereotype" value="metaconstraint"/>
 														<UML:TaggedValue tag="headStyle" value="0"/>
 														<UML:TaggedValue tag="lineStyle" value="0"/>
-														<UML:TaggedValue tag="conditional" value=" &#xA;«metaconstraint»"/>
+														<UML:TaggedValue tag="conditional" value=" &#xA;ï¿½metaconstraintï¿½"/>
 														<UML:TaggedValue tag="ea_localid" value="33722"/>
 														<UML:TaggedValue tag="ea_sourceName" value="jaackd-configuration-element"/>
 														<UML:TaggedValue tag="ea_targetName" value="jaackd-configuration"/>
@@ -501,7 +501,7 @@
 														<UML:TaggedValue tag="dst_style" value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
 														<UML:TaggedValue tag="$ea_xref_property" value="$XREFPROP=$XID={3E97AB41-0F78-442d-8349-06779F96D515}$XID;$NAM=Stereotypes$NAM;$TYP=connector property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@STEREO;Name=metaconstraint;FQName=Profile Constraints::metaconstraint;@ENDSTEREO;$DES;$CLT={89B8AC4C-0D81-4e27-A1A3-179E10832EE5}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;"/>
 														<UML:TaggedValue tag="virtualInheritance" value="0"/>
-														<UML:TaggedValue tag="mb" value=" &#xA;«metaconstraint»"/>
+														<UML:TaggedValue tag="mb" value=" &#xA;ï¿½metaconstraintï¿½"/>
 														<UML:TaggedValue tag="umlRole" value="owner" xmi.id="EAID_3482D0E0_17FD_8617_AEAB_0DF57D1B6BBC"/>
 													</UML:ModelElement.taggedValue>
 												</UML:Dependency>
@@ -684,7 +684,7 @@
 														<UML:TaggedValue tag="stereotype" value="stereotyped relationship"/>
 														<UML:TaggedValue tag="headStyle" value="0"/>
 														<UML:TaggedValue tag="lineStyle" value="0"/>
-														<UML:TaggedValue tag="conditional" value=" &#xA;«stereotyped relationship»"/>
+														<UML:TaggedValue tag="conditional" value=" &#xA;ï¿½stereotyped relationshipï¿½"/>
 														<UML:TaggedValue tag="ea_localid" value="33736"/>
 														<UML:TaggedValue tag="ea_sourceName" value="jaackd-menu-item"/>
 														<UML:TaggedValue tag="ea_targetName" value="jaackd-menu-element"/>
@@ -710,7 +710,7 @@
 														<UML:TaggedValue tag="dst_style" value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
 														<UML:TaggedValue tag="$ea_xref_property" value="$XREFPROP=$XID={7A80226E-BB3D-468a-89D2-8A3B826A46D8}$XID;$NAM=Stereotypes$NAM;$TYP=connector property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@STEREO;Name=stereotyped relationship;FQName=Profile Constraints::stereotyped relationship;@ENDSTEREO;$DES;$CLT={9A57739E-B083-471c-BD54-9AF95F896D4A}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;"/>
 														<UML:TaggedValue tag="virtualInheritance" value="0"/>
-														<UML:TaggedValue tag="mb" value=" &#xA;«stereotyped relationship»"/>
+														<UML:TaggedValue tag="mb" value=" &#xA;ï¿½stereotyped relationshipï¿½"/>
 														<UML:TaggedValue tag="stereotype" value="MenuNesting" xmi.id="EAID_0A3DC5F4_1CAF_411c_AF8A_869BB13106DE"/>
 													</UML:ModelElement.taggedValue>
 												</UML:Dependency>
@@ -1417,7 +1417,7 @@
 														<UML:TaggedValue tag="stereotype" value="stereotyped relationship"/>
 														<UML:TaggedValue tag="headStyle" value="0"/>
 														<UML:TaggedValue tag="lineStyle" value="0"/>
-														<UML:TaggedValue tag="conditional" value=" &#xA;«stereotyped relationship»"/>
+														<UML:TaggedValue tag="conditional" value=" &#xA;ï¿½stereotyped relationshipï¿½"/>
 														<UML:TaggedValue tag="ea_localid" value="33728"/>
 														<UML:TaggedValue tag="ea_sourceName" value="jaackd-submenu"/>
 														<UML:TaggedValue tag="ea_targetName" value="jaackd-menu-element"/>
@@ -1443,7 +1443,7 @@
 														<UML:TaggedValue tag="dst_style" value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
 														<UML:TaggedValue tag="$ea_xref_property" value="$XREFPROP=$XID={0217D545-35AF-4350-9795-F014E048D88F}$XID;$NAM=Stereotypes$NAM;$TYP=connector property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@STEREO;Name=stereotyped relationship;FQName=Profile Constraints::stereotyped relationship;@ENDSTEREO;$DES;$CLT={2F4BAD98-73FA-4850-B4DA-9A5E7A525B21}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;"/>
 														<UML:TaggedValue tag="virtualInheritance" value="0"/>
-														<UML:TaggedValue tag="mb" value=" &#xA;«stereotyped relationship»"/>
+														<UML:TaggedValue tag="mb" value=" &#xA;ï¿½stereotyped relationshipï¿½"/>
 														<UML:TaggedValue tag="stereotype" value="MenuNesting" xmi.id="EAID_0A3DC5F4_1CAF_411c_8B8F_94D8558CA020"/>
 													</UML:ModelElement.taggedValue>
 												</UML:Dependency>
@@ -1756,7 +1756,7 @@
 														<UML:TaggedValue tag="stereotype" value="stereotyped relationship"/>
 														<UML:TaggedValue tag="headStyle" value="0"/>
 														<UML:TaggedValue tag="lineStyle" value="0"/>
-														<UML:TaggedValue tag="conditional" value=" &#xA;«stereotyped relationship»"/>
+														<UML:TaggedValue tag="conditional" value=" &#xA;ï¿½stereotyped relationshipï¿½"/>
 														<UML:TaggedValue tag="ea_localid" value="33713"/>
 														<UML:TaggedValue tag="ea_sourceName" value="jaackd-binary"/>
 														<UML:TaggedValue tag="ea_targetName" value="jaackd-binaries"/>
@@ -1782,7 +1782,7 @@
 														<UML:TaggedValue tag="dst_style" value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
 														<UML:TaggedValue tag="$ea_xref_property" value="$XREFPROP=$XID={A28F07DE-26D4-49e0-BC12-FC86E6111E70}$XID;$NAM=Stereotypes$NAM;$TYP=connector property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@STEREO;Name=stereotyped relationship;FQName=Profile Constraints::stereotyped relationship;@ENDSTEREO;$DES;$CLT={C3E64A0F-5F4E-4390-AE3E-A7D183128039}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;"/>
 														<UML:TaggedValue tag="virtualInheritance" value="0"/>
-														<UML:TaggedValue tag="mb" value=" &#xA;«stereotyped relationship»"/>
+														<UML:TaggedValue tag="mb" value=" &#xA;ï¿½stereotyped relationshipï¿½"/>
 														<UML:TaggedValue tag="stereotype" value="Composition" xmi.id="EAID_0A3DC5F4_1CAF_411c_91E5_F9C94FF59E4F"/>
 													</UML:ModelElement.taggedValue>
 												</UML:Dependency>
@@ -1801,7 +1801,7 @@
 														<UML:TaggedValue tag="stereotype" value="metaconstraint"/>
 														<UML:TaggedValue tag="headStyle" value="0"/>
 														<UML:TaggedValue tag="lineStyle" value="0"/>
-														<UML:TaggedValue tag="conditional" value=" &#xA;«metaconstraint»"/>
+														<UML:TaggedValue tag="conditional" value=" &#xA;ï¿½metaconstraintï¿½"/>
 														<UML:TaggedValue tag="ea_localid" value="33723"/>
 														<UML:TaggedValue tag="ea_sourceName" value="jaackd-binary"/>
 														<UML:TaggedValue tag="ea_targetName" value="jaackd-binaries"/>
@@ -1827,7 +1827,7 @@
 														<UML:TaggedValue tag="dst_style" value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
 														<UML:TaggedValue tag="$ea_xref_property" value="$XREFPROP=$XID={66B3BA7D-8DDE-48e7-B89F-316C32E40E9C}$XID;$NAM=Stereotypes$NAM;$TYP=connector property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@STEREO;Name=metaconstraint;FQName=Profile Constraints::metaconstraint;@ENDSTEREO;$DES;$CLT={F440657F-0675-45bf-B5D3-3135F9C56A88}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;"/>
 														<UML:TaggedValue tag="virtualInheritance" value="0"/>
-														<UML:TaggedValue tag="mb" value=" &#xA;«metaconstraint»"/>
+														<UML:TaggedValue tag="mb" value=" &#xA;ï¿½metaconstraintï¿½"/>
 														<UML:TaggedValue tag="umlRole" value="owner" xmi.id="EAID_3482D0E0_17FD_8617_BA1B_E816D7A6D950"/>
 													</UML:ModelElement.taggedValue>
 												</UML:Dependency>
@@ -1896,7 +1896,7 @@
 														<UML:TaggedValue tag="stereotype" value="stereotyped relationship"/>
 														<UML:TaggedValue tag="headStyle" value="0"/>
 														<UML:TaggedValue tag="lineStyle" value="0"/>
-														<UML:TaggedValue tag="conditional" value=" &#xA;«stereotyped relationship»"/>
+														<UML:TaggedValue tag="conditional" value=" &#xA;ï¿½stereotyped relationshipï¿½"/>
 														<UML:TaggedValue tag="ea_localid" value="33714"/>
 														<UML:TaggedValue tag="ea_sourceName" value="jaackd-namespace"/>
 														<UML:TaggedValue tag="ea_targetName" value="jaackd-model"/>
@@ -1922,7 +1922,7 @@
 														<UML:TaggedValue tag="dst_style" value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
 														<UML:TaggedValue tag="$ea_xref_property" value="$XREFPROP=$XID={E5F3854A-C821-4e01-9D9B-8C9382C1E5DA}$XID;$NAM=Stereotypes$NAM;$TYP=connector property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@STEREO;Name=stereotyped relationship;FQName=Profile Constraints::stereotyped relationship;@ENDSTEREO;$DES;$CLT={2C17E3F2-991C-4490-A2CA-B51F86789CAD}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;"/>
 														<UML:TaggedValue tag="virtualInheritance" value="0"/>
-														<UML:TaggedValue tag="mb" value=" &#xA;«stereotyped relationship»"/>
+														<UML:TaggedValue tag="mb" value=" &#xA;ï¿½stereotyped relationshipï¿½"/>
 														<UML:TaggedValue tag="stereotype" value="Composition" xmi.id="EAID_0A3DC5F4_1CAF_411c_BEA7_E301453953CC"/>
 													</UML:ModelElement.taggedValue>
 												</UML:Dependency>
@@ -1941,7 +1941,7 @@
 														<UML:TaggedValue tag="stereotype" value="metaconstraint"/>
 														<UML:TaggedValue tag="headStyle" value="0"/>
 														<UML:TaggedValue tag="lineStyle" value="0"/>
-														<UML:TaggedValue tag="conditional" value=" &#xA;«metaconstraint»"/>
+														<UML:TaggedValue tag="conditional" value=" &#xA;ï¿½metaconstraintï¿½"/>
 														<UML:TaggedValue tag="ea_localid" value="33721"/>
 														<UML:TaggedValue tag="ea_sourceName" value="jaackd-namespace"/>
 														<UML:TaggedValue tag="ea_targetName" value="jaackd-model"/>
@@ -1967,7 +1967,7 @@
 														<UML:TaggedValue tag="dst_style" value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
 														<UML:TaggedValue tag="$ea_xref_property" value="$XREFPROP=$XID={708FE1FC-75BA-4a25-862D-2F0D99B9CD2B}$XID;$NAM=Stereotypes$NAM;$TYP=connector property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@STEREO;Name=metaconstraint;FQName=Profile Constraints::metaconstraint;@ENDSTEREO;$DES;$CLT={3A44FD2C-59F6-459b-8CCC-2CE0F7CC3F88}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;"/>
 														<UML:TaggedValue tag="virtualInheritance" value="0"/>
-														<UML:TaggedValue tag="mb" value=" &#xA;«metaconstraint»"/>
+														<UML:TaggedValue tag="mb" value=" &#xA;ï¿½metaconstraintï¿½"/>
 														<UML:TaggedValue tag="umlRole" value="owner" xmi.id="EAID_3482D0E0_17FD_8617_91B4_C71EAF3594C9"/>
 													</UML:ModelElement.taggedValue>
 												</UML:Dependency>
@@ -2073,7 +2073,7 @@
 														<UML:TaggedValue tag="stereotype" value="stereotyped relationship"/>
 														<UML:TaggedValue tag="headStyle" value="0"/>
 														<UML:TaggedValue tag="lineStyle" value="0"/>
-														<UML:TaggedValue tag="conditional" value=" &#xA;«stereotyped relationship»"/>
+														<UML:TaggedValue tag="conditional" value=" &#xA;ï¿½stereotyped relationshipï¿½"/>
 														<UML:TaggedValue tag="ea_localid" value="33715"/>
 														<UML:TaggedValue tag="ea_sourceName" value="jaackd-repositories"/>
 														<UML:TaggedValue tag="ea_targetName" value="jaackd-model"/>
@@ -2099,7 +2099,7 @@
 														<UML:TaggedValue tag="dst_style" value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
 														<UML:TaggedValue tag="$ea_xref_property" value="$XREFPROP=$XID={72B39F5F-94F1-44ce-A359-9401A8FCED0C}$XID;$NAM=Stereotypes$NAM;$TYP=connector property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@STEREO;Name=stereotyped relationship;FQName=Profile Constraints::stereotyped relationship;@ENDSTEREO;$DES;$CLT={5B54E5F3-AFB2-4fd1-A4AD-17B8F0D85D75}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;"/>
 														<UML:TaggedValue tag="virtualInheritance" value="0"/>
-														<UML:TaggedValue tag="mb" value=" &#xA;«stereotyped relationship»"/>
+														<UML:TaggedValue tag="mb" value=" &#xA;ï¿½stereotyped relationshipï¿½"/>
 														<UML:TaggedValue tag="stereotype" value="Composition" xmi.id="EAID_0A3DC5F4_1CAF_411c_B20A_57E56A8B96F2"/>
 													</UML:ModelElement.taggedValue>
 												</UML:Dependency>
@@ -2155,7 +2155,7 @@
 														<UML:TaggedValue tag="stereotype" value="metaconstraint"/>
 														<UML:TaggedValue tag="headStyle" value="0"/>
 														<UML:TaggedValue tag="lineStyle" value="0"/>
-														<UML:TaggedValue tag="conditional" value=" &#xA;«metaconstraint»"/>
+														<UML:TaggedValue tag="conditional" value=" &#xA;ï¿½metaconstraintï¿½"/>
 														<UML:TaggedValue tag="ea_localid" value="33674"/>
 														<UML:TaggedValue tag="ea_sourceName" value="jaackd-binaries"/>
 														<UML:TaggedValue tag="ea_targetName" value="jaackd-model"/>
@@ -2181,7 +2181,7 @@
 														<UML:TaggedValue tag="dst_style" value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
 														<UML:TaggedValue tag="$ea_xref_property" value="$XREFPROP=$XID={D4F2E157-1C1E-4bf6-A563-812C6CB30F92}$XID;$NAM=Stereotypes$NAM;$TYP=connector property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@STEREO;Name=metaconstraint;FQName=Profile Constraints::metaconstraint;@ENDSTEREO;$DES;$CLT={A7A9658B-965F-4d26-930D-C3B2BC7CE7DA}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;"/>
 														<UML:TaggedValue tag="virtualInheritance" value="0"/>
-														<UML:TaggedValue tag="mb" value=" &#xA;«metaconstraint»"/>
+														<UML:TaggedValue tag="mb" value=" &#xA;ï¿½metaconstraintï¿½"/>
 														<UML:TaggedValue tag="umlRole" value="owner" xmi.id="EAID_3482D0E0_17FD_8617_AA28_5257EC7A0D6E"/>
 													</UML:ModelElement.taggedValue>
 												</UML:Dependency>
@@ -2200,7 +2200,7 @@
 														<UML:TaggedValue tag="stereotype" value="metaconstraint"/>
 														<UML:TaggedValue tag="headStyle" value="0"/>
 														<UML:TaggedValue tag="lineStyle" value="0"/>
-														<UML:TaggedValue tag="conditional" value=" &#xA;«metaconstraint»"/>
+														<UML:TaggedValue tag="conditional" value=" &#xA;ï¿½metaconstraintï¿½"/>
 														<UML:TaggedValue tag="ea_localid" value="33720"/>
 														<UML:TaggedValue tag="ea_sourceName" value="jaackd-repositories"/>
 														<UML:TaggedValue tag="ea_targetName" value="jaackd-model"/>
@@ -2226,7 +2226,7 @@
 														<UML:TaggedValue tag="dst_style" value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
 														<UML:TaggedValue tag="$ea_xref_property" value="$XREFPROP=$XID={9E9D4B74-AEF8-4b36-911E-5443057B0064}$XID;$NAM=Stereotypes$NAM;$TYP=connector property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@STEREO;Name=metaconstraint;FQName=Profile Constraints::metaconstraint;@ENDSTEREO;$DES;$CLT={B0FCEF42-4ED9-46ae-BBC1-E5AD03AC0439}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;"/>
 														<UML:TaggedValue tag="virtualInheritance" value="0"/>
-														<UML:TaggedValue tag="mb" value=" &#xA;«metaconstraint»"/>
+														<UML:TaggedValue tag="mb" value=" &#xA;ï¿½metaconstraintï¿½"/>
 														<UML:TaggedValue tag="umlRole" value="owner" xmi.id="EAID_3482D0E0_17FD_8617_97D9_FDB077DB7530"/>
 													</UML:ModelElement.taggedValue>
 												</UML:Dependency>
@@ -2245,7 +2245,7 @@
 														<UML:TaggedValue tag="stereotype" value="stereotyped relationship"/>
 														<UML:TaggedValue tag="headStyle" value="0"/>
 														<UML:TaggedValue tag="lineStyle" value="0"/>
-														<UML:TaggedValue tag="conditional" value=" &#xA;«stereotyped relationship»"/>
+														<UML:TaggedValue tag="conditional" value=" &#xA;ï¿½stereotyped relationshipï¿½"/>
 														<UML:TaggedValue tag="ea_localid" value="33672"/>
 														<UML:TaggedValue tag="ea_sourceName" value="jaackd-binaries"/>
 														<UML:TaggedValue tag="ea_targetName" value="jaackd-model"/>
@@ -2271,7 +2271,7 @@
 														<UML:TaggedValue tag="dst_style" value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
 														<UML:TaggedValue tag="$ea_xref_property" value="$XREFPROP=$XID={5DEC8AC8-4C4C-4e71-987A-30E6E6A45DE2}$XID;$NAM=Stereotypes$NAM;$TYP=connector property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@STEREO;Name=stereotyped relationship;FQName=Profile Constraints::stereotyped relationship;@ENDSTEREO;$DES;$CLT={E2B98ED9-F944-4178-B985-DE48E2EC8D81}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;"/>
 														<UML:TaggedValue tag="virtualInheritance" value="0"/>
-														<UML:TaggedValue tag="mb" value=" &#xA;«stereotyped relationship»"/>
+														<UML:TaggedValue tag="mb" value=" &#xA;ï¿½stereotyped relationshipï¿½"/>
 														<UML:TaggedValue tag="stereotype" value="Composition" xmi.id="EAID_0A3DC5F4_1CAF_411c_9FD7_2334CF2E1F7A"/>
 													</UML:ModelElement.taggedValue>
 												</UML:Dependency>
@@ -2585,7 +2585,7 @@
 														<UML:TaggedValue tag="stereotype" value="stereotyped relationship"/>
 														<UML:TaggedValue tag="headStyle" value="0"/>
 														<UML:TaggedValue tag="lineStyle" value="0"/>
-														<UML:TaggedValue tag="conditional" value=" &#xA;«stereotyped relationship»"/>
+														<UML:TaggedValue tag="conditional" value=" &#xA;ï¿½stereotyped relationshipï¿½"/>
 														<UML:TaggedValue tag="ea_localid" value="33716"/>
 														<UML:TaggedValue tag="ea_sourceName" value="jaackd-repository"/>
 														<UML:TaggedValue tag="ea_targetName" value="jaackd-repositories"/>
@@ -2611,7 +2611,7 @@
 														<UML:TaggedValue tag="dst_style" value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
 														<UML:TaggedValue tag="$ea_xref_property" value="$XREFPROP=$XID={01506C7D-3C8F-47ea-91CE-90F60AA5DEB6}$XID;$NAM=Stereotypes$NAM;$TYP=connector property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@STEREO;Name=stereotyped relationship;FQName=Profile Constraints::stereotyped relationship;@ENDSTEREO;$DES;$CLT={05CCABAA-188F-45df-8172-EF6FCD9F93E3}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;"/>
 														<UML:TaggedValue tag="virtualInheritance" value="0"/>
-														<UML:TaggedValue tag="mb" value=" &#xA;«stereotyped relationship»"/>
+														<UML:TaggedValue tag="mb" value=" &#xA;ï¿½stereotyped relationshipï¿½"/>
 														<UML:TaggedValue tag="stereotype" value="Composition" xmi.id="EAID_0A3DC5F4_1CAF_411c_BB54_437381AE895C"/>
 													</UML:ModelElement.taggedValue>
 												</UML:Dependency>
@@ -2667,7 +2667,7 @@
 														<UML:TaggedValue tag="stereotype" value="metaconstraint"/>
 														<UML:TaggedValue tag="headStyle" value="0"/>
 														<UML:TaggedValue tag="lineStyle" value="0"/>
-														<UML:TaggedValue tag="conditional" value=" &#xA;«metaconstraint»"/>
+														<UML:TaggedValue tag="conditional" value=" &#xA;ï¿½metaconstraintï¿½"/>
 														<UML:TaggedValue tag="ea_localid" value="33724"/>
 														<UML:TaggedValue tag="ea_sourceName" value="jaackd-repository"/>
 														<UML:TaggedValue tag="ea_targetName" value="jaackd-repositories"/>
@@ -2693,7 +2693,7 @@
 														<UML:TaggedValue tag="dst_style" value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
 														<UML:TaggedValue tag="$ea_xref_property" value="$XREFPROP=$XID={033785C6-155E-4f32-9435-82E6E9191E03}$XID;$NAM=Stereotypes$NAM;$TYP=connector property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@STEREO;Name=metaconstraint;FQName=Profile Constraints::metaconstraint;@ENDSTEREO;$DES;$CLT={5FBA179A-EAB6-46bd-AF2C-0DCB1A5568FF}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;"/>
 														<UML:TaggedValue tag="virtualInheritance" value="0"/>
-														<UML:TaggedValue tag="mb" value=" &#xA;«metaconstraint»"/>
+														<UML:TaggedValue tag="mb" value=" &#xA;ï¿½metaconstraintï¿½"/>
 														<UML:TaggedValue tag="umlRole" value="owner" xmi.id="EAID_3482D0E0_17FD_8617_8F65_F1F8C51D5366"/>
 													</UML:ModelElement.taggedValue>
 												</UML:Dependency>
@@ -3817,7 +3817,7 @@
 														<UML:TaggedValue tag="package" value="EAPK_C1E465E8_5E0D_4ff0_8D16_5E0093F0BA65"/>
 														<UML:TaggedValue tag="date_created" value="2022-06-19 08:15:46"/>
 														<UML:TaggedValue tag="date_modified" value="2022-06-19 08:15:46"/>
-														<UML:TaggedValue tag="genfile" value="C:\Projects\github\jjhegedus\jaackd-ea\JaackdEAAddin\Utilities.cs"/>
+														<UML:TaggedValue tag="genfile" value="c:\p\gh\jjhegedus\jaackd-ea\JaackdEAAddin\Utilities.cs"/>
 														<UML:TaggedValue tag="gentype" value="C#"/>
 														<UML:TaggedValue tag="tagged" value="0"/>
 														<UML:TaggedValue tag="package_name" value="JaackdEAAddin"/>
@@ -3973,7 +3973,7 @@
 														<UML:TaggedValue tag="package" value="EAPK_C1E465E8_5E0D_4ff0_8D16_5E0093F0BA65"/>
 														<UML:TaggedValue tag="date_created" value="2022-06-12 06:21:18"/>
 														<UML:TaggedValue tag="date_modified" value="2022-06-12 06:21:18"/>
-														<UML:TaggedValue tag="genfile" value="C:\Projects\github\jjhegedus\jaackd-ea\JaackdEAAddin\Addin.cs"/>
+														<UML:TaggedValue tag="genfile" value="c:\p\gh\jjhegedus\jaackd-ea\JaackdEAAddin\Addin.cs"/>
 														<UML:TaggedValue tag="gentype" value="C#"/>
 														<UML:TaggedValue tag="tagged" value="0"/>
 														<UML:TaggedValue tag="package_name" value="JaackdEAAddin"/>
@@ -4453,7 +4453,7 @@
 														<UML:TaggedValue tag="package" value="EAPK_C1E465E8_5E0D_4ff0_8D16_5E0093F0BA65"/>
 														<UML:TaggedValue tag="date_created" value="2022-06-20 12:33:05"/>
 														<UML:TaggedValue tag="date_modified" value="2022-06-20 12:33:05"/>
-														<UML:TaggedValue tag="genfile" value="C:\Projects\github\jjhegedus\jaackd-ea\JaackdEAAddin\IMenuService.cs"/>
+														<UML:TaggedValue tag="genfile" value="c:\p\gh\jjhegedus\jaackd-ea\JaackdEAAddin\IMenuService.cs"/>
 														<UML:TaggedValue tag="gentype" value="C#"/>
 														<UML:TaggedValue tag="tagged" value="0"/>
 														<UML:TaggedValue tag="package_name" value="JaackdEAAddin"/>
@@ -4862,7 +4862,7 @@
 														<UML:TaggedValue tag="package" value="EAPK_C1E465E8_5E0D_4ff0_8D16_5E0093F0BA65"/>
 														<UML:TaggedValue tag="date_created" value="2022-06-20 12:33:05"/>
 														<UML:TaggedValue tag="date_modified" value="2022-06-20 12:33:05"/>
-														<UML:TaggedValue tag="genfile" value="C:\Projects\github\jjhegedus\jaackd-ea\JaackdEAAddin\IBackgroundProcessing.cs"/>
+														<UML:TaggedValue tag="genfile" value="c:\p\gh\jjhegedus\jaackd-ea\JaackdEAAddin\IBackgroundProcessing.cs"/>
 														<UML:TaggedValue tag="gentype" value="C#"/>
 														<UML:TaggedValue tag="tagged" value="0"/>
 														<UML:TaggedValue tag="package_name" value="JaackdEAAddin"/>
@@ -4955,7 +4955,7 @@
 														<UML:TaggedValue tag="package" value="EAPK_C1E465E8_5E0D_4ff0_8D16_5E0093F0BA65"/>
 														<UML:TaggedValue tag="date_created" value="2022-06-12 06:21:19"/>
 														<UML:TaggedValue tag="date_modified" value="2022-06-20 12:33:04"/>
-														<UML:TaggedValue tag="genfile" value="C:\Projects\github\jjhegedus\jaackd-ea\JaackdEAAddin\Addin.cs"/>
+														<UML:TaggedValue tag="genfile" value="c:\p\gh\jjhegedus\jaackd-ea\JaackdEAAddin\Addin.cs"/>
 														<UML:TaggedValue tag="gentype" value="C#"/>
 														<UML:TaggedValue tag="tagged" value="0"/>
 														<UML:TaggedValue tag="package_name" value="JaackdEAAddin"/>
@@ -5579,7 +5579,7 @@
 														<UML:TaggedValue tag="package" value="EAPK_C1E465E8_5E0D_4ff0_8D16_5E0093F0BA65"/>
 														<UML:TaggedValue tag="date_created" value="2022-06-20 12:33:05"/>
 														<UML:TaggedValue tag="date_modified" value="2022-06-20 12:33:05"/>
-														<UML:TaggedValue tag="genfile" value="C:\Projects\github\jjhegedus\jaackd-ea\JaackdEAAddin\MenuService.cs"/>
+														<UML:TaggedValue tag="genfile" value="c:\p\gh\jjhegedus\jaackd-ea\JaackdEAAddin\MenuService.cs"/>
 														<UML:TaggedValue tag="gentype" value="C#"/>
 														<UML:TaggedValue tag="tagged" value="0"/>
 														<UML:TaggedValue tag="package_name" value="JaackdEAAddin"/>
@@ -6127,7 +6127,7 @@
 														<UML:TaggedValue tag="package" value="EAPK_C1E465E8_5E0D_4ff0_8D16_5E0093F0BA65"/>
 														<UML:TaggedValue tag="date_created" value="2022-06-20 12:33:04"/>
 														<UML:TaggedValue tag="date_modified" value="2022-06-20 12:33:04"/>
-														<UML:TaggedValue tag="genfile" value="C:\Projects\github\jjhegedus\jaackd-ea\JaackdEAAddin\BackgroundProcessing.cs"/>
+														<UML:TaggedValue tag="genfile" value="c:\p\gh\jjhegedus\jaackd-ea\JaackdEAAddin\BackgroundProcessing.cs"/>
 														<UML:TaggedValue tag="gentype" value="C#"/>
 														<UML:TaggedValue tag="tagged" value="0"/>
 														<UML:TaggedValue tag="package_name" value="JaackdEAAddin"/>

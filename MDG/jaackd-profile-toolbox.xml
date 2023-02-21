@@ -23,17 +23,20 @@
 					<Tag name="jaackd::Work Items(UML::Package)" type="" description="" unit="" values="" default="Work Items"/>
 				</TaggedValues>
 			</Stereotype>
-			<Stereotype name="jaackd-solution-model" notes="" cx="90" cy="70" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
+			<Stereotype name="jaackd-solution-model" notes="" cx="298" cy="70" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
 				<AppliesTo>
 					<Apply type="ToolboxPage"/>
 				</AppliesTo>
+				<TaggedValues>
+					<Tag name="jaackd::jaackd-model-type-legend(UML::Class)" type="" description="" unit="" values="" default="jaackd-model-type-legend"/>
+				</TaggedValues>
 			</Stereotype>
 			<Stereotype name="jaackd-problem-model" notes="" cx="347" cy="101" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
 				<AppliesTo>
 					<Apply type="ToolboxPage"/>
 				</AppliesTo>
 				<TaggedValues>
-					<Tag name="jaackd::problem-model(UML:Package)" type="" description="" unit="" values="" default="Problem Model"/>
+					<Tag name="jaackd::problem-model(UML::Package)" type="" description="" unit="" values="" default="Problem Model"/>
 					<Tag name="jaackd::requirements(UML::Package)" type="" description="" unit="" values="" default="Requirements"/>
 					<Tag name="jaackd::Stakeholder Needs and Restrictions(UML::Package)" type="" description="" unit="" values="" default="Stakeholder Needs and Restrictions"/>
 					<Tag name="jaackd::Stakeholder Needs" type="" description="" unit="" values="" default="Stakeholder Needs"/>
@@ -53,7 +56,7 @@
 					<Tag name="jaackd::Dependency(UML::Dependency)" type="int" description="" unit="" values="" default="Dependency"/>
 				</TaggedValues>
 			</Stereotype>
-			<Stereotype name="jaackd-classes" notes="jaackd classes" cx="214" cy="110" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
+			<Stereotype name="jaackd-classes" notes="jaackd classes" cx="214" cy="123" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
 				<AppliesTo>
 					<Apply type="ToolboxPage"/>
 				</AppliesTo>
@@ -61,6 +64,7 @@
 					<Tag name="jaackd::menu" type="" description="" unit="" values="" default="jaackd-menu"/>
 					<Tag name="jaackd::submenu" type="" description="" unit="" values="" default="jaackd-submenu"/>
 					<Tag name="jaackd::menu-item" type="" description="" unit="" values="" default="jaackd-menu-item"/>
+					<Tag name="jaackd::jaackd-block" type="" description="" unit="" values="" default="jaackd-block"/>
 				</TaggedValues>
 			</Stereotype>
 			<Stereotype name="jaackd-packages" notes="jaackd packages" cx="369" cy="227" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
@@ -80,6 +84,14 @@
 					<Tag name="jaackd::solution-model(UML::Package)" type="" description="" unit="" values="" default="Solution Model"/>
 					<Tag name="jaackd::implementation-model(UML::Package)" type="" description="" unit="" values="" default="Implementation Model"/>
 					<Tag name="jaackd::model-set-configuration(UML::Package)" type="" description="" unit="" values="" default="Model Set Configuration"/>
+				</TaggedValues>
+			</Stereotype>
+			<Stereotype name="Patterns" notes="" cx="254" cy="70" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
+				<AppliesTo>
+					<Apply type="ToolboxPage"/>
+				</AppliesTo>
+				<TaggedValues>
+					<Tag name="jaackd::jaackd-model-type-legend(UMLPattern)" type="" description="" unit="" values="" default="jaackd-model-type-legend"/>
 				</TaggedValues>
 			</Stereotype>
 		</Stereotypes>

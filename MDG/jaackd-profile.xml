@@ -133,6 +133,17 @@
 					<Apply type="Requirement"/>
 				</AppliesTo>
 			</Stereotype>
+			<Stereotype name="jaackd-block" metatype="jaackd-block" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="SysML1.4::block" baseStereotypes="SysML1.4::block">
+				<AppliesTo>
+					<Apply type="Class">
+						<Property name="isActive" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
+					</Apply>
+				</AppliesTo>
+				<TaggedValues>
+					<Tag name="model-type" type="enumeration" description="" unit="" values="problem,solution,implementation,configuration,component,code" default=""/>
+				</TaggedValues>
+			</Stereotype>
 			<Stereotype name="menu" metatype="menu" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="menu-element" baseStereotypes="menu-element top-level-configuration-element" strictness="all">
 				<AppliesTo>
 					<Apply type="Class">

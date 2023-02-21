@@ -1,0 +1,13 @@
+<MDG.Selections model="jaackd-tools --- DBType=11;Connect=Provider=SSDB;SRC=c:\p\gh\jjhegedus\jaackd-ea\jaackd-tools.qea;UID=;PWD=;">
+	<Technology id="jaackd" name="jaackd" version="0.0.11" notes="jaackd" filename="c:\p\gh\jjhegedus\jaackd-ea\MDG\jaackd-mdg.xml"/>
+	<Profiles directory="c:\p\gh\jjhegedus\jaackd-ea\MDG" files="jaackd-profile.xml"/>
+	<TagVals tags="Boolean,Classifier,Color,Connector,Date,DiagramRef,Directory,File,Float,GitHubRepository,ImageRef,Integer,JaackdEAAddinBroadcast,ListOfClassifier,ListOfProperties,Memo,Operation,overview,Property,String,Time,Timestamp,URL"/>
+	<CodeMods>
+		<CodeMod product="jaackd-csharp" codetypes="1" codetemplates="1" grammar="c:\p\gh\jjhegedus\jaackd-ea\EA Language Grammars\jaackd-csharp.nBNF" codeoptions=""/>
+	</CodeMods>
+	<DiagramProfile directory="c:\p\gh\jjhegedus\jaackd-ea\MDG" files="jaackd-profile-diagram.xml"/>
+	<UIToolboxes directory="c:\p\gh\jjhegedus\jaackd-ea\MDG" files="jaackd-profile-toolbox.xml"/>
+	<ModelTemplates>
+		<Model name="jaackd-patterns" description="jaackd-patterns and elements" location="c:\p\gh\jjhegedus\jaackd-ea\jaackd-patterns.xml" default="yes" icon="34" filter="Common"/>
+	</ModelTemplates>
+</MDG.Selections>
