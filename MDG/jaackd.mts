@@ -9,6 +9,6 @@
 	<DiagramProfile directory="C:\p\gh\jjhegedus\jaackd-ea\MDG" files="jaackd-profile-diagram.xml"/>
 	<UIToolboxes directory="C:\p\gh\jjhegedus\jaackd-ea\MDG" files="jaackd-profile-toolbox.xml"/>
 	<ModelTemplates>
-		<Model name="jaackd-patterns" description="jaackd-patterns and elements" location="c:\p\gh\jjhegedus\jaackd-ea\jaackd-patterns.xml" default="yes" icon="34" filter="Common"/>
+		<Model name="jaackd-model-type-legend" description="jaackd-patterns and elements" location="jaackd-model-type-legend" default="yes" icon="34" filter="Common"/>
 	</ModelTemplates>
 </MDG.Selections>
