@@ -127,7 +127,7 @@
 					<Tag name="model-type" type="enumeration" description="" unit="" values="problem,solution,implementation,configuration,component,code" default=""/>
 				</TaggedValues>
 			</Stereotype>
-			<Stereotype name="jaackd-package" metatype="jaackd-package" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
+			<Stereotype name="jaackd-package" metatype="jaackd-package" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" isAbstract="true">
 				<AppliesTo>
 					<Apply type="Package">
 						<Property name="URI" value=""/>
@@ -138,12 +138,28 @@
 					<Tag name="model-type" type="enumeration" description="" unit="" values="problem,solution,implementation,configuration,component,code" default=""/>
 				</TaggedValues>
 			</Stereotype>
+			<Stereotype name="jaackd-problem-package" metatype="jaackd-problem-package" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
+				<AppliesTo>
+					<Apply type="Package">
+						<Property name="URI" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
+					</Apply>
+				</AppliesTo>
+				<TaggedValues>
+					<Tag name="model-type" type="enumeration" description="" unit="" values="problem,solution,implementation,configuration,component,code" default="problem"/>
+				</TaggedValues>
+			</Stereotype>
 			<Stereotype name="jaackd-requirement" metatype="jaackd-requirement" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
 				<AppliesTo>
 					<Apply type="Requirement"/>
 				</AppliesTo>
 				<TaggedValues>
 					<Tag name="model-type" type="enumeration" description="" unit="" values="problem,solution,implementation,configuration,component,code" default=""/>
+				</TaggedValues>
+			</Stereotype>
+			<Stereotype name="jaackd-solution-package" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-package" baseStereotypes="jaackd-package" redefines="jaackd-package">
+				<TaggedValues>
+					<Tag name="model-type" type="enumeration" description="" unit="" values="problem,solution,implementation,configuration,component,code" default="solution"/>
 				</TaggedValues>
 			</Stereotype>
 			<Stereotype name="menu" metatype="menu" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="menu-element" baseStereotypes="menu-element top-level-configuration-element" strictness="all">
@@ -190,7 +206,7 @@
 					</Apply>
 				</AppliesTo>
 			</Stereotype>
-			<Stereotype name="problem-model" metatype="Problem Model" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-package" baseStereotypes="jaackd-package top-level-model">
+			<Stereotype name="problem-model" metatype="Problem Model" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-problem-package" baseStereotypes="jaackd-problem-package top-level-model">
 				<AppliesTo>
 					<Apply type="Package">
 						<Property name="URI" value=""/>
@@ -224,7 +240,7 @@
 					<Tag name="LocalDirectory" type="" description="" unit="" values="" default=""/>
 				</TaggedValues>
 			</Stereotype>
-			<Stereotype name="Requirements" metatype="Requirements" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-package" baseStereotypes="jaackd-package">
+			<Stereotype name="Requirements" metatype="Requirements" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-problem-package" baseStereotypes="jaackd-problem-package">
 				<metaconstraints>
 					<metaconstraint umlRole="owner" constraint="jaackd::problem-model"/>
 				</metaconstraints>
@@ -246,7 +262,7 @@
 					</Apply>
 				</AppliesTo>
 			</Stereotype>
-			<Stereotype name="Stakeholder Needs" metatype="Stakeholder Needs" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-package" baseStereotypes="jaackd-package">
+			<Stereotype name="Stakeholder Needs" metatype="Stakeholder Needs" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-problem-package" baseStereotypes="jaackd-problem-package">
 				<metaconstraints>
 					<metaconstraint umlRole="owner" constraint="jaackd::Stakeholder Needs and Restrictions"/>
 				</metaconstraints>
@@ -260,7 +276,7 @@
 					</Apply>
 				</AppliesTo>
 			</Stereotype>
-			<Stereotype name="Stakeholder Needs and Restrictions" metatype="Stakeholder Needs and Restrictions" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-package" baseStereotypes="jaackd-package">
+			<Stereotype name="Stakeholder Needs and Restrictions" metatype="Stakeholder Needs and Restrictions" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-problem-package" baseStereotypes="jaackd-problem-package">
 				<metaconstraints>
 					<metaconstraint umlRole="owner" constraint="jaackd::Requirements"/>
 				</metaconstraints>
@@ -274,7 +290,7 @@
 					</Apply>
 				</AppliesTo>
 			</Stereotype>
-			<Stereotype name="Stakeholder Restrictions" metatype="Stakeholder Restrictions" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-package" baseStereotypes="jaackd-package">
+			<Stereotype name="Stakeholder Restrictions" metatype="Stakeholder Restrictions" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-problem-package" baseStereotypes="jaackd-problem-package">
 				<metaconstraints>
 					<metaconstraint umlRole="owner" constraint="jaackd::Stakeholder Needs and Restrictions"/>
 				</metaconstraints>
@@ -352,7 +368,7 @@
 					<metaconstraint umlRole="target" constraint="jaackd::configuration"/>
 				</metaconstraints>
 			</Stereotype>
-			<Stereotype name="Work Items" metatype="Work Items" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-package" baseStereotypes="jaackd-package">
+			<Stereotype name="Work Items" metatype="Work Items" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-solution-package" baseStereotypes="jaackd-solution-package">
 				<metaconstraints>
 					<metaconstraint umlRole="owner" constraint="jaackd::implementation-model"/>
 				</metaconstraints>

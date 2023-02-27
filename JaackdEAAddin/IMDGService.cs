@@ -5,11 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace JaackdEAAddin
-{
-    internal interface IMDGService
-    {
-        string GetMDGXML();
-        IEnumerable<XElement>? GetStereotypes();
-    }
+namespace JaackdEAAddin {
+  internal interface IMDGService {
+    string GetMDGXML();
+    IEnumerable<XElement>? GetStereotypes();
+    void GenerateToolboxProfiles();
+    void GenerateDiagramProfiles();
+    void GenerateProfile();
+  }
 }

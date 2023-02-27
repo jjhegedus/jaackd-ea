@@ -55,19 +55,6 @@ namespace JaackdEAAddin {
       // Loading from a file, you can also load from a stream
       XElement parsedElement = XElement.Parse(mdgXML);
       GetProfilesFromMDGParsedElement(parsedElement);
-
-      //MessageBox.Show("parsedElement = " + parsedElement.ToString());
-
-      //XmlReader reader = XmlReader.Create(new StringReader(_mdgXML));
-      //XElement root = XElement.Load(reader);
-      //XmlNameTable nameTable = reader.NameTable;
-      //XmlNamespaceManager namespaceManager = new XmlNamespaceManager(nameTable);
-      //namespaceManager.AddNamespace("MDG", "");
-      //IEnumerable<XElement> elements = root.XPathSelectElements("./aw:Child1", namespaceManager);
-      //foreach (XElement el in elements)
-      //    Console.WriteLine(el);
-
-
     }
 
     IEnumerable<XElement> GetProfilesFromMDGParsedElement(XElement parsedElement) {
@@ -76,22 +63,26 @@ namespace JaackdEAAddin {
         XElement? doc = profile.XPathSelectElement("./Documentation");
         if (doc is not null) {
           XAttribute docName = doc.Attribute("name");
+
           if (docName is not null) {
+
             if (docName.Value == "jaackd") {
               _logger.LogInformation("got the jaackd profile");
               _jaackdProfile = profile;
               LoadStereotypes();
-            }
-
-            if (docName.Value == "jaackd-diagram") {
+            
+            } else if (docName.Value == "jaackd-diagram") {
               _logger.LogInformation("got the jaackd-diagram profile");
               _jaackdDiagramProfile = profile;
-            }
-
-            if (docName.Value == "jaackd-toolbox") {
+            
+            } else if (docName.Value == "jaackd-toolbox") {
               _logger.LogInformation("got the jaackd-toolbox profile");
               _jaackdToolboxProfile = profile;
+            
+            } else {
+              _logger.LogInformation("got another profile named " + docName.Value);
             }
+
           }
         }
       }
@@ -99,7 +90,16 @@ namespace JaackdEAAddin {
       return profiles;
     }
 
+    public void GenerateToolboxProfiles() {
+      throw new NotImplementedException();
+    }
 
+    public void GenerateDiagramProfiles() {
+      throw new NotImplementedException();
+    }
 
+    public void GenerateProfile() {
+      throw new NotImplementedException();
+    }
   }
 }
