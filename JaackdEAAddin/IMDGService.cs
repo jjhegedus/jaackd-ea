@@ -9,8 +9,9 @@ namespace JaackdEAAddin {
   internal interface IMDGService {
     string GetMDGXML();
     IEnumerable<XElement>? GetStereotypes();
-    void GenerateToolboxProfiles();
-    void GenerateDiagramProfiles();
-    void GenerateProfile();
+    void GenerateToolboxProfiles(EA.Package package);
+    void GenerateDiagramProfiles(EA.Package package);
+    void GenerateProfile(EA.Package package);
+    void GenerateMDG();
   }
 }

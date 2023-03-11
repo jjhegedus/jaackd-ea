@@ -10,6 +10,7 @@ using System.Xml.XPath;
 using System.Windows.Forms;
 using System.Security.Cryptography.Xml;
 using Microsoft.Extensions.Logging;
+using EA;
 
 namespace JaackdEAAddin {
   internal class MDGService : IMDGService {
@@ -90,16 +91,22 @@ namespace JaackdEAAddin {
       return profiles;
     }
 
-    public void GenerateToolboxProfiles() {
+    public void GenerateToolboxProfiles(Package package) {
       throw new NotImplementedException();
     }
 
-    public void GenerateDiagramProfiles() {
+    public void GenerateDiagramProfiles(Package package) {
       throw new NotImplementedException();
     }
 
-    public void GenerateProfile() {
+    public void GenerateProfile(Package package) {
       throw new NotImplementedException();
     }
+
+    public void GenerateMDG() {
+      throw new NotImplementedException();
+    }
+
+
   }
 }

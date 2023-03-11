@@ -9,11 +9,13 @@ namespace JaackdEAAddin {
     const string menuHeader = "-&JaackdTools";
     const string menuHello = "&Say Hello";
     const string menuGoodbye = "&Say Goodbye";
+    const string menuOpenMTS = "&Open MTS";
     const string menuShowMain = "&Show Main Window";
     const string menuHideMain = "&Hide Main Window";
 
     // remember if we have to say hello or goodbye
     private bool shouldWeSayHello = true;
+    private bool mainWindowOpen = true;
 
     private readonly ILogger<MenuService> _logger;
     private readonly IConfiguration _configuration;
@@ -46,7 +48,7 @@ namespace JaackdEAAddin {
           return menuHeader;
         // defines the submenu options
         case menuHeader:
-          string[] subMenus = { menuHello, menuGoodbye };
+          string[] subMenus = { menuHello, menuGoodbye, menuOpenMTS };
           return subMenus;
       }
 
@@ -82,6 +84,9 @@ namespace JaackdEAAddin {
           case menuHideMain:
             IsEnabled = !shouldWeSayHello;
             break;
+          case menuOpenMTS:
+            IsEnabled = true;
+            break;
           // there shouldn't be any other, but just in case disable it.
           default:
             IsEnabled = false;
@@ -114,6 +119,9 @@ namespace JaackdEAAddin {
         case menuGoodbye:
           this.sayGoodbye();
           break;
+        case menuOpenMTS:
+          this.OpenMTSFile();
+          break;
       }
     }
 
@@ -132,6 +140,23 @@ namespace JaackdEAAddin {
     private void sayGoodbye() {
       MessageBox.Show("Goodbye World");
       this.shouldWeSayHello = true;
+    }
+
+
+
+    private void OpenMTSFile() {
+      string filterString = "MTS Files (*.mts)|*.mts|";
+      int defaultFilterIndex = 1;
+      string initialDir = "";
+      string fileName = "";
+      int OF_FILEMUSTEXIST = 0x1000;
+
+      EA.Project project = _eaService.GetRepository().GetProjectInterface();
+
+      var filePath = "";
+      filePath = project.GetFileNameDialog(fileName, filterString, defaultFilterIndex,
+                                           OF_FILEMUSTEXIST, initialDir, 0);
+      _logger.LogInformation("MTS File Path = " + filePath);
     }
 
 
