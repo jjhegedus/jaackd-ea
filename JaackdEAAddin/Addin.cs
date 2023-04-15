@@ -50,10 +50,28 @@ namespace JaackdEAAddin {
     //static Addin() {
     //  //Configure();
     //}
+    private static Assembly TryLoadFromBaseDirectory(object sender, ResolveEventArgs e) {
+      string baseDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+      // This event is called for any assembly that fails to resolve.
+      var name = new AssemblyName(e.Name);
+
+      var assemblyPath =
+          Path.Combine(baseDirectory, name.Name + ".dll");
+
+      if (System.IO.File.Exists(assemblyPath)) {
+        // If we find this missing assembly in the application's base directory,
+        // we simply return it.
+        return Assembly.Load(AssemblyName.GetAssemblyName(assemblyPath));
+      } else {
+        return null;
+      }
+    }
 
     private void Configure() {
 
-      baseJaackdFolder = System.Environment.GetEnvironmentVariable("jaackd-ea");
+#pragma warning disable CS8601 // Possible null reference assignment.
+      baseJaackdFolder =  System.Environment.GetEnvironmentVariable("jaackd-ea");
+#pragma warning restore CS8601 // Possible null reference assignment.
 
 
       builder = Utilities.BuildConfiguration(new ConfigurationBuilder());
@@ -85,6 +103,7 @@ namespace JaackdEAAddin {
     /// <param name="Repository" />the EA repository
     /// a string
     public String EA_Connect(EA.Repository repository) {
+      AppDomain.CurrentDomain.AssemblyResolve += TryLoadFromBaseDirectory;
       Configure();
       AddEAServices(repository);
 
@@ -446,6 +465,40 @@ namespace JaackdEAAddin {
     public string EA_OnRetrieveModelTemplate(EA.Repository repository, string location) {
       IPatternService patternService = _host.Services.GetRequiredService<IPatternService>();
       return patternService.GetPatternXML(repository, location);
+    }
+
+    //public virtual bool EA_OnPostNewPackage(EA.Repository repository, EA.EventProperties eventProperties) {
+    //  int packageId = int.Parse((string)eventProperties.Get(0).Value);
+    //  EA.Package package = repository.GetPackageByID(packageId);
+    //  return true;
+    //}
+
+    public virtual bool EA_OnPostNewConnector(EA.Repository repository, EA.EventProperties eventProperties) {
+      int connectorId = int.Parse((string)eventProperties.Get(0).Value);
+      EA.Connector connector = repository.GetConnectorByID(connectorId);
+
+      if(connector.FQStereotype == "jaackd::Composition") {
+
+        Element clientElement = repository.GetElementByID(connector.ClientID);
+        Package clientPackage = repository.GetPackageByGuid(clientElement.ElementGUID);
+        Element supplierElement = repository.GetElementByID(connector.SupplierID);
+        Package supplierPackage = repository.GetPackageByGuid(supplierElement.ElementGUID);
+        Package parentPackage = repository.GetPackageByID(clientElement.PackageID);
+
+
+        Log.Logger.Information("clientPackage.ParentId = " + clientPackage.ParentID);
+
+
+        clientElement.PackageID = supplierPackage.PackageID;
+        clientPackage.ParentID = supplierPackage.PackageID;
+        clientElement.Update();
+        supplierElement.Update();
+        parentPackage.Update();
+
+        Log.Logger.Information("clientPackage.ParentId = " + clientPackage.ParentID);
+      }
+
+      return true;
     }
 
 

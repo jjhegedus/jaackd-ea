@@ -15,7 +15,10 @@ namespace JaackdEAAddin {
 
     // remember if we have to say hello or goodbye
     private bool shouldWeSayHello = true;
-    private bool mainWindowOpen = true;
+
+    private JaackdMainControl mainControl;
+    private bool mainWindowOpen = false;
+    private JaackdMainForm mainForm;
 
     private readonly ILogger<MenuService> _logger;
     private readonly IConfiguration _configuration;
@@ -48,7 +51,7 @@ namespace JaackdEAAddin {
           return menuHeader;
         // defines the submenu options
         case menuHeader:
-          string[] subMenus = { menuHello, menuGoodbye, menuOpenMTS };
+          string[] subMenus = { menuHello, menuGoodbye, menuOpenMTS, menuShowMain, menuHideMain };
           return subMenus;
       }
 
@@ -78,11 +81,11 @@ namespace JaackdEAAddin {
             break;
           // show the main window
           case menuShowMain:
-            IsEnabled = !shouldWeSayHello;
+            IsEnabled = !mainWindowOpen;
             break;
           // define the state of the goodbye menu option
           case menuHideMain:
-            IsEnabled = !shouldWeSayHello;
+            IsEnabled = mainWindowOpen;
             break;
           case menuOpenMTS:
             IsEnabled = true;
@@ -122,6 +125,12 @@ namespace JaackdEAAddin {
         case menuOpenMTS:
           this.OpenMTSFile();
           break;
+        case menuShowMain:
+          this.ShowMain();
+          break;
+        case menuHideMain:
+          this.HideMain();
+          break;
       }
     }
 
@@ -157,6 +166,31 @@ namespace JaackdEAAddin {
       filePath = project.GetFileNameDialog(fileName, filterString, defaultFilterIndex,
                                            OF_FILEMUSTEXIST, initialDir, 0);
       _logger.LogInformation("MTS File Path = " + filePath);
+    }
+
+    private void ShowMain() {
+      if (mainControl is null) {
+        mainControl = (JaackdMainControl)_eaService.GetRepository().AddWindow("Jaackd Main Control", "JaackdEAAddin.JaackdMainControl");
+      }
+
+      mainControl.Show();
+
+
+      if (_eaService.GetRepository().ShowAddinWindow("Jaackd Main Window")) {
+        mainWindowOpen = true;
+      }
+
+    }
+
+    private void HideMain() {
+      _eaService.GetRepository().HideAddinWindow();
+      //mainControl.Visible = false;
+      mainWindowOpen = false;
+
+
+
+      //mainForm.Hide();
+      //mainWindowOpen = false;
     }
 
 

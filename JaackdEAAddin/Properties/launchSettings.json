@@ -6,7 +6,7 @@
     "EA": {
       "commandName": "Executable",
       "executablePath": "C:\\Program Files\\Sparx Systems\\EA\\EA.exe",
-      "workingDirectory": "%jaackd-ea%\\JaackdEAAddin\\bin\\x64\\Debug\\net5.0-windows",
+      "workingDirectory": "%jaackd-ea%\\JaackdEAAddin\\bin\\Debug\\net5.0-windows",
       "authenticationMode": "None"
     }
   }
