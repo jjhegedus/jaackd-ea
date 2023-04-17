@@ -13,14 +13,16 @@
 					<Tag name="jaackd::Initiative(UML::Requirement)" type="" description="" unit="" values="" default="Initiative"/>
 					<Tag name="jaackd::Story(UML::Requirement)" type="" description="" unit="" values="" default="Story"/>
 					<Tag name="jaackd::Theme(UML::Requirement)" type="" description="" unit="" values="" default="Theme"/>
+					<Tag name="jaackd::Feature(UML::Requirement)" type="" description="" unit="" values="" default="Feature"/>
 				</TaggedValues>
 			</Stereotype>
-			<Stereotype name="jaakcd-implementation-model" notes="" cx="227" cy="70" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
+			<Stereotype name="jaackd-implementation-model" notes="" cx="354" cy="70" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
 				<AppliesTo>
 					<Apply type="ToolboxPage"/>
 				</AppliesTo>
 				<TaggedValues>
 					<Tag name="jaackd::Work Items(UML::Package)" type="" description="" unit="" values="" default="Work Items"/>
+					<Tag name="jaackd::implementation-model(UML::Package)" type="" description="" unit="" values="" default="Implementation Model"/>
 				</TaggedValues>
 			</Stereotype>
 			<Stereotype name="jaackd-solution-model" notes="" cx="298" cy="70" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
@@ -39,8 +41,9 @@
 					<Tag name="jaackd::problem-model(UML::Package)" type="" description="" unit="" values="" default="Problem Model"/>
 					<Tag name="jaackd::requirements(UML::Package)" type="" description="" unit="" values="" default="Requirements"/>
 					<Tag name="jaackd::Stakeholder Needs and Restrictions(UML::Package)" type="" description="" unit="" values="" default="Stakeholder Needs and Restrictions"/>
-					<Tag name="jaackd::Stakeholder Needs" type="" description="" unit="" values="" default="Stakeholder Needs"/>
-					<Tag name="jaackd::Stakeholder Restrictions" type="" description="" unit="" values="" default="Stakeholder Restrictions"/>
+					<Tag name="jaackd::Stakeholder Needs(UML::Package)" type="" description="" unit="" values="" default="Stakeholder Needs"/>
+					<Tag name="jaackd::Stakeholder Restrictions(UML::Package)" type="" description="" unit="" values="" default="Stakeholder Restrictions"/>
+					<Tag name="jaackd::Stakeholder Need(UML::Requirement)" type="" description="" unit="" values="" default="Requirement"/>
 				</TaggedValues>
 			</Stereotype>
 			<Stereotype name="jaackd-connectors" notes="jaackd connectors" cx="281" cy="149" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
@@ -49,7 +52,7 @@
 				</AppliesTo>
 				<TaggedValues>
 					<Tag name="jaackd::Aggregation(UML::Aggregation)" type="" description="" unit="" values="" default="Aggregation"/>
-					<Tag name="jaackd::Composition(UML::Composition)" type="" description="" unit="" values="" default="Composition"/>
+					<Tag name="jaackd::jaackd-composition(UML::Composition)" type="" description="" unit="" values="" default="Composition"/>
 					<Tag name="jaackd::Generalization(UML::Generalization)" type="" description="" unit="" values="" default="Generalization"/>
 					<Tag name="jaackd::MenuNesting" type="" description="" unit="" values="" default="MenuNesting"/>
 					<Tag name="jaackd::TopLevelConfigurationComposition" type="" description="" unit="" values="" default="TopLevelConfigurationComposition"/>
@@ -86,7 +89,7 @@
 					<Tag name="jaackd::model-set-configuration(UML::Package)" type="" description="" unit="" values="" default="Model Set Configuration"/>
 				</TaggedValues>
 			</Stereotype>
-			<Stereotype name="Patterns" notes="" cx="254" cy="70" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
+			<Stereotype name="Patterns" notes="" cx="301" cy="70" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
 				<AppliesTo>
 					<Apply type="ToolboxPage"/>
 				</AppliesTo>

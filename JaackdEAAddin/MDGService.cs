@@ -20,7 +20,7 @@ namespace JaackdEAAddin {
     XElement? _jaackdProfile;
     XElement? _jaackdDiagramProfile;
     XElement? _jaackdToolboxProfile;
-    IEnumerable<XElement>? _stereotypes;
+    IEnumerable<XElement>? _stereotypesXML;
 
     internal MDGService(ILogger<MDGService> logger, string mdgFile) {
       _logger = logger;
@@ -33,16 +33,16 @@ namespace JaackdEAAddin {
       return _mdgXML;
     }
 
-    public IEnumerable<XElement>? GetStereotypes() {
-      return _stereotypes;
+    public IEnumerable<XElement>? GetStereotypesXML() {
+      return _stereotypesXML;
     }
 
     private void LoadStereotypes() {
       if (_jaackdProfile != null) {
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
-        _stereotypes = _jaackdProfile.Descendants("Stereotype");
+        _stereotypesXML = _jaackdProfile.Descendants("Stereotype");
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
-        foreach (XElement stereotype in _stereotypes) {
+        foreach (XElement stereotype in _stereotypesXML) {
           XAttribute? stereotypeName = stereotype.Attribute("name");
 
           if (stereotypeName is not null) {

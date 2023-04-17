@@ -31,7 +31,7 @@ namespace JaackdEAAddin {
 
   [ComVisible(true)]
   [Guid("0806C872-F80D-48DC-AD48-2408556757DF")]
-  public class Addin : IAddin {
+  public class Addin : IAddin, IPostNewObjectService {
     private const string ADDIN_NAME = "JaackdEAAddin";
     private string logFileName = "";
     private static IHost _host = _host = Host.CreateDefaultBuilder()
@@ -158,6 +158,8 @@ namespace JaackdEAAddin {
           services.AddSingleton<IContextService, ContextService>();
 
           services.AddSingleton<IPreNewObjectService, PreNewObjectService>();
+
+          services.AddSingleton<IPostNewObjectService, PostNewObjectService>();
 
 
           services.AddSingleton<IBackgroundProcessing, BackgroundProcessing>();
@@ -467,40 +469,6 @@ namespace JaackdEAAddin {
       return patternService.GetPatternXML(repository, location);
     }
 
-    //public virtual bool EA_OnPostNewPackage(EA.Repository repository, EA.EventProperties eventProperties) {
-    //  int packageId = int.Parse((string)eventProperties.Get(0).Value);
-    //  EA.Package package = repository.GetPackageByID(packageId);
-    //  return true;
-    //}
-
-    public virtual bool EA_OnPostNewConnector(EA.Repository repository, EA.EventProperties eventProperties) {
-      int connectorId = int.Parse((string)eventProperties.Get(0).Value);
-      EA.Connector connector = repository.GetConnectorByID(connectorId);
-
-      if(connector.FQStereotype == "jaackd::Composition") {
-
-        Element clientElement = repository.GetElementByID(connector.ClientID);
-        Package clientPackage = repository.GetPackageByGuid(clientElement.ElementGUID);
-        Element supplierElement = repository.GetElementByID(connector.SupplierID);
-        Package supplierPackage = repository.GetPackageByGuid(supplierElement.ElementGUID);
-        Package parentPackage = repository.GetPackageByID(clientElement.PackageID);
-
-
-        Log.Logger.Information("clientPackage.ParentId = " + clientPackage.ParentID);
-
-
-        clientElement.PackageID = supplierPackage.PackageID;
-        clientPackage.ParentID = supplierPackage.PackageID;
-        clientElement.Update();
-        supplierElement.Update();
-        parentPackage.Update();
-
-        Log.Logger.Information("clientPackage.ParentId = " + clientPackage.ParentID);
-      }
-
-      return true;
-    }
-
 
 
     ///
@@ -511,6 +479,45 @@ namespace JaackdEAAddin {
       GC.WaitForPendingFinalizers();
     }
 
+    public bool EA_OnPostNewConnector(Repository repository, EventProperties eventProperties) {
+      IPostNewObjectService postNewObjectService = _host.Services.GetRequiredService<IPostNewObjectService>();
+      return postNewObjectService.EA_OnPostNewConnector(repository, eventProperties);
+    }
+
+    public bool EA_OnPostNewElement(Repository repository, EventProperties eventProperties) {
+      IPostNewObjectService postNewObjectService = _host.Services.GetRequiredService<IPostNewObjectService>();
+      return postNewObjectService.EA_OnPostNewElement(repository, eventProperties);
+    }
+
+    public bool EA_OnPostNewDiagram(Repository repository, EventProperties eventProperties) {
+      IPostNewObjectService postNewObjectService = _host.Services.GetRequiredService<IPostNewObjectService>();
+      return postNewObjectService.EA_OnPostNewDiagram(repository, eventProperties);
+    }
+
+    public bool EA_OnPostNewDiagramObject(Repository repository, EventProperties eventProperties) {
+      IPostNewObjectService postNewObjectService = _host.Services.GetRequiredService<IPostNewObjectService>();
+      return postNewObjectService.EA_OnPostNewDiagramObject(repository, eventProperties);
+    }
+
+    public bool EA_OnPostNewAttribute(Repository repository, EventProperties eventProperties) {
+      IPostNewObjectService postNewObjectService = _host.Services.GetRequiredService<IPostNewObjectService>();
+      return postNewObjectService.EA_OnPostNewAttribute(repository, eventProperties);
+    }
+
+    public bool EA_OnPostNewMethod(Repository repository, EventProperties eventProperties) {
+      IPostNewObjectService postNewObjectService = _host.Services.GetRequiredService<IPostNewObjectService>();
+      return postNewObjectService.EA_OnPostNewMethod(repository, eventProperties);
+    }
+
+    public bool EA_OnPostNewPackage(Repository repository, EventProperties eventProperties) {
+      IPostNewObjectService postNewObjectService = _host.Services.GetRequiredService<IPostNewObjectService>();
+      return postNewObjectService.EA_OnPostNewPackage(repository, eventProperties);
+    }
+
+    public bool EA_OnPostNewGlossaryTerm(Repository repository, EventProperties eventProperties) {
+      IPostNewObjectService postNewObjectService = _host.Services.GetRequiredService<IPostNewObjectService>();
+      return postNewObjectService.EA_OnPostNewGlossaryTerm(repository, eventProperties);
+    }
   }
 
 }

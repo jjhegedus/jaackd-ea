@@ -205,18 +205,6 @@ namespace JaackdEAAddin
             return true; 
         }
 
-        private string GetEventPropertiesString(EA.EventProperties eventProperties)
-        {
-            string eventPropertiesString = string.Empty;
-
-            foreach (EventProperty property in eventProperties)
-            {
-                eventPropertiesString += "  propertyName = " + property.Name + " propertyValue = " + property.Value + "\n";
-            }
-
-            return eventPropertiesString;
-        }
-
         #endregion EA Pre-New Events
     }
 }

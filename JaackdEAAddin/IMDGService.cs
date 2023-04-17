@@ -8,7 +8,7 @@ using System.Xml.Linq;
 namespace JaackdEAAddin {
   internal interface IMDGService {
     string GetMDGXML();
-    IEnumerable<XElement>? GetStereotypes();
+    IEnumerable<XElement>? GetStereotypesXML();
     void GenerateToolboxProfiles(EA.Package package);
     void GenerateDiagramProfiles(EA.Package package);
     void GenerateProfile(EA.Package package);
