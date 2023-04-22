@@ -47,7 +47,7 @@ namespace JaackdEAAddin {
       //  //ProcessJaackdCompositionConnector(jaackdConnector);
       //}
 
-      //foreach (EA.Element jaackdElement in _eaService.GetElementsBySterotypeName("problem-model")) {
+      //foreach (EA.Element jaackdElement in _eaService.GetElementsBySterotypeName("jaackd-problem-model")) {
       //  _logger.LogInformation(jaackdElement.FQStereotype);
       //}
     }

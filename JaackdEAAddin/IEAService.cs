@@ -7,5 +7,7 @@ namespace JaackdEAAddin {
     IEnumerable<EA.Element> GetElementsBySterotypeName(string stereotypeFQN);
     IEnumerable<EA.Connector> GetConnectorsBySterotypeName(string stereotypeFQN);
     EA.Stereotype GetStereotype(string stereotypeFQN);
+    IEnumerable<EA.Connector> ConvertConnectorsFromStereotype(string fromStereotype, string toStereotype);
+    IEnumerable<EA.Element> ConvertElementsFromStereotype(string fromStereotype, string toStereotype);
   }
 }

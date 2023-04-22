@@ -54,10 +54,6 @@ namespace JaackdEAAddin {
       return elements;
     }
 
-    public Stereotype GetStereotype(string stereotypeFQN) {
-      throw new System.NotImplementedException();
-    }
-
     public IEnumerable<Connector> GetConnectorsBySterotypeName(string stereotypeFQN) {
       List<Connector> connectors = new List<Connector>();
 
@@ -70,5 +66,40 @@ namespace JaackdEAAddin {
 
       return connectors;
     }
+
+    public Stereotype GetStereotype(string stereotypeFQN) {
+      throw new System.NotImplementedException();
+    }
+
+    public IEnumerable<Connector> ConvertConnectorsFromStereotype(string fromStereotype, string toStereotype) {
+      IEnumerable<Connector> connectors = GetConnectorsBySterotypeName(fromStereotype);
+      List<Connector> returnedConnectors = new List<Connector>();
+
+      foreach (Connector connector in connectors) {
+        connector.StereotypeEx = "";
+        connector.Update();
+        connector.StereotypeEx = toStereotype;
+        connector.Update();
+        returnedConnectors.Add(connector);
+      }
+
+      return returnedConnectors;
+    }
+
+    public IEnumerable<Element> ConvertElementsFromStereotype(string fromStereotype, string toStereotype) {
+      IEnumerable<Element> elements = GetElementsBySterotypeName(fromStereotype);
+      List<Element> returnedElements = new List<Element>();
+
+      foreach (Element element in elements) {
+        element.StereotypeEx = "";
+        element.Update();
+        element.StereotypeEx = toStereotype;
+        element.Update();
+        returnedElements.Add(element);
+      }
+
+      return returnedElements;
+    }
+
   }
 }

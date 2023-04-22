@@ -1,5 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Text;
 using System.Windows.Forms;
 
 namespace JaackdEAAddin {
@@ -12,6 +15,8 @@ namespace JaackdEAAddin {
     const string menuOpenMTS = "&Open MTS";
     const string menuShowMain = "&Show Main Window";
     const string menuHideMain = "&Hide Main Window";
+    const string menuConvertElementsFromStereotype = "&Convert Elements from Stereotype";
+    const string menuConvertConnectorsFromStereotype = "&Convert Connectors from Stereotype";
 
     // remember if we have to say hello or goodbye
     private bool shouldWeSayHello = true;
@@ -51,7 +56,7 @@ namespace JaackdEAAddin {
           return menuHeader;
         // defines the submenu options
         case menuHeader:
-          string[] subMenus = { menuHello, menuGoodbye, menuOpenMTS, menuShowMain, menuHideMain };
+          string[] subMenus = { menuHello, menuGoodbye, menuOpenMTS, menuShowMain, menuHideMain, menuConvertElementsFromStereotype, menuConvertConnectorsFromStereotype };
           return subMenus;
       }
 
@@ -88,6 +93,12 @@ namespace JaackdEAAddin {
             IsEnabled = mainWindowOpen;
             break;
           case menuOpenMTS:
+            IsEnabled = true;
+            break;
+          case menuConvertElementsFromStereotype:
+            IsEnabled = true;
+            break;
+          case menuConvertConnectorsFromStereotype:
             IsEnabled = true;
             break;
           // there shouldn't be any other, but just in case disable it.
@@ -130,6 +141,12 @@ namespace JaackdEAAddin {
           break;
         case menuHideMain:
           this.HideMain();
+          break;
+        case menuConvertElementsFromStereotype:
+          this.ConvertElementsFromStereotype();
+          break;
+        case menuConvertConnectorsFromStereotype:
+          this.ConvertConnectorsFromStereotype();
           break;
       }
     }
@@ -191,6 +208,50 @@ namespace JaackdEAAddin {
 
       //mainForm.Hide();
       //mainWindowOpen = false;
+    }
+
+    private void ConvertElementsFromStereotype() {
+      string formName = "Convert Elements from Stereotype";
+
+      Dictionary<string, Type> dataElements = new Dictionary<string, Type>();
+      dataElements.Add("fromStereotype", typeof(string));
+      dataElements.Add("toStereotype", typeof(string));
+
+      Dictionary<string, Tuple<Type, string>> data = Utilities.GetData(formName, dataElements);
+
+      if (data.Count > 0) {
+        IEnumerable<EA.Element> convertedElements = _eaService.ConvertElementsFromStereotype(data["fromStereotype"].Item2, data["toStereotype"].Item2);
+
+        StringBuilder builder = new StringBuilder();
+        builder.AppendLine("Updated Elements:");
+        foreach (EA.Element element in convertedElements) {
+          builder.AppendLine("The stereotype for " + element.Name + " was changed to " + element.Stereotype);
+        }
+
+        _logger.LogInformation(builder.ToString());
+      }
+    }
+
+    private void ConvertConnectorsFromStereotype() {
+      string formName = "Convert Connectors from Stereotype";
+
+      Dictionary<string, Type> dataElements = new Dictionary<string, Type>();
+      dataElements.Add("fromStereotype", typeof(string));
+      dataElements.Add("toStereotype", typeof(string));
+
+      Dictionary<string, Tuple<Type, string>> data = Utilities.GetData(formName, dataElements);
+
+      if (data.Count > 0) {
+        IEnumerable<EA.Connector> convertedConnectors = _eaService.ConvertConnectorsFromStereotype(data["fromStereotype"].Item2, data["toStereotype"].Item2);
+
+        StringBuilder builder = new StringBuilder();
+        builder.AppendLine("Updated Connectors:");
+        foreach (EA.Connector connector in convertedConnectors) {
+          builder.AppendLine("connector.StereoType = " + connector.Stereotype);
+        }
+
+        _logger.LogInformation(builder.ToString());
+      }
     }
 
 
