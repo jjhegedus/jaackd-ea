@@ -51,7 +51,7 @@ namespace JaackdEAAddin {
       return result;
     }
 
-    public static Dictionary<string, Tuple<Type, string>> GetData(string formName, Dictionary<string, Type> dataElements) {
+    public static Dictionary<string, Tuple<Type, string>> GetInput(string formName, Dictionary<string, Type> dataElements) {
       Dictionary<string, Tuple<Type, string>> results = new Dictionary<string, Tuple<Type, string>>();
       Dictionary<string, Tuple<Control, Control>> controls = new Dictionary<string, Tuple<Control, Control>>();
 

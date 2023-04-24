@@ -138,22 +138,9 @@ namespace JaackdEAAddin {
 
           services.AddSingleton<IMDGService>(mdgService);
 
+          services.AddSingleton<IMTSService, MTSService>();
 
-          string mtsFile = baseJaackdFolder + config.GetValue<string>("MTSFile");
-          IMTSService mtsService = new MTSService(
-            _host.Services.GetRequiredService<Microsoft.Extensions.Logging.ILogger<MTSService>>(),
-            mtsFile);
-
-          services.AddSingleton<IMTSService>(mtsService);
-
-
-          string patternFile = baseJaackdFolder + config.GetValue<string>("PatternFile");
-          IPatternService patternService = new PatternService(
-            _host.Services.GetRequiredService<Microsoft.Extensions.Logging.ILogger<PatternService>>(),
-            patternFile);
-
-          services.AddSingleton<IPatternService>(patternService);
-
+          services.AddSingleton<IPatternService, PatternService>();
 
           services.AddSingleton<IContextService, ContextService>();
 
@@ -167,7 +154,6 @@ namespace JaackdEAAddin {
         })
         .UseSerilog()
         .Build();
-
 
 
       IBackgroundProcessing backgroundProcessing = _host.Services.GetRequiredService<IBackgroundProcessing>();

@@ -101,5 +101,14 @@ namespace JaackdEAAddin {
       return returnedElements;
     }
 
+    public Element UpdateElementStereotype(Element element, string toSterotype) {
+      element.StereotypeEx = "";
+      element.Update();
+      element.StereotypeEx = toSterotype;
+      element.Update();
+
+      return element;
+    }
+
   }
 }

@@ -1,3 +1,4 @@
 	<ModelTemplates>
-		<Model name="jaackd-patterns" description="jaackd-patterns and elements" location="c:\p\gh\jjhegedus\jaackd-ea\jaackd-patterns.xml" default="yes" icon="34" filter="Common"/>
+		<Model name="jaackd-patterns" description="jaackd-patterns and elements" location="c:\p\gh\jjhegedus\jaackd-ea\MDG\patterns\jaackd-patterns.xml" default="yes" icon="34" filter="Common"/>
+		<Model name="jaackd-problem-model-no-requirements" description="template structure for a problem model with only requirements" location="c:\p\gh\jjhegedus\jaackd-ea\MDG\patterns\jaackd-problem-model-no-requirements-pattern.xml" default="yes" icon="34" filter="Common"/>
 	</ModelTemplates>

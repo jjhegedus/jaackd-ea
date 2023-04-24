@@ -17,6 +17,7 @@ namespace JaackdEAAddin {
     const string menuHideMain = "&Hide Main Window";
     const string menuConvertElementsFromStereotype = "&Convert Elements from Stereotype";
     const string menuConvertConnectorsFromStereotype = "&Convert Connectors from Stereotype";
+    const string menuConvertSelectedElementsStereotypes = "&Convert Selected Elements Stereotypes";
 
     // remember if we have to say hello or goodbye
     private bool shouldWeSayHello = true;
@@ -56,7 +57,7 @@ namespace JaackdEAAddin {
           return menuHeader;
         // defines the submenu options
         case menuHeader:
-          string[] subMenus = { menuHello, menuGoodbye, menuOpenMTS, menuShowMain, menuHideMain, menuConvertElementsFromStereotype, menuConvertConnectorsFromStereotype };
+          string[] subMenus = { menuHello, menuGoodbye, menuOpenMTS, menuShowMain, menuHideMain, menuConvertElementsFromStereotype, menuConvertConnectorsFromStereotype, menuConvertSelectedElementsStereotypes };
           return subMenus;
       }
 
@@ -99,6 +100,9 @@ namespace JaackdEAAddin {
             IsEnabled = true;
             break;
           case menuConvertConnectorsFromStereotype:
+            IsEnabled = true;
+            break;
+          case menuConvertSelectedElementsStereotypes:
             IsEnabled = true;
             break;
           // there shouldn't be any other, but just in case disable it.
@@ -147,6 +151,9 @@ namespace JaackdEAAddin {
           break;
         case menuConvertConnectorsFromStereotype:
           this.ConvertConnectorsFromStereotype();
+          break;
+        case menuConvertSelectedElementsStereotypes:
+          this.ConvertSelectedElementsStereotypes();
           break;
       }
     }
@@ -217,10 +224,10 @@ namespace JaackdEAAddin {
       dataElements.Add("fromStereotype", typeof(string));
       dataElements.Add("toStereotype", typeof(string));
 
-      Dictionary<string, Tuple<Type, string>> data = Utilities.GetData(formName, dataElements);
+      Dictionary<string, Tuple<Type, string>> input = Utilities.GetInput(formName, dataElements);
 
-      if (data.Count > 0) {
-        IEnumerable<EA.Element> convertedElements = _eaService.ConvertElementsFromStereotype(data["fromStereotype"].Item2, data["toStereotype"].Item2);
+      if (input.Count > 0) {
+        IEnumerable<EA.Element> convertedElements = _eaService.ConvertElementsFromStereotype(input["fromStereotype"].Item2, input["toStereotype"].Item2);
 
         StringBuilder builder = new StringBuilder();
         builder.AppendLine("Updated Elements:");
@@ -239,15 +246,50 @@ namespace JaackdEAAddin {
       dataElements.Add("fromStereotype", typeof(string));
       dataElements.Add("toStereotype", typeof(string));
 
-      Dictionary<string, Tuple<Type, string>> data = Utilities.GetData(formName, dataElements);
+      Dictionary<string, Tuple<Type, string>> input = Utilities.GetInput(formName, dataElements);
 
-      if (data.Count > 0) {
-        IEnumerable<EA.Connector> convertedConnectors = _eaService.ConvertConnectorsFromStereotype(data["fromStereotype"].Item2, data["toStereotype"].Item2);
+      if (input.Count > 0) {
+        IEnumerable<EA.Connector> convertedConnectors = _eaService.ConvertConnectorsFromStereotype(input["fromStereotype"].Item2, input["toStereotype"].Item2);
 
         StringBuilder builder = new StringBuilder();
         builder.AppendLine("Updated Connectors:");
         foreach (EA.Connector connector in convertedConnectors) {
           builder.AppendLine("connector.StereoType = " + connector.Stereotype);
+        }
+
+        _logger.LogInformation(builder.ToString());
+      }
+    }
+
+    private void ConvertSelectedElementsStereotypes() {
+      string formName = "Convert Selected Elements Stereotypes";
+
+      Dictionary<string, Type> dataElements = new Dictionary<string, Type>();
+      dataElements.Add("toStereotype", typeof(string));
+
+      EA.EASelection selection = _eaService.GetRepository().CurrentSelection;
+      EA.Collection elements = _eaService.GetRepository().CurrentSelection.List;
+
+      Dictionary<string, Tuple<Type, string>> input = Utilities.GetInput(formName, dataElements);
+
+      if (input.Count > 0) {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendLine("Updated Elements:");
+
+        for (short i = 0; i < elements.Count; i++) {
+          EA.EAContext item = (EA.EAContext)elements.GetAt(i);
+          
+
+          switch (item.ContextType) {
+
+            case EA.ObjectType.otPackage:
+              EA.Element packageElement = _eaService.GetRepository().GetElementByGuid(item.ElementGUID);
+
+              _eaService.UpdateElementStereotype(packageElement, input["toStereotype"].Item2);
+              builder.AppendLine("The stereotype for " + packageElement.Name + " was changed to " + packageElement.Stereotype);
+              break;
+
+          }
         }
 
         _logger.LogInformation(builder.ToString());

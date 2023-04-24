@@ -9,6 +9,7 @@
 	<DiagramProfile directory="C:\p\gh\jjhegedus\jaackd-ea\MDG" files="jaackd-profile-diagram.xml"/>
 	<UIToolboxes directory="C:\p\gh\jjhegedus\jaackd-ea\MDG" files="jaackd-profile-toolbox.xml"/>
 	<ModelTemplates>
-		<Model name="jaackd-model-type-legend" description="jaackd-patterns and elements" location="jaackd-model-type-legend" default="yes" icon="34" filter="Common"/>
+		<Model name="jaackd-model-type-legend" description="legend which color codes elements by the model type" location="jaackd-model-type-legend" default="yes" icon="34" filter="Common"/>
+		<Model name="jaackd-problem-model-no-requirements" description="template structure for a problem model with only requirements" location="jaackd-problem-model-no-requirements" default="yes" icon="34" filter="Common"/>
 	</ModelTemplates>
 </MDG.Selections>
