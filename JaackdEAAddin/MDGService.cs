@@ -11,20 +11,26 @@ using System.Windows.Forms;
 using System.Security.Cryptography.Xml;
 using Microsoft.Extensions.Logging;
 using EA;
+using Microsoft.Extensions.Configuration;
 
 namespace JaackdEAAddin {
   internal class MDGService : IMDGService {
     private readonly ILogger<MDGService> _logger;
+    private readonly IConfiguration _configuration;
+    private readonly IMTSService _mtsService;
     string _mdgFile = string.Empty;
     string _mdgXML = string.Empty;
     XElement? _jaackdProfile;
     XElement? _jaackdDiagramProfile;
     XElement? _jaackdToolboxProfile;
     IEnumerable<XElement>? _stereotypesXML;
+    XElement? _parsedElement;
 
-    internal MDGService(ILogger<MDGService> logger, string mdgFile) {
+    public MDGService(ILogger<MDGService> logger, IConfiguration configuration, IMTSService mtsService) {
       _logger = logger;
-      _mdgFile = mdgFile;
+      _configuration = configuration;
+      _mtsService = mtsService;
+      _mdgFile = System.Environment.GetEnvironmentVariable("jaackd-ea") + _configuration.GetValue<string>("MDGFile");
       _mdgXML = System.IO.File.ReadAllText(_mdgFile);
       processMDGXML(_mdgXML);
     }
@@ -54,12 +60,14 @@ namespace JaackdEAAddin {
 
     void processMDGXML(string mdgXML) {
       // Loading from a file, you can also load from a stream
-      XElement parsedElement = XElement.Parse(mdgXML);
-      GetProfilesFromMDGParsedElement(parsedElement);
+      _parsedElement = XElement.Parse(mdgXML);
+      GetProfilesFromMDGParsedElement();
+      _mtsService.InsertTemplates(ref _parsedElement);
+      _parsedElement.Save(_mdgFile);
     }
 
-    IEnumerable<XElement> GetProfilesFromMDGParsedElement(XElement parsedElement) {
-      IEnumerable<XElement> profiles = parsedElement.Descendants("UMLProfile");
+    IEnumerable<XElement> GetProfilesFromMDGParsedElement() {
+      IEnumerable<XElement> profiles = _parsedElement.Descendants("UMLProfile");
       foreach (XElement profile in profiles) {
         XElement? doc = profile.XPathSelectElement("./Documentation");
         if (doc is not null) {
@@ -106,7 +114,6 @@ namespace JaackdEAAddin {
     public void GenerateMDG() {
       throw new NotImplementedException();
     }
-
 
   }
 }

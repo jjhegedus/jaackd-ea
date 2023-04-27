@@ -128,17 +128,9 @@ namespace JaackdEAAddin {
 
           services.AddSingleton<IMenuService, MenuService>();
 
-
-          string mdgFile = baseJaackdFolder + config.GetValue<string>("MDGFile");
-          Log.Logger.Information("Addin::EA_OnInitializeTechnologies(repository): successfully retrieved MDGFile from the configuration service. MDGFile = " + mdgFile);
-
-          IMDGService mdgService = new MDGService(
-                  _host.Services.GetRequiredService<Microsoft.Extensions.Logging.ILogger<MDGService>>(),
-                  mdgFile);
-
-          services.AddSingleton<IMDGService>(mdgService);
-
           services.AddSingleton<IMTSService, MTSService>();
+
+          services.AddSingleton<IMDGService, MDGService>();
 
           services.AddSingleton<IPatternService, PatternService>();
 
@@ -147,7 +139,6 @@ namespace JaackdEAAddin {
           services.AddSingleton<IPreNewObjectService, PreNewObjectService>();
 
           services.AddSingleton<IPostNewObjectService, PostNewObjectService>();
-
 
           services.AddSingleton<IBackgroundProcessing, BackgroundProcessing>();
 
