@@ -7,8 +7,8 @@
 				<AppliesTo>
 					<Apply type="Diagram_Logical">
 						<Property name="alias" value="jaackd-diagram"/>
-						<Property name="toolbox" value="jaackd::jaackd-toolbox"/>
 						<Property name="diagramID" value="jd"/>
+						<Property name="toolbox" value="jaackd::jaackd-toolbox"/>
 					</Apply>
 				</AppliesTo>
 			</Stereotype>
