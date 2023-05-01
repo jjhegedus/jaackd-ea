@@ -12,8 +12,8 @@
 				</stereotypedrelationships>
 				<AppliesTo>
 					<Apply type="Package">
-						<Property name="_HideUmlLinks" value="True"/>
 						<Property name="URI" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
 					</Apply>
 				</AppliesTo>
 			</Stereotype>
@@ -27,8 +27,8 @@
 			<Stereotype name="jaackd-binaries" metatype="binaries" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-package" baseStereotypes="jaackd-package jaackd-top-level-model" redefines="jaackd-package">
 				<AppliesTo>
 					<Apply type="Package">
-						<Property name="_HideUmlLinks" value="True"/>
 						<Property name="URI" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
 					</Apply>
 				</AppliesTo>
 			</Stereotype>
@@ -41,8 +41,8 @@
 				</stereotypedrelationships>
 				<AppliesTo>
 					<Apply type="Package">
-						<Property name="_HideUmlLinks" value="True"/>
 						<Property name="URI" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
 					</Apply>
 				</AppliesTo>
 				<TaggedValues>
@@ -53,8 +53,8 @@
 			<Stereotype name="jaackd-block" metatype="jaackd-block" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="SysML1.4::block" baseStereotypes="SysML1.4::block">
 				<AppliesTo>
 					<Apply type="Class">
-						<Property name="_HideUmlLinks" value="True"/>
 						<Property name="isActive" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
 					</Apply>
 				</AppliesTo>
 				<TaggedValues>
@@ -88,8 +88,8 @@
 			<Stereotype name="jaackd-configuration" metatype="configuration" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-package" baseStereotypes="jaackd-package">
 				<AppliesTo>
 					<Apply type="Package">
-						<Property name="_HideUmlLinks" value="True"/>
 						<Property name="URI" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
 					</Apply>
 				</AppliesTo>
 			</Stereotype>
@@ -102,16 +102,16 @@
 				</stereotypedrelationships>
 				<AppliesTo>
 					<Apply type="Package">
-						<Property name="_HideUmlLinks" value="True"/>
 						<Property name="URI" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
 					</Apply>
 				</AppliesTo>
 			</Stereotype>
 			<Stereotype name="jaackd-contract" metatype="contract" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-block" baseStereotypes="jaackd-block">
 				<AppliesTo>
 					<Apply type="Class">
-						<Property name="_HideUmlLinks" value="True"/>
 						<Property name="isActive" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
 					</Apply>
 				</AppliesTo>
 			</Stereotype>
@@ -132,8 +132,8 @@
 				</stereotypedrelationships>
 				<AppliesTo>
 					<Apply type="Package">
-						<Property name="_HideUmlLinks" value="True"/>
 						<Property name="URI" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
 					</Apply>
 				</AppliesTo>
 				<TaggedValues>
@@ -143,8 +143,8 @@
 			<Stereotype name="jaackd-deployments" metatype="deployments" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-package" baseStereotypes="jaackd-package jaackd-top-level-model" redefines="jaackd-package">
 				<AppliesTo>
 					<Apply type="Package">
-						<Property name="_HideUmlLinks" value="True"/>
 						<Property name="URI" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
 					</Apply>
 				</AppliesTo>
 			</Stereotype>
@@ -164,8 +164,8 @@
 			<Stereotype name="jaackd-exchange-items" metatype="Exchange Items" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-problem-package" baseStereotypes="jaackd-problem-package" redefines="jaackd-problem-package">
 				<AppliesTo>
 					<Apply type="Package">
-						<Property name="_HideUmlLinks" value="True"/>
 						<Property name="URI" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
 					</Apply>
 				</AppliesTo>
 			</Stereotype>
@@ -178,8 +178,8 @@
 				</stereotypedrelationships>
 				<AppliesTo>
 					<Apply type="Package">
-						<Property name="_HideUmlLinks" value="True"/>
 						<Property name="URI" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
 					</Apply>
 				</AppliesTo>
 			</Stereotype>
@@ -192,8 +192,8 @@
 				</stereotypedrelationships>
 				<AppliesTo>
 					<Apply type="Package">
-						<Property name="_HideUmlLinks" value="True"/>
 						<Property name="URI" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
 					</Apply>
 				</AppliesTo>
 			</Stereotype>
@@ -221,8 +221,8 @@
 			<Stereotype name="jaackd-implementation-model" metatype="Implementation Model" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-implementation-package" baseStereotypes="jaackd-implementation-package jaackd-top-level-model" redefines="jaackd-implementation-package">
 				<AppliesTo>
 					<Apply type="Package">
-						<Property name="_HideUmlLinks" value="True"/>
 						<Property name="URI" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
 					</Apply>
 				</AppliesTo>
 				<TaggedValues>
@@ -253,8 +253,8 @@
 				</stereotypedrelationships>
 				<AppliesTo>
 					<Apply type="Package">
-						<Property name="_HideUmlLinks" value="True"/>
 						<Property name="URI" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
 					</Apply>
 				</AppliesTo>
 			</Stereotype>
@@ -267,8 +267,8 @@
 				</stereotypedrelationships>
 				<AppliesTo>
 					<Apply type="Package">
-						<Property name="_HideUmlLinks" value="True"/>
 						<Property name="URI" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
 					</Apply>
 				</AppliesTo>
 			</Stereotype>
@@ -281,24 +281,24 @@
 				</stereotypedrelationships>
 				<AppliesTo>
 					<Apply type="Package">
-						<Property name="_HideUmlLinks" value="True"/>
 						<Property name="URI" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
 					</Apply>
 				</AppliesTo>
 			</Stereotype>
 			<Stereotype name="jaackd-local-docker-sveltekit-deployment" metatype="local-docker-sveltekit-deployment" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-deployment" baseStereotypes="jaackd-deployment" redefines="jaackd-deployment">
 				<AppliesTo>
 					<Apply type="Package">
-						<Property name="_HideUmlLinks" value="True"/>
 						<Property name="URI" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
 					</Apply>
 				</AppliesTo>
 			</Stereotype>
 			<Stereotype name="jaackd-menu" metatype="menu" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-menu-element" baseStereotypes="jaackd-menu-element jaackd-top-level-configuration-element" strictness="all">
 				<AppliesTo>
 					<Apply type="Class">
-						<Property name="_HideUmlLinks" value="True"/>
 						<Property name="isActive" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
 					</Apply>
 				</AppliesTo>
 				<TaggedValues>
@@ -312,8 +312,8 @@
 				</stereotypedrelationships>
 				<AppliesTo>
 					<Apply type="Class">
-						<Property name="_HideUmlLinks" value="True"/>
 						<Property name="isActive" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
 					</Apply>
 				</AppliesTo>
 				<TaggedValues>
@@ -333,8 +333,8 @@
 			<Stereotype name="jaackd-model-set-configuration" metatype="Model Set Configuration" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-package" baseStereotypes="jaackd-package jaackd-top-level-model" redefines="jaackd-package">
 				<AppliesTo>
 					<Apply type="Package">
-						<Property name="_HideUmlLinks" value="True"/>
 						<Property name="URI" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
 					</Apply>
 				</AppliesTo>
 				<TaggedValues>
@@ -342,16 +342,10 @@
 				</TaggedValues>
 			</Stereotype>
 			<Stereotype name="jaackd-package" metatype="jaackd-package" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" isAbstract="true">
-				<metaconstraints>
-					<metaconstraint umlRole="owner" constraint="jaackd::jaackd-package"/>
-				</metaconstraints>
-				<stereotypedrelationships>
-					<stereotypedrelationship stereotype="jaackd::jaackd-composition" constraint="jaackd::jaackd-package"/>
-				</stereotypedrelationships>
 				<AppliesTo>
 					<Apply type="Package">
-						<Property name="_HideUmlLinks" value="True"/>
 						<Property name="URI" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
 					</Apply>
 				</AppliesTo>
 				<TaggedValues>
@@ -362,8 +356,8 @@
 			<Stereotype name="jaackd-problem-model" metatype="Problem Model" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-problem-package" baseStereotypes="jaackd-problem-package jaackd-top-level-model" redefines="jaackd-problem-package">
 				<AppliesTo>
 					<Apply type="Package">
-						<Property name="_HideUmlLinks" value="True"/>
 						<Property name="URI" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
 					</Apply>
 				</AppliesTo>
 				<TaggedValues>
@@ -373,8 +367,8 @@
 			<Stereotype name="jaackd-problem-package" metatype="jaackd-problem-package" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-package" baseStereotypes="jaackd-package">
 				<AppliesTo>
 					<Apply type="Package">
-						<Property name="_HideUmlLinks" value="True"/>
 						<Property name="URI" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
 					</Apply>
 				</AppliesTo>
 				<TaggedValues>
@@ -390,8 +384,8 @@
 				</stereotypedrelationships>
 				<AppliesTo>
 					<Apply type="Class">
-						<Property name="_HideUmlLinks" value="True"/>
 						<Property name="isActive" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
 					</Apply>
 				</AppliesTo>
 			</Stereotype>
@@ -404,8 +398,8 @@
 				</stereotypedrelationships>
 				<AppliesTo>
 					<Apply type="Class">
-						<Property name="_HideUmlLinks" value="True"/>
 						<Property name="isActive" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
 					</Apply>
 				</AppliesTo>
 				<TaggedValues>
@@ -416,8 +410,8 @@
 			<Stereotype name="jaackd-repositories" metatype="repositories" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-package" baseStereotypes="jaackd-package jaackd-top-level-model" redefines="jaackd-package">
 				<AppliesTo>
 					<Apply type="Package">
-						<Property name="_HideUmlLinks" value="True"/>
 						<Property name="URI" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
 					</Apply>
 				</AppliesTo>
 			</Stereotype>
@@ -430,8 +424,8 @@
 				</stereotypedrelationships>
 				<AppliesTo>
 					<Apply type="Package">
-						<Property name="_HideUmlLinks" value="True"/>
 						<Property name="URI" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
 					</Apply>
 				</AppliesTo>
 				<TaggedValues>
@@ -459,8 +453,8 @@
 				</stereotypedrelationships>
 				<AppliesTo>
 					<Apply type="Package">
-						<Property name="_HideUmlLinks" value="True"/>
 						<Property name="URI" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
 					</Apply>
 				</AppliesTo>
 			</Stereotype>
@@ -473,16 +467,16 @@
 				</stereotypedrelationships>
 				<AppliesTo>
 					<Apply type="Package">
-						<Property name="_HideUmlLinks" value="True"/>
 						<Property name="URI" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
 					</Apply>
 				</AppliesTo>
 			</Stereotype>
 			<Stereotype name="jaackd-solution-model" metatype="Solution Model" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-solution-package" baseStereotypes="jaackd-solution-package jaackd-top-level-model" redefines="jaackd-solution-package">
 				<AppliesTo>
 					<Apply type="Package">
-						<Property name="_HideUmlLinks" value="True"/>
 						<Property name="URI" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
 					</Apply>
 				</AppliesTo>
 				<TaggedValues>
@@ -519,8 +513,8 @@
 				</stereotypedrelationships>
 				<AppliesTo>
 					<Apply type="Package">
-						<Property name="_HideUmlLinks" value="True"/>
 						<Property name="URI" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
 					</Apply>
 				</AppliesTo>
 			</Stereotype>
@@ -533,8 +527,8 @@
 				</stereotypedrelationships>
 				<AppliesTo>
 					<Apply type="Package">
-						<Property name="_HideUmlLinks" value="True"/>
 						<Property name="URI" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
 					</Apply>
 				</AppliesTo>
 			</Stereotype>
@@ -547,8 +541,8 @@
 				</stereotypedrelationships>
 				<AppliesTo>
 					<Apply type="Package">
-						<Property name="_HideUmlLinks" value="True"/>
 						<Property name="URI" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
 					</Apply>
 				</AppliesTo>
 			</Stereotype>
@@ -574,8 +568,8 @@
 				</stereotypedrelationships>
 				<AppliesTo>
 					<Apply type="Package">
-						<Property name="_HideUmlLinks" value="True"/>
 						<Property name="URI" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
 					</Apply>
 				</AppliesTo>
 			</Stereotype>
@@ -585,8 +579,8 @@
 				</stereotypedrelationships>
 				<AppliesTo>
 					<Apply type="Class">
-						<Property name="_HideUmlLinks" value="True"/>
 						<Property name="isActive" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
 					</Apply>
 				</AppliesTo>
 				<TaggedValues>
@@ -615,8 +609,8 @@
 				</stereotypedrelationships>
 				<AppliesTo>
 					<Apply type="Class">
-						<Property name="_HideUmlLinks" value="True"/>
 						<Property name="isActive" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
 					</Apply>
 				</AppliesTo>
 			</Stereotype>
@@ -629,8 +623,8 @@
 			<Stereotype name="jaackd-top-level-model" metatype="namespace" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-package" baseStereotypes="jaackd-package" redefines="jaackd-package">
 				<AppliesTo>
 					<Apply type="Package">
-						<Property name="_HideUmlLinks" value="True"/>
 						<Property name="URI" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
 					</Apply>
 				</AppliesTo>
 			</Stereotype>
@@ -643,8 +637,8 @@
 				</stereotypedrelationships>
 				<AppliesTo>
 					<Apply type="Package">
-						<Property name="_HideUmlLinks" value="True"/>
 						<Property name="URI" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
 					</Apply>
 				</AppliesTo>
 			</Stereotype>
@@ -657,8 +651,8 @@
 				</stereotypedrelationships>
 				<AppliesTo>
 					<Apply type="Package">
-						<Property name="_HideUmlLinks" value="True"/>
 						<Property name="URI" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
 					</Apply>
 				</AppliesTo>
 			</Stereotype>
