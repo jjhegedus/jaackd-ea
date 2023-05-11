@@ -162,6 +162,9 @@
 				</AppliesTo>
 			</Stereotype>
 			<Stereotype name="jaackd-exchange-items" metatype="Exchange Items" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-problem-package" baseStereotypes="jaackd-problem-package" redefines="jaackd-problem-package">
+				<stereotypedrelationships>
+					<stereotypedrelationship stereotype="jaackd::jaackd-composition" constraint="jaackd::jaackd-structure"/>
+				</stereotypedrelationships>
 				<AppliesTo>
 					<Apply type="Package">
 						<Property name="URI" value=""/>
@@ -293,6 +296,9 @@
 						<Property name="_HideUmlLinks" value="True"/>
 					</Apply>
 				</AppliesTo>
+				<TaggedValues>
+					<Tag name="Elements" type="" description="Type=RefGUIDList;&#xA;Metatype=Classifier;" unit="" values="" default=""/>
+				</TaggedValues>
 			</Stereotype>
 			<Stereotype name="jaackd-menu" metatype="menu" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-menu-element" baseStereotypes="jaackd-menu-element jaackd-top-level-configuration-element" strictness="all">
 				<AppliesTo>
@@ -463,7 +469,7 @@
 					<metaconstraint umlRole="owner" constraint="jaackd::jaackd-structure"/>
 				</metaconstraints>
 				<stereotypedrelationships>
-					<stereotypedrelationship stereotype="jaackd::jaackd-composition" constraint="jaackd::jaackd-structure"/>
+					<stereotypedrelationship stereotype="jaackd::jaackd-composition" constraint="jaackd::jaackd-exchange-items"/>
 				</stereotypedrelationships>
 				<AppliesTo>
 					<Apply type="Package">

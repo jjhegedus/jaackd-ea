@@ -6,6 +6,7 @@
 			<Stereotype name="jaackd-diagram" notes="" cx="90" cy="70" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
 				<AppliesTo>
 					<Apply type="Diagram_Logical">
+						<Property name="styleex" value="HideConnStereotype=1;"/>
 						<Property name="alias" value="jaackd-diagram"/>
 						<Property name="toolbox" value="jaackd::jaackd-toolbox"/>
 						<Property name="diagramID" value="jd"/>

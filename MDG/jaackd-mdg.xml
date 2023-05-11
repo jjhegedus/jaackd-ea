@@ -165,6 +165,9 @@
             </AppliesTo>
           </Stereotype>
           <Stereotype name="jaackd-exchange-items" metatype="Exchange Items" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-problem-package" baseStereotypes="jaackd-problem-package" redefines="jaackd-problem-package">
+            <stereotypedrelationships>
+              <stereotypedrelationship stereotype="jaackd::jaackd-composition" constraint="jaackd::jaackd-structure" />
+            </stereotypedrelationships>
             <AppliesTo>
               <Apply type="Package">
                 <Property name="URI" value="" />
@@ -296,6 +299,9 @@
                 <Property name="_HideUmlLinks" value="True" />
               </Apply>
             </AppliesTo>
+            <TaggedValues>
+              <Tag name="Elements" type="" description="Type=RefGUIDList;&#xA;Metatype=Classifier;" unit="" values="" default="" />
+            </TaggedValues>
           </Stereotype>
           <Stereotype name="jaackd-menu" metatype="menu" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-menu-element" baseStereotypes="jaackd-menu-element jaackd-top-level-configuration-element" strictness="all">
             <AppliesTo>
@@ -466,7 +472,7 @@
               <metaconstraint umlRole="owner" constraint="jaackd::jaackd-structure" />
             </metaconstraints>
             <stereotypedrelationships>
-              <stereotypedrelationship stereotype="jaackd::jaackd-composition" constraint="jaackd::jaackd-structure" />
+              <stereotypedrelationship stereotype="jaackd::jaackd-composition" constraint="jaackd::jaackd-exchange-items" />
             </stereotypedrelationships>
             <AppliesTo>
               <Apply type="Package">
@@ -2828,6 +2834,7 @@ parse(<compilationUnit>);
           <Stereotype name="jaackd-diagram" notes="" cx="90" cy="70" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
             <AppliesTo>
               <Apply type="Diagram_Logical">
+                <Property name="styleex" value="HideConnStereotype=1;" />
                 <Property name="alias" value="jaackd-diagram" />
                 <Property name="toolbox" value="jaackd::jaackd-toolbox" />
                 <Property name="diagramID" value="jd" />
@@ -2846,7 +2853,15 @@ parse(<compilationUnit>);
       <Documentation id="6D4B159F-9" name="jaackd-toolbox" version="1.0" alias="jaackd-toolbox-profile" notes="Elements for jaackd modeling" />
       <Content>
         <Stereotypes>
-          <Stereotype name="jaackd-top-level-packages" notes="" cx="379" cy="127" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
+          <Stereotype name="jaackd-patterns" notes="" cx="301" cy="70" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
+            <AppliesTo>
+              <Apply type="ToolboxPage" />
+            </AppliesTo>
+            <TaggedValues>
+              <Tag name="jaackd::jaackd-model-type-legend(UMLPattern)" type="" description="" unit="" values="" default="jaackd-model-type-legend" />
+            </TaggedValues>
+          </Stereotype>
+          <Stereotype name="jaackd-top-level-packages" notes="" cx="379" cy="140" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
             <AppliesTo>
               <Apply type="ToolboxPage" />
             </AppliesTo>
@@ -2861,7 +2876,7 @@ parse(<compilationUnit>);
               <Tag name="jaackd::jaackd-package" type="" description="" unit="" values="" default="Package" />
             </TaggedValues>
           </Stereotype>
-          <Stereotype name="jaackd-problem-model" notes="" cx="375" cy="257" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
+          <Stereotype name="jaackd-problem-model" notes="" cx="375" cy="294" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
             <AppliesTo>
               <Apply type="ToolboxPage" />
             </AppliesTo>
@@ -2885,6 +2900,14 @@ parse(<compilationUnit>);
               <Tag name="jaackd::jaackd-signals(UML::Package)" type="" description="" unit="" values="" default="Signals" />
             </TaggedValues>
           </Stereotype>
+          <Stereotype name="jaackd-solution-model" notes="" cx="298" cy="70" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
+            <AppliesTo>
+              <Apply type="ToolboxPage" />
+            </AppliesTo>
+            <TaggedValues>
+              <Tag name="jaackd::jaackd-model-type-legend(UML::Class)" type="" description="" unit="" values="" default="jaackd-model-type-legend" />
+            </TaggedValues>
+          </Stereotype>
           <Stereotype name="jaackd-implementation-model" notes="" cx="354" cy="70" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
             <AppliesTo>
               <Apply type="ToolboxPage" />
@@ -2894,15 +2917,7 @@ parse(<compilationUnit>);
               <Tag name="jaackd::jaackd-implementation-model(UML::Package)" type="" description="" unit="" values="" default="Implementation Model" />
             </TaggedValues>
           </Stereotype>
-          <Stereotype name="jaackd-solution-model" notes="" cx="298" cy="70" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
-            <AppliesTo>
-              <Apply type="ToolboxPage" />
-            </AppliesTo>
-            <TaggedValues>
-              <Tag name="jaackd::jaackd-model-type-legend(UML::Class)" type="" description="" unit="" values="" default="jaackd-model-type-legend" />
-            </TaggedValues>
-          </Stereotype>
-          <Stereotype name="jaackd-packages" notes="jaackd packages" cx="369" cy="227" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
+          <Stereotype name="jaackd-packages" notes="jaackd packages" cx="369" cy="252" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
             <AppliesTo>
               <Apply type="ToolboxPage" />
             </AppliesTo>
@@ -2920,6 +2935,17 @@ parse(<compilationUnit>);
               <Tag name="jaackd::jaackd-model-set-configuration(UML::Package)" type="" description="" unit="" values="" default="Model Set Configuration" />
             </TaggedValues>
           </Stereotype>
+          <Stereotype name="jaackd-classes" notes="jaackd classes" cx="214" cy="123" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
+            <AppliesTo>
+              <Apply type="ToolboxPage" />
+            </AppliesTo>
+            <TaggedValues>
+              <Tag name="jaackd::jaackd-menu" type="" description="" unit="" values="" default="jaackd-menu" />
+              <Tag name="jaackd::jaackd-submenu" type="" description="" unit="" values="" default="jaackd-submenu" />
+              <Tag name="jaackd::jaackd-menu-item" type="" description="" unit="" values="" default="jaackd-menu-item" />
+              <Tag name="jaackd::jaackd-block" type="" description="" unit="" values="" default="jaackd-block" />
+            </TaggedValues>
+          </Stereotype>
           <Stereotype name="jaackd-connectors" notes="jaackd connectors" cx="313" cy="149" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
             <AppliesTo>
               <Apply type="ToolboxPage" />
@@ -2931,17 +2957,6 @@ parse(<compilationUnit>);
               <Tag name="jaackd::jaackd-menu-nesting" type="" description="" unit="" values="" default="MenuNesting" />
               <Tag name="jaackd::jaackd-top-level-configuration-composition" type="" description="" unit="" values="" default="TopLevelConfigurationComposition" />
               <Tag name="jaackd::jaackd-dependency(UML::Dependency)" type="int" description="" unit="" values="" default="Dependency" />
-            </TaggedValues>
-          </Stereotype>
-          <Stereotype name="jaackd-classes" notes="jaackd classes" cx="214" cy="123" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
-            <AppliesTo>
-              <Apply type="ToolboxPage" />
-            </AppliesTo>
-            <TaggedValues>
-              <Tag name="jaackd::jaackd-menu" type="" description="" unit="" values="" default="jaackd-menu" />
-              <Tag name="jaackd::jaackd-submenu" type="" description="" unit="" values="" default="jaackd-submenu" />
-              <Tag name="jaackd::jaackd-menu-item" type="" description="" unit="" values="" default="jaackd-menu-item" />
-              <Tag name="jaackd::jaackd-block" type="" description="" unit="" values="" default="jaackd-block" />
             </TaggedValues>
           </Stereotype>
           <Stereotype name="jaackd-work-items" notes="" cx="248" cy="114" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
@@ -2957,15 +2972,7 @@ parse(<compilationUnit>);
               <Tag name="jaackd::jaackd-feature(UML::Requirement)" type="" description="" unit="" values="" default="Feature" />
             </TaggedValues>
           </Stereotype>
-          <Stereotype name="Patterns" notes="" cx="301" cy="70" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
-            <AppliesTo>
-              <Apply type="ToolboxPage" />
-            </AppliesTo>
-            <TaggedValues>
-              <Tag name="jaackd::jaackd-model-type-legend(UMLPattern)" type="" description="" unit="" values="" default="jaackd-model-type-legend" />
-            </TaggedValues>
-          </Stereotype>
-          <Stereotype name="Reports" notes="" cx="279" cy="70" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
+          <Stereotype name="jaakcd-reports" notes="" cx="279" cy="70" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
             <AppliesTo>
               <Apply type="ToolboxPage" />
             </AppliesTo>
