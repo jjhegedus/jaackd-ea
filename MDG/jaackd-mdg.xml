@@ -6,15 +6,13 @@
       <Documentation id="8A93E0A4-5" name="jaackd" version="1.0" notes="jaackd" />
       <Content>
         <Stereotypes>
-          <Stereotype name="jaackd-activities" metatype="Activities" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-problem-package" baseStereotypes="jaackd-problem-package" redefines="jaackd-problem-package">
-            <metaconstraints>
-              <metaconstraint umlRole="owner" constraint="jaackd::jaackd-problem-model" />
-            </metaconstraints>
+          <Stereotype name="jaackd-activities" metatype="Activities" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-package" baseStereotypes="jaackd-package" redefines="jaackd-package">
             <stereotypedrelationships>
-              <stereotypedrelationship stereotype="jaackd::jaackd-composition" constraint="jaackd::jaackd-problem-model" />
+              <stereotypedrelationship stereotype="jaackd::jaackd-composition" constraint="jaackd::jaackd-problem-model;jaackd::jaackd-solution-model" />
             </stereotypedrelationships>
             <AppliesTo>
               <Apply type="Package">
+                <Property name="_defaultDiagramType" value="jaackd::jaackd-diagram" />
                 <Property name="URI" value="" />
                 <Property name="_HideUmlLinks" value="True" />
               </Apply>
@@ -30,6 +28,7 @@
           <Stereotype name="jaackd-binaries" metatype="binaries" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-package" baseStereotypes="jaackd-package jaackd-top-level-model" redefines="jaackd-package">
             <AppliesTo>
               <Apply type="Package">
+                <Property name="_defaultDiagramType" value="jaackd::jaackd-diagram" />
                 <Property name="URI" value="" />
                 <Property name="_HideUmlLinks" value="True" />
               </Apply>
@@ -44,6 +43,7 @@
             </stereotypedrelationships>
             <AppliesTo>
               <Apply type="Package">
+                <Property name="_defaultDiagramType" value="jaackd::jaackd-diagram" />
                 <Property name="URI" value="" />
                 <Property name="_HideUmlLinks" value="True" />
               </Apply>
@@ -91,6 +91,7 @@
           <Stereotype name="jaackd-configuration" metatype="configuration" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-package" baseStereotypes="jaackd-package">
             <AppliesTo>
               <Apply type="Package">
+                <Property name="_defaultDiagramType" value="jaackd::jaackd-diagram" />
                 <Property name="URI" value="" />
                 <Property name="_HideUmlLinks" value="True" />
               </Apply>
@@ -105,6 +106,7 @@
             </stereotypedrelationships>
             <AppliesTo>
               <Apply type="Package">
+                <Property name="_defaultDiagramType" value="jaackd::jaackd-diagram" />
                 <Property name="URI" value="" />
                 <Property name="_HideUmlLinks" value="True" />
               </Apply>
@@ -135,17 +137,20 @@
             </stereotypedrelationships>
             <AppliesTo>
               <Apply type="Package">
+                <Property name="_defaultDiagramType" value="jaackd::jaackd-diagram" />
                 <Property name="URI" value="" />
                 <Property name="_HideUmlLinks" value="True" />
               </Apply>
             </AppliesTo>
             <TaggedValues>
               <Tag name="name-prefix" type="String" description="" unit="" values="" default="DEP_" />
+              <Tag name="elements" />
             </TaggedValues>
           </Stereotype>
           <Stereotype name="jaackd-deployments" metatype="deployments" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-package" baseStereotypes="jaackd-package jaackd-top-level-model" redefines="jaackd-package">
             <AppliesTo>
               <Apply type="Package">
+                <Property name="_defaultDiagramType" value="jaackd::jaackd-diagram" />
                 <Property name="URI" value="" />
                 <Property name="_HideUmlLinks" value="True" />
               </Apply>
@@ -164,12 +169,16 @@
               </Apply>
             </AppliesTo>
           </Stereotype>
-          <Stereotype name="jaackd-exchange-items" metatype="Exchange Items" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-problem-package" baseStereotypes="jaackd-problem-package" redefines="jaackd-problem-package">
+          <Stereotype name="jaackd-exchange-items" metatype="Exchange Items" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-package" baseStereotypes="jaackd-package" redefines="jaackd-package">
+            <metaconstraints>
+              <metaconstraint umlRole="owner" constraint="jaackd::jaackd-structure" />
+            </metaconstraints>
             <stereotypedrelationships>
               <stereotypedrelationship stereotype="jaackd::jaackd-composition" constraint="jaackd::jaackd-structure" />
             </stereotypedrelationships>
             <AppliesTo>
               <Apply type="Package">
+                <Property name="_defaultDiagramType" value="jaackd::jaackd-diagram" />
                 <Property name="URI" value="" />
                 <Property name="_HideUmlLinks" value="True" />
               </Apply>
@@ -184,12 +193,13 @@
             </stereotypedrelationships>
             <AppliesTo>
               <Apply type="Package">
+                <Property name="_defaultDiagramType" value="jaackd::jaackd-diagram" />
                 <Property name="URI" value="" />
                 <Property name="_HideUmlLinks" value="True" />
               </Apply>
             </AppliesTo>
           </Stereotype>
-          <Stereotype name="jaackd-external-structure" metatype="External Structure" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-problem-package" baseStereotypes="jaackd-problem-package" redefines="jaackd-problem-package">
+          <Stereotype name="jaackd-external-structure" metatype="External Structure" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-package" baseStereotypes="jaackd-package" redefines="jaackd-package">
             <metaconstraints>
               <metaconstraint umlRole="owner" constraint="jaackd::jaackd-structure" />
             </metaconstraints>
@@ -198,6 +208,7 @@
             </stereotypedrelationships>
             <AppliesTo>
               <Apply type="Package">
+                <Property name="_defaultDiagramType" value="jaackd::jaackd-diagram" />
                 <Property name="URI" value="" />
                 <Property name="_HideUmlLinks" value="True" />
               </Apply>
@@ -227,6 +238,7 @@
           <Stereotype name="jaackd-implementation-model" metatype="Implementation Model" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-implementation-package" baseStereotypes="jaackd-implementation-package jaackd-top-level-model" redefines="jaackd-implementation-package">
             <AppliesTo>
               <Apply type="Package">
+                <Property name="_defaultDiagramType" value="jaackd::jaackd-diagram" />
                 <Property name="URI" value="" />
                 <Property name="_HideUmlLinks" value="True" />
               </Apply>
@@ -253,12 +265,13 @@
               </Apply>
             </AppliesTo>
           </Stereotype>
-          <Stereotype name="jaackd-interfaces" metatype="Interfaces" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-problem-package" baseStereotypes="jaackd-problem-package" redefines="jaackd-problem-package">
+          <Stereotype name="jaackd-interfaces" metatype="Interfaces" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-package" baseStereotypes="jaackd-package" redefines="jaackd-package">
             <stereotypedrelationships>
               <stereotypedrelationship stereotype="jaackd::jaackd-composition" constraint="jaackd::jaackd-structure" />
             </stereotypedrelationships>
             <AppliesTo>
               <Apply type="Package">
+                <Property name="_defaultDiagramType" value="jaackd::jaackd-diagram" />
                 <Property name="URI" value="" />
                 <Property name="_HideUmlLinks" value="True" />
               </Apply>
@@ -273,12 +286,13 @@
             </stereotypedrelationships>
             <AppliesTo>
               <Apply type="Package">
+                <Property name="_defaultDiagramType" value="jaackd::jaackd-diagram" />
                 <Property name="URI" value="" />
                 <Property name="_HideUmlLinks" value="True" />
               </Apply>
             </AppliesTo>
           </Stereotype>
-          <Stereotype name="jaackd-internal-structure" metatype="Internal Structure" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-problem-package" baseStereotypes="jaackd-problem-package" redefines="jaackd-problem-package">
+          <Stereotype name="jaackd-internal-structure" metatype="Internal Structure" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-package" baseStereotypes="jaackd-package" redefines="jaackd-package">
             <metaconstraints>
               <metaconstraint umlRole="owner" constraint="jaackd::jaackd-structure" />
             </metaconstraints>
@@ -287,6 +301,7 @@
             </stereotypedrelationships>
             <AppliesTo>
               <Apply type="Package">
+                <Property name="_defaultDiagramType" value="jaackd::jaackd-diagram" />
                 <Property name="URI" value="" />
                 <Property name="_HideUmlLinks" value="True" />
               </Apply>
@@ -295,13 +310,11 @@
           <Stereotype name="jaackd-local-docker-sveltekit-deployment" metatype="local-docker-sveltekit-deployment" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-deployment" baseStereotypes="jaackd-deployment" redefines="jaackd-deployment">
             <AppliesTo>
               <Apply type="Package">
+                <Property name="_defaultDiagramType" value="jaackd::jaackd-diagram" />
                 <Property name="URI" value="" />
                 <Property name="_HideUmlLinks" value="True" />
               </Apply>
             </AppliesTo>
-            <TaggedValues>
-              <Tag name="Elements" type="" description="Type=RefGUIDList;&#xA;Metatype=Classifier;" unit="" values="" default="" />
-            </TaggedValues>
           </Stereotype>
           <Stereotype name="jaackd-menu" metatype="menu" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-menu-element" baseStereotypes="jaackd-menu-element jaackd-top-level-configuration-element" strictness="all">
             <AppliesTo>
@@ -342,6 +355,7 @@
           <Stereotype name="jaackd-model-set-configuration" metatype="Model Set Configuration" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-package" baseStereotypes="jaackd-package jaackd-top-level-model" redefines="jaackd-package">
             <AppliesTo>
               <Apply type="Package">
+                <Property name="_defaultDiagramType" value="jaackd::jaackd-diagram" />
                 <Property name="URI" value="" />
                 <Property name="_HideUmlLinks" value="True" />
               </Apply>
@@ -353,6 +367,7 @@
           <Stereotype name="jaackd-package" metatype="jaackd-package" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" isAbstract="true">
             <AppliesTo>
               <Apply type="Package">
+                <Property name="_defaultDiagramType" value="jaackd::jaackd-diagram" />
                 <Property name="URI" value="" />
                 <Property name="_HideUmlLinks" value="True" />
               </Apply>
@@ -365,6 +380,7 @@
           <Stereotype name="jaackd-problem-model" metatype="Problem Model" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-problem-package" baseStereotypes="jaackd-problem-package jaackd-top-level-model" redefines="jaackd-problem-package">
             <AppliesTo>
               <Apply type="Package">
+                <Property name="_defaultDiagramType" value="jaackd::jaackd-diagram" />
                 <Property name="URI" value="" />
                 <Property name="_HideUmlLinks" value="True" />
               </Apply>
@@ -376,6 +392,7 @@
           <Stereotype name="jaackd-problem-package" metatype="jaackd-problem-package" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-package" baseStereotypes="jaackd-package">
             <AppliesTo>
               <Apply type="Package">
+                <Property name="_defaultDiagramType" value="jaackd::jaackd-diagram" />
                 <Property name="URI" value="" />
                 <Property name="_HideUmlLinks" value="True" />
               </Apply>
@@ -397,6 +414,9 @@
                 <Property name="_HideUmlLinks" value="True" />
               </Apply>
             </AppliesTo>
+            <TaggedValues>
+              <Tag name="reportFragments" />
+            </TaggedValues>
           </Stereotype>
           <Stereotype name="jaackd-report-fragment" metatype="jaackd-report-fragment" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-block" baseStereotypes="jaackd-block" redefines="jaackd-block">
             <metaconstraints>
@@ -419,6 +439,7 @@
           <Stereotype name="jaackd-repositories" metatype="repositories" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-package" baseStereotypes="jaackd-package jaackd-top-level-model" redefines="jaackd-package">
             <AppliesTo>
               <Apply type="Package">
+                <Property name="_defaultDiagramType" value="jaackd::jaackd-diagram" />
                 <Property name="URI" value="" />
                 <Property name="_HideUmlLinks" value="True" />
               </Apply>
@@ -433,6 +454,7 @@
             </stereotypedrelationships>
             <AppliesTo>
               <Apply type="Package">
+                <Property name="_defaultDiagramType" value="jaackd::jaackd-diagram" />
                 <Property name="URI" value="" />
                 <Property name="_HideUmlLinks" value="True" />
               </Apply>
@@ -462,20 +484,22 @@
             </stereotypedrelationships>
             <AppliesTo>
               <Apply type="Package">
+                <Property name="_defaultDiagramType" value="jaackd::jaackd-diagram" />
                 <Property name="URI" value="" />
                 <Property name="_HideUmlLinks" value="True" />
               </Apply>
             </AppliesTo>
           </Stereotype>
-          <Stereotype name="jaackd-signals" metatype="Signals" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-problem-package" baseStereotypes="jaackd-problem-package" redefines="jaackd-problem-package">
+          <Stereotype name="jaackd-signals" metatype="Signals" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-package" baseStereotypes="jaackd-package" redefines="jaackd-package">
             <metaconstraints>
-              <metaconstraint umlRole="owner" constraint="jaackd::jaackd-structure" />
+              <metaconstraint umlRole="owner" constraint="jaackd::jaackd-exchange-items" />
             </metaconstraints>
             <stereotypedrelationships>
               <stereotypedrelationship stereotype="jaackd::jaackd-composition" constraint="jaackd::jaackd-exchange-items" />
             </stereotypedrelationships>
             <AppliesTo>
               <Apply type="Package">
+                <Property name="_defaultDiagramType" value="jaackd::jaackd-diagram" />
                 <Property name="URI" value="" />
                 <Property name="_HideUmlLinks" value="True" />
               </Apply>
@@ -484,6 +508,7 @@
           <Stereotype name="jaackd-solution-model" metatype="Solution Model" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-solution-package" baseStereotypes="jaackd-solution-package jaackd-top-level-model" redefines="jaackd-solution-package">
             <AppliesTo>
               <Apply type="Package">
+                <Property name="_defaultDiagramType" value="jaackd::jaackd-diagram" />
                 <Property name="URI" value="" />
                 <Property name="_HideUmlLinks" value="True" />
               </Apply>
@@ -522,6 +547,7 @@
             </stereotypedrelationships>
             <AppliesTo>
               <Apply type="Package">
+                <Property name="_defaultDiagramType" value="jaackd::jaackd-diagram" />
                 <Property name="URI" value="" />
                 <Property name="_HideUmlLinks" value="True" />
               </Apply>
@@ -536,6 +562,7 @@
             </stereotypedrelationships>
             <AppliesTo>
               <Apply type="Package">
+                <Property name="_defaultDiagramType" value="jaackd::jaackd-diagram" />
                 <Property name="URI" value="" />
                 <Property name="_HideUmlLinks" value="True" />
               </Apply>
@@ -550,6 +577,7 @@
             </stereotypedrelationships>
             <AppliesTo>
               <Apply type="Package">
+                <Property name="_defaultDiagramType" value="jaackd::jaackd-diagram" />
                 <Property name="URI" value="" />
                 <Property name="_HideUmlLinks" value="True" />
               </Apply>
@@ -568,15 +596,13 @@
               </Apply>
             </AppliesTo>
           </Stereotype>
-          <Stereotype name="jaackd-structure" metatype="Structure" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-problem-package" baseStereotypes="jaackd-problem-package" redefines="jaackd-problem-package">
-            <metaconstraints>
-              <metaconstraint umlRole="owner" constraint="jaackd::jaackd-problem-model" />
-            </metaconstraints>
+          <Stereotype name="jaackd-structure" metatype="Structure" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-package" baseStereotypes="jaackd-package" redefines="jaackd-package">
             <stereotypedrelationships>
-              <stereotypedrelationship stereotype="jaackd::jaackd-composition" constraint="jaackd::jaackd-problem-model" />
+              <stereotypedrelationship stereotype="jaackd::jaackd-composition" constraint="jaackd::jaackd-problem-model;jaackd::jaackd-solution-model" />
             </stereotypedrelationships>
             <AppliesTo>
               <Apply type="Package">
+                <Property name="_defaultDiagramType" value="jaackd::jaackd-diagram" />
                 <Property name="URI" value="" />
                 <Property name="_HideUmlLinks" value="True" />
               </Apply>
@@ -632,6 +658,7 @@
           <Stereotype name="jaackd-top-level-model" metatype="namespace" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-package" baseStereotypes="jaackd-package" redefines="jaackd-package">
             <AppliesTo>
               <Apply type="Package">
+                <Property name="_defaultDiagramType" value="jaackd::jaackd-diagram" />
                 <Property name="URI" value="" />
                 <Property name="_HideUmlLinks" value="True" />
               </Apply>
@@ -646,6 +673,7 @@
             </stereotypedrelationships>
             <AppliesTo>
               <Apply type="Package">
+                <Property name="_defaultDiagramType" value="jaackd::jaackd-diagram" />
                 <Property name="URI" value="" />
                 <Property name="_HideUmlLinks" value="True" />
               </Apply>
@@ -660,6 +688,7 @@
             </stereotypedrelationships>
             <AppliesTo>
               <Apply type="Package">
+                <Property name="_defaultDiagramType" value="jaackd::jaackd-diagram" />
                 <Property name="URI" value="" />
                 <Property name="_HideUmlLinks" value="True" />
               </Apply>
@@ -667,6 +696,8 @@
           </Stereotype>
         </Stereotypes>
         <TaggedValueTypes>
+          <TaggedValueType property="elements" description="" notes="Type=RefGUIDList;Stereotypes=jaackd-block;" />
+          <TaggedValueType property="reportFragments" description="" notes="Type=RefGUIDList;Stereotypes=jaackd-report-fragment;" />
           <TaggedValueType property="jaackd-blocks" description="" notes="Type=RefGUIDList;Stereotypes=jaackd-block;" />
         </TaggedValueTypes>
         <ViewDefinitions />
@@ -959,58 +990,6 @@ AAAAFAAAAA==
     <RefData version="1.0" exporter="EA.25">
       <DataSet name="Property Types" table="t_propertytypes" filter="Property='#Property#'">
         <DataRow>
-          <Column name="Property" value="architectureChange" />
-          <Column name="Notes" value="Type=RefGUIDList;Stereotypes=ArchitectureChange;" />
-        </DataRow>
-        <DataRow>
-          <Column name="Property" value="businessArchitecture" />
-          <Column name="Notes" value="Type=RefGUID;Stereotypes=BusinessArchitecture;" />
-        </DataRow>
-        <DataRow>
-          <Column name="Property" value="codeModels" />
-          <Column name="Notes" value="Type=RefGUID;Stereotypes=CodeModels;" />
-        </DataRow>
-        <DataRow>
-          <Column name="Property" value="enterpriseArchitecture" />
-          <Column name="Notes" value="Type=RefGUID;Stereotypes=EnterpriseArchitecture;" />
-        </DataRow>
-        <DataRow>
-          <Column name="Property" value="infrastructureModel" />
-          <Column name="Notes" value="Type=RefGUID;Stereotypes=InfrastructureModel;" />
-        </DataRow>
-        <DataRow>
-          <Column name="Property" value="modelTooling" />
-          <Column name="Notes" value="Type=RefGUID;Stereotypes=ModelTooling;" />
-        </DataRow>
-        <DataRow>
-          <Column name="Property" value="overview" />
-          <Column name="Notes" value="Type=RefGUID;Stereotypes=Overview;" />
-        </DataRow>
-        <DataRow>
-          <Column name="Property" value="project" />
-          <Column name="Notes" value="Type=RefGUIDList;Stereotypes=Project;" />
-        </DataRow>
-        <DataRow>
-          <Column name="Property" value="projects" />
-          <Column name="Notes" value="Type=RefGUID;Stereotypes=Projects;" />
-        </DataRow>
-        <DataRow>
-          <Column name="Property" value="reference" />
-          <Column name="Notes" value="Type=RefGUID;Stereotypes=Reference;" />
-        </DataRow>
-        <DataRow>
-          <Column name="Property" value="sandbox" />
-          <Column name="Notes" value="Type=RefGUID;Stereotypes=Sandbox;" />
-        </DataRow>
-        <DataRow>
-          <Column name="Property" value="systemArchitecture" />
-          <Column name="Notes" value="Type=RefGUID;Stereotypes=SystemArchitecture;" />
-        </DataRow>
-        <DataRow>
-          <Column name="Property" value="technicalArchitecture" />
-          <Column name="Notes" value="Type=RefGUID;Stereotypes=TechnicalArchitecture;" />
-        </DataRow>
-        <DataRow>
           <Column name="Property" value="JaackdEAAddinBroadcast" />
           <Column name="Description" value="Tagged value controlled by the Jaackd EA Addin" />
           <Column name="Notes" value="Type=AddinBroadcast;&#xA;&#xA;Values=JaackdEAAddin;&#xA;&#xA;Used to: Allow the Jaackd EA Addin to respond to an attempt to edit this Tagged Value by showing a dialog in which the value and notes can be edited." />
@@ -1064,11 +1043,6 @@ AAAAFAAAAA==
           <Column name="Property" value="Memo" />
           <Column name="Description" value="Memo" />
           <Column name="Notes" value="Type=Memo;&#xA;&#xA;Used to: Input large and complex values for a tag." />
-        </DataRow>
-        <DataRow>
-          <Column name="Property" value="GitHubRepository" />
-          <Column name="Description" value="A github repository" />
-          <Column name="Notes" value="Type=RefGUID;&#xA;Stereotypes=jaackd::GitHubRepository" />
         </DataRow>
         <DataRow>
           <Column name="Property" value="Classifier" />
@@ -2917,6 +2891,14 @@ parse(<compilationUnit>);
               <Tag name="jaackd::jaackd-implementation-model(UML::Package)" type="" description="" unit="" values="" default="Implementation Model" />
             </TaggedValues>
           </Stereotype>
+          <Stereotype name="jaackd-deployment-model" notes="" cx="259" cy="70" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
+            <AppliesTo>
+              <Apply type="ToolboxPage" />
+            </AppliesTo>
+            <TaggedValues>
+              <Tag name="jaackd::jaackd-deployment(UML::Package)" type="" description="" unit="" values="" default="Deployment" />
+            </TaggedValues>
+          </Stereotype>
           <Stereotype name="jaackd-packages" notes="jaackd packages" cx="369" cy="252" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
             <AppliesTo>
               <Apply type="ToolboxPage" />
@@ -2935,7 +2917,7 @@ parse(<compilationUnit>);
               <Tag name="jaackd::jaackd-model-set-configuration(UML::Package)" type="" description="" unit="" values="" default="Model Set Configuration" />
             </TaggedValues>
           </Stereotype>
-          <Stereotype name="jaackd-classes" notes="jaackd classes" cx="214" cy="123" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
+          <Stereotype name="jaackd-blocks" notes="jaackd classes" cx="214" cy="123" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
             <AppliesTo>
               <Apply type="ToolboxPage" />
             </AppliesTo>
@@ -2993,8 +2975,7 @@ parse(<compilationUnit>);
   </UIToolboxes>
   <ModelTemplates>
     <Model name="jaackd-model-type-legend" location="C:\p\gh\jjhegedus\jaackd-ea\MDG\patterns\jaackd-model-type-legend.xml" default="yes" icon="34" isFramework="false" />
-    <Model name="jaackd-problem-model-no-requirements" location="C:\p\gh\jjhegedus\jaackd-ea\MDG\patterns\jaackd-problem-model-no-requirements.xml" default="yes" icon="34" isFramework="false" />
+    <Model name="jaackd-problem-model-requirements-only" location="C:\p\gh\jjhegedus\jaackd-ea\MDG\patterns\jaackd-problem-model-requirements-only.xml" default="yes" icon="34" isFramework="false" />
     <Model name="jaackd-problem-model" location="C:\p\gh\jjhegedus\jaackd-ea\MDG\patterns\jaackd-problem-model.xml" default="yes" icon="34" isFramework="false" />
-    <Model name="jaackd-structure" location="C:\p\gh\jjhegedus\jaackd-ea\MDG\patterns\jaackd-structure.xml" default="yes" icon="34" isFramework="false" />
   </ModelTemplates>
 </MDG.Technology>

@@ -50,6 +50,10 @@ namespace JaackdEAAddin {
       //foreach (EA.Element jaackdElement in _eaService.GetElementsBySterotypeName("jaackd-problem-model")) {
       //  _logger.LogInformation(jaackdElement.FQStereotype);
       //}
+
+      foreach (EA.Element jaackdElement in _eaService.GetElementsBySterotypeName("jaackd-deployment")) {
+        _logger.LogInformation("BackgroundProcess:OnTimedEvent processing stereotype " + jaackdElement.FQStereotype);
+      }
     }
 
     private bool ProcessJaackdCompositionConnector(EA.Connector connector) {
@@ -59,14 +63,10 @@ namespace JaackdEAAddin {
       EA.Package clientPackage = repository.GetPackageByGuid(clientElement.ElementGUID);
       EA.Element supplierElement = repository.GetElementByID(connector.SupplierID);
       EA.Package supplierPackage = repository.GetPackageByGuid(supplierElement.ElementGUID);
-      //EA.Package parentPackage = repository.GetPackageByID(clientElement.PackageID);
 
       if (clientPackage.ParentID != supplierPackage.PackageID) {
-        //clientElement.PackageID = supplierPackage.PackageID;
         clientPackage.ParentID = supplierPackage.PackageID;
         clientPackage.Update();
-        //supplierElement.Update();
-        //parentPackage.Update();
       }
 
 

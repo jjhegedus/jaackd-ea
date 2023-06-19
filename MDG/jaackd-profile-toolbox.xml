@@ -67,6 +67,14 @@
 					<Tag name="jaackd::jaackd-implementation-model(UML::Package)" type="" description="" unit="" values="" default="Implementation Model"/>
 				</TaggedValues>
 			</Stereotype>
+			<Stereotype name="jaackd-deployment-model" notes="" cx="259" cy="70" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
+				<AppliesTo>
+					<Apply type="ToolboxPage"/>
+				</AppliesTo>
+				<TaggedValues>
+					<Tag name="jaackd::jaackd-deployment(UML::Package)" type="" description="" unit="" values="" default="Deployment"/>
+				</TaggedValues>
+			</Stereotype>
 			<Stereotype name="jaackd-packages" notes="jaackd packages" cx="369" cy="252" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
 				<AppliesTo>
 					<Apply type="ToolboxPage"/>
@@ -85,7 +93,7 @@
 					<Tag name="jaackd::jaackd-model-set-configuration(UML::Package)" type="" description="" unit="" values="" default="Model Set Configuration"/>
 				</TaggedValues>
 			</Stereotype>
-			<Stereotype name="jaackd-classes" notes="jaackd classes" cx="214" cy="123" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
+			<Stereotype name="jaackd-blocks" notes="jaackd classes" cx="214" cy="123" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
 				<AppliesTo>
 					<Apply type="ToolboxPage"/>
 				</AppliesTo>

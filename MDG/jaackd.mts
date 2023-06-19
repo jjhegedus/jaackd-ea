@@ -11,9 +11,8 @@
   <UIToolboxes directory="C:\p\gh\jjhegedus\jaackd-ea\MDG" files="jaackd-profile-toolbox.xml" />
   <ModelTemplates>
     <Model name="jaackd-model-type-legend" location="C:\p\gh\jjhegedus\jaackd-ea\MDG\patterns\jaackd-model-type-legend.xml" default="yes" icon="34" isFramework="false" />
-    <Model name="jaackd-problem-model-no-requirements" location="C:\p\gh\jjhegedus\jaackd-ea\MDG\patterns\jaackd-problem-model-no-requirements.xml" default="yes" icon="34" isFramework="false" />
+    <Model name="jaackd-problem-model-requirements-only" location="C:\p\gh\jjhegedus\jaackd-ea\MDG\patterns\jaackd-problem-model-requirements-only.xml" default="yes" icon="34" isFramework="false" />
     <Model name="jaackd-problem-model" location="C:\p\gh\jjhegedus\jaackd-ea\MDG\patterns\jaackd-problem-model.xml" default="yes" icon="34" isFramework="false" />
-    <Model name="jaackd-structure" location="C:\p\gh\jjhegedus\jaackd-ea\MDG\patterns\jaackd-structure.xml" default="yes" icon="34" isFramework="false" />
   </ModelTemplates>
   <ModelTemplates>
     <Model name="jaackd-model-type-legend" location="C:\p\gh\jjhegedus\jaackd-ea\MDG\patterns\jaackd-model-type-legend.xml" default="yes" icon="34" isFramework="false" />
