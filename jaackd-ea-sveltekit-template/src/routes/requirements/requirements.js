@@ -1,5 +1,4 @@
-{
-  "requirements": [
+export const requirements = [
     {
       "id": "1",
       "title": "Requirement 1",
@@ -30,4 +29,3 @@
       ]
     }
   ]
-}
