@@ -55,7 +55,7 @@
 					<Apply type="ToolboxPage"/>
 				</AppliesTo>
 				<TaggedValues>
-					<Tag name="jaackd::jaackd-model-type-legend(UML::Class)" type="" description="" unit="" values="" default="jaackd-model-type-legend"/>
+					<Tag name="jaackd::jaackd-solution(UML::Class)" type="" description="" unit="" values="" default="Solution"/>
 				</TaggedValues>
 			</Stereotype>
 			<Stereotype name="jaackd-implementation-model" notes="" cx="354" cy="70" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">

@@ -502,6 +502,14 @@
 					</Apply>
 				</AppliesTo>
 			</Stereotype>
+			<Stereotype name="jaackd-solution" metatype="Solution" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-block" baseStereotypes="jaackd-block" redefines="jaackd-block">
+				<AppliesTo>
+					<Apply type="Class">
+						<Property name="isActive" value=""/>
+						<Property name="_HideUmlLinks" value="True"/>
+					</Apply>
+				</AppliesTo>
+			</Stereotype>
 			<Stereotype name="jaackd-solution-model" metatype="Solution Model" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-solution-package" baseStereotypes="jaackd-solution-package jaackd-top-level-model" redefines="jaackd-solution-package">
 				<AppliesTo>
 					<Apply type="Package">

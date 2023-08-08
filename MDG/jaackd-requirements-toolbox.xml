@@ -1,0 +1,32 @@
+<?xml  version='1.0' encoding='windows-1252' ?>
+<UMLProfile profiletype="uml2">
+	<Documentation id="E8D951C7-B" name="jaackd-requirements-toolbox" version="0.0.1" notes="jaackd-requirements-toolbox"/>
+	<Content>
+		<Stereotypes>
+			<Stereotype name="jaackd-requirements" notes="" cx="246" cy="70" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
+				<AppliesTo>
+					<Apply type="ToolboxPage"/>
+				</AppliesTo>
+				<TaggedValues>
+					<Tag name="jaackd::jaackd-stakeholder-need" type="" description="" unit="" values="" default="Stakeholder Need"/>
+				</TaggedValues>
+			</Stereotype>
+			<Stereotype name="jaackd-work-items" notes="" cx="248" cy="114" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
+				<AppliesTo>
+					<Apply type="ToolboxPage"/>
+				</AppliesTo>
+				<TaggedValues>
+					<Tag name="jaackd::jaackd-bug(UML::Requirement)" type="" description="" unit="" values="" default="Bug"/>
+					<Tag name="jaackd::jaackd-epic(UML::Requirement)" type="" description="" unit="" values="" default="Epic"/>
+					<Tag name="jaackd::jaackd-initiative(UML::Requirement)" type="" description="" unit="" values="" default="Initiative"/>
+					<Tag name="jaackd::jaackd-story(UML::Requirement)" type="" description="" unit="" values="" default="Story"/>
+					<Tag name="jaackd::jaackd-theme(UML::Requirement)" type="" description="" unit="" values="" default="Theme"/>
+					<Tag name="jaackd::jaackd-feature(UML::Requirement)" type="" description="" unit="" values="" default="Feature"/>
+				</TaggedValues>
+			</Stereotype>
+		</Stereotypes>
+		<TaggedValueTypes/>
+		<ViewDefinitions/>
+		<Metamodel/>
+	</Content>
+</UMLProfile>

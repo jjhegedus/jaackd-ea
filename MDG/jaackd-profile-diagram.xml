@@ -13,6 +13,15 @@
 					</Apply>
 				</AppliesTo>
 			</Stereotype>
+			<Stereotype name="jaackd-requirements-diagram" notes="" cx="90" cy="70" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
+				<AppliesTo>
+					<Apply type="Diagram_Custom">
+						<Property name="alias" value="jaackd-requirements"/>
+						<Property name="diagramID" value="jaackd-requirements"/>
+						<Property name="toolbox" value="jaackd-toolbox"/>
+					</Apply>
+				</AppliesTo>
+			</Stereotype>
 		</Stereotypes>
 		<TaggedValueTypes/>
 		<ViewDefinitions/>
