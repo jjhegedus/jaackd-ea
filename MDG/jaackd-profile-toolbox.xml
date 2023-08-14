@@ -11,7 +11,7 @@
 					<Tag name="jaackd::jaackd-model-type-legend(UMLPattern)" type="" description="" unit="" values="" default="jaackd-model-type-legend"/>
 				</TaggedValues>
 			</Stereotype>
-			<Stereotype name="jaackd-top-level-packages" notes="" cx="379" cy="140" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
+			<Stereotype name="jaackd-top-level-packages" notes="" cx="379" cy="153" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
 				<AppliesTo>
 					<Apply type="ToolboxPage"/>
 				</AppliesTo>
@@ -24,6 +24,7 @@
 					<Tag name="jaackd::jaackd-binaries(UML::Package)" type="" description="" unit="" values="" default="Binaries"/>
 					<Tag name="jaackd::jaackd-deployments(UML::Package)" type="" description="" unit="" values="" default="Deployments"/>
 					<Tag name="jaackd::jaackd-package" type="" description="" unit="" values="" default="Package"/>
+					<Tag name="jaackd::jaackd-component-model(UML::Package)" type="" description="" unit="" values="" default="Component Model"/>
 				</TaggedValues>
 			</Stereotype>
 			<Stereotype name="jaackd-problem-model" notes="" cx="375" cy="294" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
@@ -91,6 +92,17 @@
 					<Tag name="jaackd::jaackd-solution-model(UML::Package)" type="" description="" unit="" values="" default="Solution Model"/>
 					<Tag name="jaackd::jaackd-implementation-model(UML::Package)" type="" description="" unit="" values="" default="Implementation Model"/>
 					<Tag name="jaackd::jaackd-model-set-configuration(UML::Package)" type="" description="" unit="" values="" default="Model Set Configuration"/>
+				</TaggedValues>
+			</Stereotype>
+			<Stereotype name="jaackd-entities" notes="" cx="196" cy="88" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
+				<AppliesTo>
+					<Apply type="ToolboxPage"/>
+				</AppliesTo>
+				<TaggedValues>
+					<Tag name="jaackd::jaackd-entity(UML::Class)" type="" description="" unit="" values="" default="Entity"/>
+					<Tag name="jaackd::jaackd-group(UML::Class)" type="" description="" unit="" values="" default="Group"/>
+					<Tag name="jaackd::jaackd-person" type="" description="" unit="" values="" default="Person"/>
+					<Tag name="jaackd::jaackd-corporation" type="" description="" unit="" values="" default="Corporation"/>
 				</TaggedValues>
 			</Stereotype>
 			<Stereotype name="jaackd-blocks" notes="jaackd classes" cx="214" cy="123" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">

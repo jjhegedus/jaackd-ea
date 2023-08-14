@@ -18,7 +18,7 @@
 					<Apply type="Diagram_Custom">
 						<Property name="alias" value="jaackd-requirements"/>
 						<Property name="diagramID" value="jaackd-requirements"/>
-						<Property name="toolbox" value="jaackd-toolbox"/>
+						<Property name="toolbox" value="jaackd-requirements-toolbox"/>
 					</Apply>
 				</AppliesTo>
 			</Stereotype>
