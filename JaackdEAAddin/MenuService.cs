@@ -10,27 +10,27 @@ namespace JaackdEAAddin {
 
     // define menu constants
     const string menuHeader = "-&JaackdTools";
-    const string menuHello = "&Say Hello";
-    const string menuGoodbye = "&Say Goodbye";
+    const string menuHello = "Say Hello";
+    const string menuGoodbye = "Say &Goodbye";
     const string menuOpenMTS = "&Open MTS";
     const string menuShowMain = "&Show Main Window";
     const string menuHideMain = "&Hide Main Window";
     const string menuConvertElementsFromStereotype = "&Convert Elements from Stereotype";
-    const string menuConvertConnectorsFromStereotype = "&Convert Connectors from Stereotype";
-    const string menuConvertSelectedElementsStereotypes = "&Convert Selected Elements Stereotypes";
+    const string menuConvertConnectorsFromStereotype = "Convert Connectors from Stereotype";
+    const string menuConvertSelectedElementsStereotypes = "Convert Selected Elements Stereotypes";
+    const string menuTestJaackdTools = "&Test Jaackd Tools";
 
     // remember if we have to say hello or goodbye
     private bool shouldWeSayHello = true;
 
     private JaackdMainControl mainControl;
     private bool mainWindowOpen = false;
-    private JaackdMainForm mainForm;
+    private JaackdMainForm overlay;
 
     private readonly ILogger<MenuService> _logger;
     private readonly IConfiguration _configuration;
     private readonly IEAService _eaService;
-
-    
+    private readonly int _highlighBorderColor = 0;
 
     public MenuService(ILogger<MenuService> logger, IConfiguration configuration, IEAService eaService) {
       _logger = logger;
@@ -57,7 +57,7 @@ namespace JaackdEAAddin {
           return menuHeader;
         // defines the submenu options
         case menuHeader:
-          string[] subMenus = { menuHello, menuGoodbye, menuOpenMTS, menuShowMain, menuHideMain, menuConvertElementsFromStereotype, menuConvertConnectorsFromStereotype, menuConvertSelectedElementsStereotypes };
+          string[] subMenus = { menuHello, menuGoodbye, menuOpenMTS, menuShowMain, menuHideMain, menuConvertElementsFromStereotype, menuConvertConnectorsFromStereotype, menuConvertSelectedElementsStereotypes, menuTestJaackdTools };
           return subMenus;
       }
 
@@ -103,6 +103,9 @@ namespace JaackdEAAddin {
             IsEnabled = true;
             break;
           case menuConvertSelectedElementsStereotypes:
+            IsEnabled = true;
+            break;
+          case menuTestJaackdTools:
             IsEnabled = true;
             break;
           // there shouldn't be any other, but just in case disable it.
@@ -154,6 +157,9 @@ namespace JaackdEAAddin {
           break;
         case menuConvertSelectedElementsStereotypes:
           this.ConvertSelectedElementsStereotypes();
+          break;
+        case menuTestJaackdTools:
+          this.TestJaackdTools(Repository);
           break;
       }
     }
@@ -296,6 +302,84 @@ namespace JaackdEAAddin {
       }
     }
 
+    private void TestJaackdTools(EA.Repository repository) {
+        _logger.LogInformation("TestJaackdTools: Start");
+      //LaunchOverlay(repository);
+
+      // Figure out what diagram this is running from
+      EA.Diagram diagram = repository.GetCurrentDiagram();
+
+
+      // Process the nodes
+      bool firstIteration = true;
+      EA.Element contextObject = null;
+      foreach (EA.DiagramObject diagramObject in diagram.DiagramObjects) {
+        if (firstIteration) { // The first objeect is the context object so we have a special case to handle it
+          firstIteration = false;
+          contextObject = repository.GetElementByID(diagramObject.ElementID);
+          EA.Element contextElement = repository.GetElementByID(diagramObject.ElementID);
+          _logger.LogInformation("Diagram Object Name: " + contextElement.Name + " is the context element");
+          continue;
+        }
+        bool isStartNode = true;
+        EA.Element element = repository.GetElementByID(diagramObject.ElementID);
+        foreach (EA.Connector connector in element.Connectors) {
+          if (connector.SupplierID == element.ElementID && connector.MetaType == "ControlFlow") {
+            isStartNode = false;
+            ProcessSimulation(repository, element, diagramObject);
+            break;
+          }
+        }
+        _logger.LogInformation("Diagram Object Name: " + element.Name + (isStartNode ? " is a start node" : " is not a start node"));
+      }
+    }
+
+    private void ProcessSimulation(EA.Repository repository, EA.Element element, EA.DiagramObject diagramObject) {
+      // Store the color of the diagram object
+      int originalBorderColor = diagramObject.BorderColor;
+      // Set the color to the highlight color
+      diagramObject.BorderColor = _highlighBorderColor;
+
+      // Get the outbound control flows
+      foreach (EA.Connector connector in element.Connectors) {
+        if (connector.SupplierID == element.ElementID && connector.MetaType == "ControlFlow") {
+          // Get the element at the opposite end of the control flow
+          EA.Element nextElement = repository.GetElementByID(connector.ClientID);
+
+          // Get the inbound object flows
+
+          // Select case for each element type
+
+          //   Atomic Action
+          //   Parse the JavaScript
+          //   Get the locals
+          //   Get the model element references
+        }
+      }
+
+      // Restore the color of the diagram object
+      diagramObject.BorderColor = originalBorderColor;
+    }
+
+    private void LaunchOverlay(EA.Repository repository) {
+
+      if(overlay is null) {
+        overlay = new JaackdMainForm();
+        overlay.Text = "Overlay";
+        System.Drawing.Size size = new System.Drawing.Size(SystemInformation.VirtualScreen.Width * 2, SystemInformation.VirtualScreen.Height * 2);
+        overlay.Size = size;
+        overlay.Top = -size.Height / 4;
+        overlay.Left = -size.Width / 4;
+      }
+
+      overlay.Show();
+
+    }
+
+
+    private void HideOverlay(EA.Repository repository) {
+      overlay.Hide();
+    }
 
   }
 }

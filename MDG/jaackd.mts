@@ -3,7 +3,7 @@
   <Technology id="jaackd" name="jaackd" version="0.0.15" notes="jaackd MDG for software and system architecture" filename="C:\p\gh\jjhegedus\jaackd-ea\MDG\jaackd-mdg.xml" infoURI="jaackd.com" supportURI="admin@jaackd.com" />
   <Profiles directory="C:\p\gh\jjhegedus\jaackd-ea\MDG" files="jaackd-profile.xml" />
   <Patterns directory="C:\p\gh\jjhegedus\jaackd-ea\MDG" files="jaackd-model-type-pattern.xml" />
-  <TagVals tags="Boolean,Classifier,Color,Connector,Date,DiagramRef,Directory,File,Float,ImageRef,Integer,JaackdEAAddinBroadcast,ListOfClassifier,ListOfProperties,Memo,Operation,Property,String,Time,Timestamp,URL,Version Control Repository" />
+  <TagVals tags="Boolean,Classifier,Color,Connector,Date,DiagramRef,Directory,File,Float,ImageRef,Integer,JaackdEAAddinBroadcast,jaackd-report-fragment-list,jaackd-signal-list,ListOfProperties,Memo,Operation,Property,String,Time,Timestamp,URL,Version Control Repository" />
   <CodeMods>
     <CodeMod product="jaackd-csharp" codetypes="1" codetemplates="1" grammar="C:\p\gh\jjhegedus\jaackd-ea\EA Language Grammars\jaackd-csharp.nBNF" codeoptions="" />
   </CodeMods>

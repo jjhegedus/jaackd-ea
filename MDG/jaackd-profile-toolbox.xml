@@ -68,12 +68,13 @@
 					<Tag name="jaackd::jaackd-implementation-model(UML::Package)" type="" description="" unit="" values="" default="Implementation Model"/>
 				</TaggedValues>
 			</Stereotype>
-			<Stereotype name="jaackd-deployment-model" notes="" cx="259" cy="70" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
+			<Stereotype name="jaackd-deployment-model" notes="" cx="355" cy="70" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
 				<AppliesTo>
 					<Apply type="ToolboxPage"/>
 				</AppliesTo>
 				<TaggedValues>
-					<Tag name="jaackd::jaackd-deployment(UML::Package)" type="" description="" unit="" values="" default="Deployment"/>
+					<Tag name="jaackd::jaackd-deployment(UML::Class)" type="" description="" unit="" values="" default="Deployment"/>
+					<Tag name="jaackd::jaackd-deployment-local-docker-sveltekit(UML:Class)" type="" description="" unit="" values="" default="Deployment to Local Docker SveleteKit"/>
 				</TaggedValues>
 			</Stereotype>
 			<Stereotype name="jaackd-packages" notes="jaackd packages" cx="369" cy="252" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
@@ -105,7 +106,7 @@
 					<Tag name="jaackd::jaackd-corporation" type="" description="" unit="" values="" default="Corporation"/>
 				</TaggedValues>
 			</Stereotype>
-			<Stereotype name="jaackd-blocks" notes="jaackd classes" cx="214" cy="123" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
+			<Stereotype name="jaackd-blocks" notes="jaackd classes" cx="214" cy="149" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
 				<AppliesTo>
 					<Apply type="ToolboxPage"/>
 				</AppliesTo>
@@ -114,6 +115,8 @@
 					<Tag name="jaackd::jaackd-submenu" type="" description="" unit="" values="" default="jaackd-submenu"/>
 					<Tag name="jaackd::jaackd-menu-item" type="" description="" unit="" values="" default="jaackd-menu-item"/>
 					<Tag name="jaackd::jaackd-block" type="" description="" unit="" values="" default="jaackd-block"/>
+					<Tag name="jaackd::jaackd-context" type="" description="" unit="" values="" default="jaackd-context"/>
+					<Tag name="jaackd::jaackd-signal" type="" description="" unit="" values="" default="jaackd-signal"/>
 				</TaggedValues>
 			</Stereotype>
 			<Stereotype name="jaackd-connectors" notes="jaackd connectors" cx="313" cy="149" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">
