@@ -49,6 +49,8 @@
 					<Tag name="jaackd::jaackd-external-structure(UML::Package)" type="" description="" unit="" values="" default="External Structure"/>
 					<Tag name="jaackd::jaackd-exchange-items(UML::Package)" type="" description="" unit="" values="" default="Exchange Items"/>
 					<Tag name="jaackd::jaackd-signals(UML::Package)" type="" description="" unit="" values="" default="Signals"/>
+					<Tag name="jaackd::jaackd-context(UML::Package)" type="" description="" unit="" values="" default="Context"/>
+					<Tag name="UML::Activity" type="" description="" unit="" values="" default="Activity"/>
 				</TaggedValues>
 			</Stereotype>
 			<Stereotype name="jaackd-solution-model" notes="" cx="298" cy="70" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0">

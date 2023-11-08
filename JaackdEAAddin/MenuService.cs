@@ -326,7 +326,7 @@ namespace JaackdEAAddin {
         foreach (EA.Connector connector in element.Connectors) {
           if (connector.SupplierID == element.ElementID && connector.MetaType == "ControlFlow") {
             isStartNode = false;
-            ProcessSimulation(repository, element, diagramObject);
+            ProcessSimulation(repository, diagramObject);
             break;
           }
         }
@@ -334,11 +334,14 @@ namespace JaackdEAAddin {
       }
     }
 
-    private void ProcessSimulation(EA.Repository repository, EA.Element element, EA.DiagramObject diagramObject) {
+    private void ProcessSimulation(EA.Repository repository, EA.DiagramObject diagramObject) {
       // Store the color of the diagram object
       int originalBorderColor = diagramObject.BorderColor;
       // Set the color to the highlight color
       diagramObject.BorderColor = _highlighBorderColor;
+
+      // Get the element from the diagramObject
+      EA.Element element = repository.GetElementByID(diagramObject.ElementID);
 
       // Get the outbound control flows
       foreach (EA.Connector connector in element.Connectors) {
