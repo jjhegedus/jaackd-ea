@@ -305,6 +305,9 @@
 				</AppliesTo>
 			</Stereotype>
 			<Stereotype name="jaackd-group" metatype="group" notes="" cx="0" cy="0" bgcolor="-1" fontcolor="-1" bordercolor="-1" borderwidth="-1" hideicon="0" generalizes="jaackd-entity" baseStereotypes="jaackd-entity">
+				<stereotypedrelationships>
+					<stereotypedrelationship stereotype="jaackd::jaackd-composition" constraint="jaackd::jaackd-group"/>
+				</stereotypedrelationships>
 				<AppliesTo>
 					<Apply type="Class">
 						<Property name="isActive" value=""/>
